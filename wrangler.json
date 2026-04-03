@@ -11,6 +11,12 @@
 		"enabled": true
 	},
 	"upload_source_maps": true,
+	"kv_namespaces": [
+		{
+			"binding": "VIEW_COUNTS",
+			"id": "REPLACE_WITH_NAMESPACE_ID"
+		}
+	],
 	"routes": [
 		{
 			"pattern": "latentmesh.ai",
