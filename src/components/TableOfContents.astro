@@ -1,0 +1,98 @@
+<nav class="toc" id="toc" aria-label="Table of contents">
+  <details>
+    <summary class="toc-toggle">Table of contents</summary>
+    <ol class="toc-list" id="toc-list"></ol>
+  </details>
+</nav>
+
+<script>
+  const tocList = document.getElementById('toc-list');
+  const headings = document.querySelectorAll('article .prose h2, article .prose h3');
+
+  if (tocList && headings.length > 2) {
+    headings.forEach((heading) => {
+      if (!heading.id) {
+        heading.id = heading.textContent?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') ?? '';
+      }
+      const li = document.createElement('li');
+      li.className = heading.tagName === 'H3' ? 'toc-h3' : 'toc-h2';
+      const a = document.createElement('a');
+      a.href = `#${heading.id}`;
+      a.textContent = heading.textContent ?? '';
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        heading.scrollIntoView({ behavior: 'smooth' });
+        history.replaceState(null, '', `#${heading.id}`);
+      });
+      li.appendChild(a);
+      tocList.appendChild(li);
+    });
+  } else {
+    const toc = document.getElementById('toc');
+    if (toc) toc.style.display = 'none';
+  }
+</script>
+
+<style>
+  .toc {
+    margin-bottom: 2rem;
+    border: 1px solid var(--color-border, #e5e7eb);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .toc-toggle {
+    padding: 0.75rem 1rem;
+    font-family: sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-secondary, #475569);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .toc-toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .toc-toggle::before {
+    content: '▸';
+    font-size: 0.7rem;
+    transition: transform 0.15s;
+  }
+
+  details[open] .toc-toggle::before {
+    transform: rotate(90deg);
+  }
+
+  .toc-list {
+    margin: 0;
+    padding: 0 1rem 0.75rem;
+    list-style: none;
+  }
+
+  .toc-list li a {
+    display: block;
+    padding: 0.3rem 0;
+    font-family: sans-serif;
+    font-size: 0.85rem;
+    color: var(--color-text-muted, #64748b);
+    text-decoration: none;
+    line-height: 1.4;
+  }
+
+  .toc-list li a:hover {
+    color: var(--color-link, #2563eb);
+  }
+
+  .toc-h3 {
+    padding-left: 1rem;
+  }
+
+  .toc-h3 a {
+    font-size: 0.8rem !important;
+  }
+</style>

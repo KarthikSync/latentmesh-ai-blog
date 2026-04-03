@@ -1,0 +1,149 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { SITE_TITLE } from '../../consts';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  const tags = new Set<string>();
+  posts.forEach((post) => {
+    (post.data.tags ?? []).forEach((tag: string) => tags.add(tag));
+  });
+  return [...tags].map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: posts
+        .filter((p) => (p.data.tags ?? []).includes(tag))
+        .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={`${tag} | ${SITE_TITLE}`} description={`Essays tagged "${tag}".`} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <h1>{tag}</h1>
+      <div class="essay-list">
+        {posts.map((post: any) => (
+          <a href={`/blog/${post.id}/`} class="essay-item">
+            <div class="essay-content">
+              <h2 class="essay-title">{post.data.title}</h2>
+              {post.data.description && (
+                <p class="essay-summary">{post.data.description}</p>
+              )}
+            </div>
+            <span class="essay-date">
+              <FormattedDate date={post.data.pubDate} />
+            </span>
+          </a>
+        ))}
+      </div>
+      <a href="/topics" class="back-link">&larr; All topics</a>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  main {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 3.5rem;
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin: 0 0 2rem;
+    font-family: sans-serif;
+  }
+
+  .essay-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .essay-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--color-border-light);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .essay-item:last-child {
+    border-bottom: none;
+  }
+
+  .essay-item:hover .essay-title {
+    color: var(--color-brand);
+  }
+
+  .essay-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 0;
+  }
+
+  .essay-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    font-family: sans-serif;
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  .essay-summary {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .essay-date {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    font-family: sans-serif;
+    flex-shrink: 0;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    font-family: sans-serif;
+    font-weight: 600;
+    color: var(--color-link);
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    color: var(--color-link-hover);
+  }
+
+  @media (max-width: 480px) {
+    .essay-item {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  }
+</style>

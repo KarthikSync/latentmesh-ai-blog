@@ -45,3 +45,15 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+<!-- Theme detection (inline to prevent flash) -->
+<script is:inline>
+  (function() {
+    const stored = localStorage.getItem('theme');
+    if (stored) {
+      document.documentElement.setAttribute('data-theme', stored);
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+</script>
