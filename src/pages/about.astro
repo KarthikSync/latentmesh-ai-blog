@@ -1,62 +1,182 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, GITHUB_URL, LINKEDIN_URL } from '../consts';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage="/blog-placeholder-about.jpg"
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={`About | ${SITE_TITLE}`}
+			description="Karthik Mahalingam — Principal Engineering Manager at Microsoft. 19+ years in distributed systems, now focused on AI compliance, risk, and safety."
+		/>
+		<style>
+			main {
+				max-width: 720px;
+				margin: 0 auto;
+				padding: 0 1.5rem;
+			}
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
+			.about-header {
+				padding: 3rem 0 2rem;
+				border-bottom: 1px solid #eee;
+			}
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+			.about-header h1 {
+				font-size: 2rem;
+				font-weight: 700;
+				margin: 0 0 0.5rem;
+				color: #111;
+			}
 
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
+			.about-header .role {
+				font-size: 1.05rem;
+				color: #555;
+				margin: 0;
+				line-height: 1.6;
+			}
 
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+			.about-section {
+				padding: 2rem 0;
+				border-bottom: 1px solid #eee;
+			}
+
+			.about-section:last-of-type {
+				border-bottom: none;
+				padding-bottom: 4rem;
+			}
+
+			.about-section h2 {
+				font-size: 1.15rem;
+				font-weight: 600;
+				margin: 0 0 1rem;
+				color: #111;
+				font-family: sans-serif;
+			}
+
+			.about-section p {
+				font-size: 1rem;
+				line-height: 1.8;
+				color: #444;
+				margin: 0 0 1rem;
+			}
+
+			.about-section p:last-child {
+				margin-bottom: 0;
+			}
+
+			.connect-links {
+				display: flex;
+				gap: 1rem;
+				flex-wrap: wrap;
+				margin-top: 1.25rem;
+			}
+
+			.connect-links a {
+				color: #111;
+				padding: 0.5rem 1.2rem;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				text-decoration: none;
+				font-size: 0.95rem;
+				font-family: sans-serif;
+			}
+
+			.connect-links a:hover {
+				border-color: #111;
+			}
+
+			.cta-box {
+				background: #f8f8f8;
+				border: 1px solid #eee;
+				border-radius: 6px;
+				padding: 1.5rem;
+				margin-top: 1.5rem;
+			}
+
+			.cta-box p {
+				margin: 0 0 1rem;
+			}
+
+			.cta-box a {
+				display: inline-block;
+				background: #111;
+				color: #fff;
+				padding: 0.6rem 1.4rem;
+				border-radius: 4px;
+				text-decoration: none;
+				font-size: 0.95rem;
+				font-family: sans-serif;
+			}
+
+			.cta-box a:hover {
+				background: #333;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="about-header">
+				<h1>About Me</h1>
+				<p class="role">
+					Principal Engineering Manager at Microsoft. 19+ years building systems that scale.
+				</p>
+			</div>
+
+			<section class="about-section">
+				<h2>Background</h2>
+				<p>
+					I'm Karthik Mahalingam. I've spent nearly two decades building and leading engineering
+					teams across developer tools, semiconductor systems, and enterprise cloud platforms. My
+					career started at Syncfusion, where I went from writing code to leading product strategy.
+					I then spent close to a decade at KLA, managing engineering teams that built
+					high-throughput systems for the semiconductor industry. In 2021, I joined Microsoft.
+				</p>
+				<p>
+					At Microsoft, I lead engineering for Purview Data Lifecycle Management — building the
+					services that handle data retention, compliance, and governance across millions of
+					mailboxes and thousands of enterprise tenants. Over the past couple of years, my work has
+					increasingly moved toward AI: deploying multi-agent LLM systems, building RAG/CAG
+					pipelines, and applying AI to compliance automation at enterprise scale.
+				</p>
+			</section>
+
+			<section class="about-section">
+				<h2>What this blog is about</h2>
+				<p>
+					Latent Mesh is where I think out loud about the problems I work on and around — AI
+					agents, system evaluations, safety, privacy, and the distributed systems patterns that
+					underpin all of it. These are notes from someone who builds these systems for a living,
+					not a researcher writing from the outside. The questions here tend to be practical: how
+					do you govern agents at scale? How do you evaluate AI systems before shipping them? What
+					does compliance actually look like when AI is in the loop?
+				</p>
+			</section>
+
+			<section class="about-section">
+				<h2>Let's talk</h2>
+				<p>
+					I'm open to conversations with founders, engineering leaders, and companies navigating
+					AI compliance, regulatory risk, and safety. If you're building in this space and want to
+					think through the hard problems together, I'd welcome the conversation.
+				</p>
+				<div class="cta-box">
+					<p>
+						Reach out to discuss AI compliance, risk, regulatory strategy, or safety engineering.
+					</p>
+					<a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">
+						Message me on LinkedIn
+					</a>
+				</div>
+				<div class="connect-links">
+					<a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a>
+					<a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+				</div>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>

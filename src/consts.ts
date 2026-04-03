@@ -4,3 +4,4 @@ export const SITE_DESCRIPTION =
 export const SITE_AUTHOR = "Karthik Mahalingam";
 export const SITE_URL = "https://latentmesh.ai";
 export const GITHUB_URL = "https://github.com/KarthikSync";
+export const LINKEDIN_URL = "https://www.linkedin.com/in/karthiksync";
