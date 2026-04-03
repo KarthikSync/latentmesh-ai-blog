@@ -1,5 +1,6 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
-
-export const SITE_TITLE = "Astro Blog";
-export const SITE_DESCRIPTION = "Welcome to my website!";
+export const SITE_TITLE = "Latent Mesh";
+export const SITE_DESCRIPTION =
+  "Where distributed systems thinking meets AI risk and safety. Written by Karthik Mahalingam.";
+export const SITE_AUTHOR = "Karthik Mahalingam";
+export const SITE_URL = "https://latentmesh.ai";
+export const GITHUB_URL = "https://github.com/KarthikSync";
