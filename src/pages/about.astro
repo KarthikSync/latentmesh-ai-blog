@@ -2,7 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, GITHUB_URL, LINKEDIN_URL } from '../consts';
+import { SITE_TITLE, LINKEDIN_URL } from '../consts';
 ---
 
 <!doctype html>
@@ -10,173 +10,173 @@ import { SITE_TITLE, GITHUB_URL, LINKEDIN_URL } from '../consts';
 	<head>
 		<BaseHead
 			title={`About | ${SITE_TITLE}`}
-			description="Karthik Mahalingam — Principal Engineering Manager at Microsoft. 19+ years in distributed systems, now focused on AI compliance, risk, and safety."
+			description="Karthik Mahalingam — engineering leader at Microsoft, writing about AI agents, evaluation, compliance, and governance from a systems perspective."
 		/>
-		<style>
-			main {
-				max-width: 720px;
-				margin: 0 auto;
-				padding: 0 1.5rem;
-			}
-
-			.about-header {
-				padding: 3rem 0 2rem;
-				border-bottom: 1px solid #eee;
-			}
-
-			.about-header h1 {
-				font-size: 2rem;
-				font-weight: 700;
-				margin: 0 0 0.5rem;
-				color: #111;
-			}
-
-			.about-header .role {
-				font-size: 1.05rem;
-				color: #555;
-				margin: 0;
-				line-height: 1.6;
-			}
-
-			.about-section {
-				padding: 2rem 0;
-				border-bottom: 1px solid #eee;
-			}
-
-			.about-section:last-of-type {
-				border-bottom: none;
-				padding-bottom: 4rem;
-			}
-
-			.about-section h2 {
-				font-size: 1.15rem;
-				font-weight: 600;
-				margin: 0 0 1rem;
-				color: #111;
-				font-family: sans-serif;
-			}
-
-			.about-section p {
-				font-size: 1rem;
-				line-height: 1.8;
-				color: #444;
-				margin: 0 0 1rem;
-			}
-
-			.about-section p:last-child {
-				margin-bottom: 0;
-			}
-
-			.connect-links {
-				display: flex;
-				gap: 1rem;
-				flex-wrap: wrap;
-				margin-top: 1.25rem;
-			}
-
-			.connect-links a {
-				color: #111;
-				padding: 0.5rem 1.2rem;
-				border: 1px solid #ccc;
-				border-radius: 4px;
-				text-decoration: none;
-				font-size: 0.95rem;
-				font-family: sans-serif;
-			}
-
-			.connect-links a:hover {
-				border-color: #111;
-			}
-
-			.cta-box {
-				background: #f8f8f8;
-				border: 1px solid #eee;
-				border-radius: 6px;
-				padding: 1.5rem;
-				margin-top: 1.5rem;
-			}
-
-			.cta-box p {
-				margin: 0 0 1rem;
-			}
-
-			.cta-box a {
-				display: inline-block;
-				background: #111;
-				color: #fff;
-				padding: 0.6rem 1.4rem;
-				border-radius: 4px;
-				text-decoration: none;
-				font-size: 0.95rem;
-				font-family: sans-serif;
-			}
-
-			.cta-box a:hover {
-				background: #333;
-			}
-		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
 			<div class="about-header">
-				<h1>About Me</h1>
+				<h1>About Karthik and LatentMesh</h1>
 				<p class="role">
-					Principal Engineering Manager at Microsoft. 19+ years building systems that scale.
+					Engineering leader at Microsoft. 19+ years building systems at scale,
+					now focused on AI agents, evaluation, compliance, and governance.
 				</p>
 			</div>
 
 			<section class="about-section">
 				<h2>Background</h2>
 				<p>
-					I'm Karthik Mahalingam. I've spent nearly two decades building and leading engineering
-					teams across developer tools, semiconductor systems, and enterprise cloud platforms. My
-					career started at Syncfusion, where I went from writing code to leading product strategy.
-					I then spent close to a decade at KLA, managing engineering teams that built
-					high-throughput systems for the semiconductor industry. In 2021, I joined Microsoft.
+					I work at the intersection of large-scale systems, AI evaluation,
+					privacy, and governance. At Microsoft, I lead engineering for Purview
+					Data Lifecycle Management — building the services that handle retention,
+					compliance, and governance across millions of mailboxes and thousands
+					of enterprise tenants. Over the past few years, my work has increasingly
+					shifted toward AI: multi-agent systems, evaluation pipelines, RAG/CAG
+					architectures, and compliance automation at enterprise scale.
 				</p>
 				<p>
-					At Microsoft, I lead engineering for Purview Data Lifecycle Management — building the
-					services that handle data retention, compliance, and governance across millions of
-					mailboxes and thousands of enterprise tenants. Over the past couple of years, my work has
-					increasingly moved toward AI: deploying multi-agent LLM systems, building RAG/CAG
-					pipelines, and applying AI to compliance automation at enterprise scale.
-				</p>
-			</section>
-
-			<section class="about-section">
-				<h2>What this blog is about</h2>
-				<p>
-					Latent Mesh is where I think out loud about the problems I work on and around — AI
-					agents, system evaluations, safety, privacy, and the distributed systems patterns that
-					underpin all of it. These are notes from someone who builds these systems for a living,
-					not a researcher writing from the outside. The questions here tend to be practical: how
-					do you govern agents at scale? How do you evaluate AI systems before shipping them? What
-					does compliance actually look like when AI is in the loop?
+					Before Microsoft, I spent nearly two decades building and leading
+					engineering teams across developer tools, semiconductor systems, and
+					enterprise cloud platforms — including Syncfusion and KLA. That
+					background shapes how I think about AI: not just as a model problem,
+					but as a systems problem.
 				</p>
 			</section>
 
 			<section class="about-section">
-				<h2>Let's talk</h2>
+				<h2>What LatentMesh is about</h2>
 				<p>
-					I'm open to conversations with founders, engineering leaders, and companies navigating
-					AI compliance, regulatory risk, and safety. If you're building in this space and want to
-					think through the hard problems together, I'd welcome the conversation.
+					LatentMesh is where I write about the problems I work on and around:
+					AI agents, system evaluation, safety, privacy, compliance, and the
+					distributed systems patterns underneath them. These are notes from
+					someone building these systems in practice, not observing them from
+					a distance. The questions here are practical: how do you govern agents
+					at scale, evaluate them before deployment, and make compliance real
+					when AI is in the loop?
+				</p>
+			</section>
+
+			<section class="about-section last">
+				<h2>Connect</h2>
+				<p>
+					LatentMesh is evolving around the hard problems of agent evaluation,
+					compliance, and governance. If you're building in this space or thinking
+					through these challenges inside your organization, I'd welcome the
+					conversation.
 				</p>
 				<div class="cta-box">
 					<p>
-						Reach out to discuss AI compliance, risk, regulatory strategy, or safety engineering.
+						Interested in AI evaluation, compliance, or governance?
 					</p>
 					<a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">
-						Message me on LinkedIn
+						Start a conversation
 					</a>
-				</div>
-				<div class="connect-links">
-					<a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a>
-					<a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">LinkedIn</a>
 				</div>
 			</section>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	main {
+		width: 100%;
+		max-width: 720px;
+		margin: 0 auto;
+		padding: 0 1.25rem;
+	}
+
+	.about-header {
+		padding: 3rem 0 2rem;
+		border-bottom: 1px solid #e5e7eb;
+	}
+
+	.about-header h1 {
+		font-size: clamp(1.5rem, 4vw, 2rem);
+		font-weight: 800;
+		margin: 0 0 0.75rem;
+		color: #0f172a;
+		letter-spacing: -0.01em;
+	}
+
+	.about-header .role {
+		font-size: 1.05rem;
+		color: #475569;
+		margin: 0;
+		line-height: 1.65;
+	}
+
+	.about-section {
+		padding: 2.5rem 0;
+		border-bottom: 1px solid #e5e7eb;
+	}
+
+	.about-section.last {
+		border-bottom: none;
+		padding-bottom: 3.5rem;
+	}
+
+	.about-section h2 {
+		font-size: 1.25rem;
+		font-weight: 700;
+		margin: 0 0 1rem;
+		color: #0f172a;
+		font-family: sans-serif;
+	}
+
+	.about-section p {
+		font-size: 1rem;
+		line-height: 1.8;
+		color: #475569;
+		margin: 0 0 1rem;
+	}
+
+	.about-section p:last-child {
+		margin-bottom: 0;
+	}
+
+	.cta-box {
+		background: #f8fafc;
+		border: 1px solid #e5e7eb;
+		border-radius: 8px;
+		padding: 1.5rem;
+		margin-top: 1.5rem;
+	}
+
+	.cta-box p {
+		margin: 0 0 1rem;
+		font-size: 0.95rem;
+		color: #475569;
+	}
+
+	.cta-box a {
+		display: inline-block;
+		background: #1e3a8a;
+		color: #fff;
+		padding: 0.7rem 1.4rem;
+		border-radius: 6px;
+		text-decoration: none;
+		font-size: 0.95rem;
+		font-family: sans-serif;
+		font-weight: 600;
+	}
+
+	.cta-box a:hover {
+		background: #1e40af;
+	}
+
+	@media (max-width: 480px) {
+		main {
+			padding: 0 1rem;
+		}
+
+		.about-header {
+			padding: 2rem 0 1.5rem;
+		}
+
+		.about-section {
+			padding: 2rem 0;
+		}
+	}
+</style>
