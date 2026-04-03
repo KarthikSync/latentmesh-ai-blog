@@ -78,10 +78,10 @@ export const POST: APIRoute = async ({ params, locals, request }) => {
     const next = current + 1;
     await kv.put(slug, next.toString());
 
-    // Track referrer source
-    const referer = request.headers.get('referer');
-    const url = new URL(request.url);
-    const utmSource = url.searchParams.get('utm_source');
+    // Track referrer source from client-provided document.referrer
+    const body: any = await request.json().catch(() => ({}));
+    const referer = body.referrer || null;
+    const utmSource = body.utmSource || null;
     const source = extractSource(referer, utmSource);
 
     const refKey = `${slug}:ref:${source}`;

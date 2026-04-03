@@ -81,7 +81,14 @@ const pageUrl = new URL(`/blog/${slug}/`, Astro.site).toString();
 
 	// View count
 	if (slug) {
-		fetch(`/api/views/${slug}`, { method: 'POST' })
+		fetch(`/api/views/${slug}`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				referrer: document.referrer,
+				utmSource: new URLSearchParams(window.location.search).get('utm_source'),
+			}),
+		})
 			.then(r => r.json())
 			.then(data => {
 				const el = document.getElementById('view-count');
