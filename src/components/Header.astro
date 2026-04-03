@@ -4,7 +4,9 @@ import { SITE_TITLE } from "../consts";
 
 <header>
   <nav>
-    <a href="/" class="site-title">{SITE_TITLE}</a>
+    <a href="/" class="site-title">
+      <img src="/logo.svg" alt={SITE_TITLE} class="site-logo" />
+    </a>
     <div class="nav-links">
       <a href="/blog">Blog</a>
       <a href="/about">About</a>
@@ -27,15 +29,14 @@ import { SITE_TITLE } from "../consts";
   }
 
   .site-title {
-    font-family: sans-serif;
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: #111;
     text-decoration: none;
+    display: flex;
+    align-items: center;
   }
 
-  .site-title:hover {
-    color: #444;
+  .site-logo {
+    height: 32px;
+    width: auto;
   }
 
   .nav-links {
