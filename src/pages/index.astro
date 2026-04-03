@@ -2,7 +2,15 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { getCollection } from "astro:content";
+
+const allPosts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const hasPosts = allPosts.length > 0 && allPosts[0].data.title !== "Coming Soon";
+const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
 ---
 
 <!doctype html>
@@ -16,27 +24,50 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
     <main>
       <!-- Hero -->
       <section class="hero">
-        <p class="greeting">Hi, I'm Karthik Mahalingam.</p>
-        <h1 class="tagline">
-          Where distributed systems thinking meets AI risk and safety.
+        <p class="author-name">Karthik Mahalingam</p>
+        <h1 class="headline">
+          How AI systems fail, how to evaluate them, and how to govern them in production.
         </h1>
-        <p class="intro">
-          A seasoned distributed systems architect who spent years designing
-          high-scale infrastructure, now applying that same systems thinking to
-          AI risk, safety, and governance at Microsoft. This is where I think in
-          public about agents, evals, compliance, trust, and the hard problems
-          that don't have clean answers yet.
+        <p class="thesis">
+          Agents, evaluations, safety, privacy, and compliance through the lens
+          of distributed systems and real-world engineering.
         </p>
-        <p class="credibility">
-          19+ years building high-scale distributed systems. Now at Microsoft,
-          spanning agent identity, privacy-by-design, AI system evaluations,
-          and responsible AI guardrails.
-        </p>
-        <div class="hero-links">
-          <a href="/blog" class="btn-primary">Read the blog</a>
-          <a href="/about" class="btn-secondary">About me</a>
+        <div class="hero-actions">
+          <a href="/blog" class="btn-primary">Read latest essays</a>
+          <a href="/about" class="btn-secondary">About</a>
         </div>
       </section>
+
+      <!-- Proof strip -->
+      <section class="proof">
+        <div class="proof-items">
+          <span>19+ years building at scale</span>
+          <span class="proof-sep" aria-hidden="true"></span>
+          <span>Principal engineering leader at Microsoft</span>
+          <span class="proof-sep" aria-hidden="true"></span>
+          <span>AI systems, evaluation, safety, and governance</span>
+        </div>
+      </section>
+
+      <!-- Featured essays (auto-shows when posts exist) -->
+      {featuredPosts.length > 0 && (
+        <section class="featured">
+          <h2>Latest essays</h2>
+          <ul class="essay-list">
+            {featuredPosts.map((post) => (
+              <li>
+                <a href={`/blog/${post.id}/`}>
+                  <span class="essay-title">{post.data.title}</span>
+                  <span class="essay-meta">
+                    <FormattedDate date={post.data.pubDate} />
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a href="/blog" class="view-all">All essays &rarr;</a>
+        </section>
+      )}
 
       <!-- Topics -->
       <section class="topics">
@@ -44,70 +75,68 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
         <div class="topics-grid">
           <div class="topic-card">
             <span class="topic-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="3"/><path d="M12 8v3"/><circle cx="7" cy="16" r="1" fill="#2563eb"/><circle cx="17" cy="16" r="1" fill="#2563eb"/>
               </svg>
             </span>
-            <h3>AI Agents</h3>
+            <h3>Agents in production</h3>
             <p>
-              Governance, identity, autonomy, and what happens when agents
-              interact at scale.
+              How agent systems break, drift, and misbehave once they leave the demo.
             </p>
           </div>
           <div class="topic-card">
             <span class="topic-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 2h6l-1 7h4l-7 11 1-7H8z"/>
               </svg>
             </span>
-            <h3>AI System Evals</h3>
+            <h3>Evals that catch real failures</h3>
             <p>
-              How to measure, test, and validate AI systems before and after
-              deployment.
+              Practical evaluation strategies for regression detection, reliability, and trust.
             </p>
           </div>
           <div class="topic-card">
             <span class="topic-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
               </svg>
             </span>
-            <h3>AI Safety</h3>
+            <h3>AI safety as systems engineering</h3>
             <p>
-              Alignment, robustness, failure modes, and building systems that
-              behave as intended.
+              Safety through control surfaces, guardrails, observability, and failure design.
             </p>
           </div>
           <div class="topic-card">
             <span class="topic-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
             </span>
-            <h3>Privacy and Compliance</h3>
-            <p>GDPR, DMA, least-privilege, and regulatory realities.</p>
-          </div>
-          <div class="topic-card">
-            <span class="topic-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="3"/><circle cx="4" cy="6" r="2"/><circle cx="20" cy="6" r="2"/><circle cx="4" cy="18" r="2"/><circle cx="20" cy="18" r="2"/><line x1="6" y1="6" x2="9.5" y2="10"/><line x1="18" y1="6" x2="14.5" y2="10"/><line x1="6" y1="18" x2="9.5" y2="14"/><line x1="18" y1="18" x2="14.5" y2="14"/>
-              </svg>
-            </span>
-            <h3>Distributed Systems</h3>
+            <h3>Privacy, controls, and compliance</h3>
             <p>
-              Hard-won patterns from building at scale, now applied to AI
-              infrastructure.
+              How legal and policy obligations become technical architecture and operational workflows.
             </p>
           </div>
           <div class="topic-card">
             <span class="topic-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/><circle cx="4" cy="6" r="2"/><circle cx="20" cy="6" r="2"/><circle cx="4" cy="18" r="2"/><circle cx="20" cy="18" r="2"/><line x1="6" y1="6" x2="9.5" y2="10"/><line x1="18" y1="6" x2="14.5" y2="10"/><line x1="6" y1="18" x2="9.5" y2="14"/><line x1="18" y1="18" x2="14.5" y2="14"/>
+              </svg>
+            </span>
+            <h3>Distributed systems lessons for AI</h3>
+            <p>
+              What scale, failure handling, and system design teach us about modern AI infrastructure.
+            </p>
+          </div>
+          <div class="topic-card">
+            <span class="topic-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
               </svg>
             </span>
-            <h3>Field Notes</h3>
+            <h3>Field notes</h3>
             <p>
-              Observations from the frontier of responsible AI in big tech.
+              Short observations from building, testing, and governing AI systems in the real world.
             </p>
           </div>
         </div>
@@ -126,142 +155,247 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
     padding: 0 1rem;
   }
 
-  /* Hero */
+  /* ── Hero ── */
   .hero {
-    padding: 4rem 0 3rem;
+    padding: 2.5rem 0 2rem;
     border-bottom: 1px solid #eee;
   }
 
-  .greeting {
-    font-size: 1rem;
-    color: #666;
-    margin: 0 0 0.5rem;
-    font-family: monospace;
-  }
-
-  .tagline {
-    font-size: clamp(1.35rem, 4.5vw, 2rem);
-    font-weight: 700;
-    line-height: 1.3;
-    margin: 0 0 1.25rem;
-    color: #111;
-    overflow-wrap: break-word;
-    word-break: break-word;
-  }
-
-  .intro {
-    font-size: 1.1rem;
-    line-height: 1.75;
-    color: #444;
-    margin: 0 0 1.25rem;
-    max-width: 640px;
-  }
-
-  .credibility {
+  .author-name {
     font-size: 0.9rem;
-    line-height: 1.6;
-    color: #777;
-    margin: 0 0 2rem;
-    padding: 0.75rem 1rem;
-    border-left: 3px solid #dbeafe;
-    background: #f8fafc;
-    border-radius: 0 4px 4px 0;
+    font-weight: 600;
+    color: #2563eb;
+    margin: 0 0 0.75rem;
+    font-family: sans-serif;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
   }
 
-  .hero-links {
+  .headline {
+    font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0 0 1rem;
+    color: #111;
+    letter-spacing: -0.01em;
+  }
+
+  .thesis {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #555;
+    margin: 0 0 1.5rem;
+  }
+
+  .hero-actions {
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem;
     flex-wrap: wrap;
   }
 
   .btn-primary {
-    background: #111;
+    background: #1e3a8a;
     color: #fff;
-    padding: 0.6rem 1.4rem;
+    padding: 0.55rem 1.25rem;
     border-radius: 4px;
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-family: sans-serif;
+    font-weight: 500;
   }
 
   .btn-primary:hover {
-    background: #333;
+    background: #1e40af;
   }
 
   .btn-secondary {
-    color: #111;
-    padding: 0.6rem 1.4rem;
+    color: #333;
+    padding: 0.55rem 1.25rem;
     border-radius: 4px;
-    border: 1px solid #ccc;
+    border: 1px solid #d1d5db;
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-family: sans-serif;
+    font-weight: 500;
   }
 
   .btn-secondary:hover {
     border-color: #111;
+    color: #111;
   }
 
-  /* Topics */
+  /* ── Proof strip ── */
+  .proof {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .proof-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #666;
+  }
+
+  .proof-sep {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #ccc;
+    flex-shrink: 0;
+  }
+
+  /* ── Featured essays ── */
+  .featured {
+    padding: 2rem 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .featured h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 1.25rem;
+    color: #111;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .essay-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .essay-list li {
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .essay-list li:last-child {
+    border-bottom: none;
+  }
+
+  .essay-list a {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .essay-list a:hover .essay-title {
+    color: #1e3a8a;
+  }
+
+  .essay-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #222;
+    font-family: sans-serif;
+  }
+
+  .essay-meta {
+    font-size: 0.8rem;
+    color: #999;
+    font-family: sans-serif;
+    flex-shrink: 0;
+  }
+
+  .view-all {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    font-family: sans-serif;
+    font-weight: 500;
+    color: #2563eb;
+    text-decoration: none;
+  }
+
+  .view-all:hover {
+    color: #1e3a8a;
+  }
+
+  /* ── Topics ── */
   .topics {
-    padding: 3rem 0 4rem;
+    padding: 2rem 0 3rem;
   }
 
   .topics h2 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin: 0 0 2rem;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem;
     color: #111;
     font-family: sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
   }
 
   .topics-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   .topic-card {
-    padding: 1rem;
-    border: 1px solid #eee;
+    padding: 1.25rem 1rem;
+    border: 1px solid #e5e7eb;
     border-radius: 6px;
     min-width: 0;
   }
 
   .topic-card:hover {
-    border-color: #ccc;
+    border-color: #93c5fd;
   }
 
   .topic-icon {
     display: block;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.6rem;
     line-height: 1;
   }
 
   .topic-card h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0 0 0.5rem;
-    color: #111;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin: 0 0 0.35rem;
+    color: #1e293b;
     font-family: sans-serif;
+    line-height: 1.3;
   }
 
   .topic-card p {
-    font-size: 0.85rem;
-    line-height: 1.6;
-    color: #666;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #64748b;
     margin: 0;
     overflow-wrap: break-word;
   }
 
+  /* ── Mobile ── */
   @media (max-width: 720px) {
     .topics-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
     }
 
     .hero {
       padding: 1.5rem 0;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .proof-items {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+
+    .proof-sep {
+      display: none;
     }
   }
 </style>
