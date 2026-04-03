@@ -3,7 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { SITE_TITLE, SITE_DESCRIPTION, LINKEDIN_URL } from "../consts";
 import { getCollection } from "astro:content";
 
 const allPosts = (await getCollection("blog")).sort(
@@ -24,48 +24,55 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
     <main>
       <!-- Hero -->
       <section class="hero">
-        <p class="author-name">Karthik Mahalingam</p>
+        <p class="eyebrow">Karthik Mahalingam</p>
         <h1 class="headline">
-          How AI systems fail, how to evaluate them, and how to govern them in production.
+          How AI systems fail.<br />
+          How to evaluate them.<br />
+          How to govern them in production.
         </h1>
         <p class="thesis">
-          Agents, evaluations, safety, privacy, and compliance through the lens
-          of distributed systems and real-world engineering.
+          Essays on agents, evals, safety, privacy, and compliance through the
+          lens of distributed systems and real-world engineering.
         </p>
         <div class="hero-actions">
           <a href="/blog" class="btn-primary">Read latest essays</a>
-          <a href="/about" class="btn-secondary">About</a>
+          <a href="/about" class="btn-secondary">Start here</a>
         </div>
       </section>
 
-      <!-- Proof strip -->
+      <!-- Credibility strip -->
       <section class="proof">
-        <div class="proof-items">
-          <span>19+ years building at scale</span>
-          <span class="proof-sep" aria-hidden="true"></span>
-          <span>Principal engineering leader at Microsoft</span>
-          <span class="proof-sep" aria-hidden="true"></span>
-          <span>AI systems, evaluation, safety, and governance</span>
+        <div class="proof-grid">
+          <div class="proof-item">
+            <span class="proof-text">19+ years building distributed systems at scale</span>
+          </div>
+          <div class="proof-item">
+            <span class="proof-text">Engineering leader at Microsoft</span>
+          </div>
+          <div class="proof-item">
+            <span class="proof-text">Writing on AI systems, evals, safety, and governance</span>
+          </div>
         </div>
       </section>
 
-      <!-- Featured essays (auto-shows when posts exist) -->
+      <!-- Featured essays -->
       {featuredPosts.length > 0 && (
         <section class="featured">
-          <h2>Latest essays</h2>
-          <ul class="essay-list">
+          <h2>Featured essays</h2>
+          <div class="essay-list">
             {featuredPosts.map((post) => (
-              <li>
-                <a href={`/blog/${post.id}/`}>
-                  <span class="essay-title">{post.data.title}</span>
-                  <span class="essay-meta">
-                    <FormattedDate date={post.data.pubDate} />
-                  </span>
-                </a>
-              </li>
+              <a href={`/blog/${post.id}/`} class="essay-item">
+                <span class="essay-title">{post.data.title}</span>
+                {post.data.description && (
+                  <span class="essay-summary">{post.data.description}</span>
+                )}
+                <span class="essay-date">
+                  <FormattedDate date={post.data.pubDate} />
+                </span>
+              </a>
             ))}
-          </ul>
-          <a href="/blog" class="view-all">All essays &rarr;</a>
+          </div>
+          <a href="/blog" class="view-all">View all essays &rarr;</a>
         </section>
       )}
 
@@ -80,9 +87,7 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
               </svg>
             </span>
             <h3>Agents in production</h3>
-            <p>
-              How agent systems break, drift, and misbehave once they leave the demo.
-            </p>
+            <p>How agent systems break, drift, and misbehave once they leave the demo.</p>
           </div>
           <div class="topic-card">
             <span class="topic-icon">
@@ -91,9 +96,7 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
               </svg>
             </span>
             <h3>Evals that catch real failures</h3>
-            <p>
-              Practical evaluation strategies for regression detection, reliability, and trust.
-            </p>
+            <p>Practical evaluation strategies for regression detection, reliability, and trust.</p>
           </div>
           <div class="topic-card">
             <span class="topic-icon">
@@ -102,9 +105,7 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
               </svg>
             </span>
             <h3>AI safety as systems engineering</h3>
-            <p>
-              Safety through control surfaces, guardrails, observability, and failure design.
-            </p>
+            <p>Safety through control surfaces, guardrails, observability, and failure design.</p>
           </div>
           <div class="topic-card">
             <span class="topic-icon">
@@ -113,33 +114,22 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
               </svg>
             </span>
             <h3>Privacy, controls, and compliance</h3>
-            <p>
-              How legal and policy obligations become technical architecture and operational workflows.
-            </p>
-          </div>
-          <div class="topic-card">
-            <span class="topic-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="3"/><circle cx="4" cy="6" r="2"/><circle cx="20" cy="6" r="2"/><circle cx="4" cy="18" r="2"/><circle cx="20" cy="18" r="2"/><line x1="6" y1="6" x2="9.5" y2="10"/><line x1="18" y1="6" x2="14.5" y2="10"/><line x1="6" y1="18" x2="9.5" y2="14"/><line x1="18" y1="18" x2="14.5" y2="14"/>
-              </svg>
-            </span>
-            <h3>Distributed systems lessons for AI</h3>
-            <p>
-              What scale, failure handling, and system design teach us about modern AI infrastructure.
-            </p>
-          </div>
-          <div class="topic-card">
-            <span class="topic-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-              </svg>
-            </span>
-            <h3>Field notes</h3>
-            <p>
-              Short observations from building, testing, and governing AI systems in the real world.
-            </p>
+            <p>How legal and policy obligations become technical architecture and operational workflows.</p>
           </div>
         </div>
+      </section>
+
+      <!-- About preview -->
+      <section class="about-preview">
+        <h2>About</h2>
+        <p>
+          I write about AI systems from the perspective of someone who has spent
+          nearly two decades building large-scale distributed systems. My focus is
+          on how agents behave in production, how evaluations can catch real
+          failures, and how safety, privacy, and compliance become operational
+          reality.
+        </p>
+        <a href="/about" class="about-link">More about me &rarr;</a>
       </section>
     </main>
 
@@ -150,41 +140,41 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
 <style>
   main {
     width: 100%;
-    max-width: 760px;
+    max-width: 1120px;
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 2rem;
   }
 
   /* ── Hero ── */
   .hero {
-    padding: 2.5rem 0 2rem;
-    border-bottom: 1px solid #eee;
+    max-width: 720px;
+    padding: 3.5rem 0 2.5rem;
   }
 
-  .author-name {
-    font-size: 0.9rem;
+  .eyebrow {
+    font-size: 0.8rem;
     font-weight: 600;
     color: #2563eb;
     margin: 0 0 0.75rem;
     font-family: sans-serif;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
   }
 
   .headline {
-    font-size: clamp(1.4rem, 4.5vw, 1.9rem);
-    font-weight: 700;
-    line-height: 1.25;
-    margin: 0 0 1rem;
-    color: #111;
-    letter-spacing: -0.01em;
+    font-size: clamp(2.25rem, 5.5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0 0 1.25rem;
+    color: #0f172a;
+    letter-spacing: -0.025em;
   }
 
   .thesis {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: #555;
-    margin: 0 0 1.5rem;
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+    line-height: 1.6;
+    color: #475569;
+    margin: 0 0 1.75rem;
   }
 
   .hero-actions {
@@ -196,12 +186,12 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
   .btn-primary {
     background: #1e3a8a;
     color: #fff;
-    padding: 0.55rem 1.25rem;
-    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-family: sans-serif;
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .btn-primary:hover {
@@ -209,110 +199,106 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
   }
 
   .btn-secondary {
-    color: #333;
-    padding: 0.55rem 1.25rem;
-    border-radius: 4px;
+    color: #1e293b;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
     border: 1px solid #d1d5db;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-family: sans-serif;
-    font-weight: 500;
+    font-weight: 600;
+    background: transparent;
   }
 
   .btn-secondary:hover {
-    border-color: #111;
-    color: #111;
+    border-color: #1e293b;
   }
 
-  /* ── Proof strip ── */
+  /* ── Credibility strip ── */
   .proof {
-    padding: 1.25rem 0;
-    border-bottom: 1px solid #eee;
+    padding: 1.5rem 0 2rem;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
   }
 
-  .proof-items {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
+  .proof-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .proof-text {
     font-family: sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 500;
-    color: #666;
-  }
-
-  .proof-sep {
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background: #ccc;
-    flex-shrink: 0;
+    color: #64748b;
+    line-height: 1.5;
   }
 
   /* ── Featured essays ── */
   .featured {
-    padding: 2rem 0;
-    border-bottom: 1px solid #eee;
+    max-width: 860px;
+    padding: 3.5rem 0;
+    border-bottom: 1px solid #e5e7eb;
   }
 
   .featured h2 {
-    font-size: 1rem;
+    font-size: clamp(1.5rem, 3vw, 1.875rem);
     font-weight: 700;
-    margin: 0 0 1.25rem;
-    color: #111;
+    margin: 0 0 1.5rem;
+    color: #0f172a;
     font-family: sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
   }
 
   .essay-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .essay-list li {
-    border-bottom: 1px solid #f3f4f6;
-  }
-
-  .essay-list li:last-child {
-    border-bottom: none;
-  }
-
-  .essay-list a {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1rem;
-    padding: 0.75rem 0;
+    flex-direction: column;
+  }
+
+  .essay-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid #f1f5f9;
     text-decoration: none;
     color: inherit;
   }
 
-  .essay-list a:hover .essay-title {
+  .essay-item:last-child {
+    border-bottom: none;
+  }
+
+  .essay-item:hover .essay-title {
     color: #1e3a8a;
   }
 
   .essay-title {
-    font-size: 0.95rem;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
     font-weight: 600;
-    color: #222;
+    color: #1e293b;
     font-family: sans-serif;
+    line-height: 1.3;
   }
 
-  .essay-meta {
+  .essay-summary {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.5;
+  }
+
+  .essay-date {
     font-size: 0.8rem;
-    color: #999;
+    color: #94a3b8;
     font-family: sans-serif;
-    flex-shrink: 0;
   }
 
   .view-all {
     display: inline-block;
-    margin-top: 0.75rem;
-    font-size: 0.85rem;
+    margin-top: 1.25rem;
+    font-size: 0.9rem;
     font-family: sans-serif;
-    font-weight: 500;
+    font-weight: 600;
     color: #2563eb;
     text-decoration: none;
   }
@@ -323,29 +309,28 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
 
   /* ── Topics ── */
   .topics {
-    padding: 2rem 0 3rem;
+    padding: 3.5rem 0;
+    border-bottom: 1px solid #e5e7eb;
   }
 
   .topics h2 {
-    font-size: 1rem;
+    font-size: clamp(1.5rem, 3vw, 1.875rem);
     font-weight: 700;
     margin: 0 0 1.5rem;
-    color: #111;
+    color: #0f172a;
     font-family: sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
   }
 
   .topics-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
   }
 
   .topic-card {
-    padding: 1.25rem 1rem;
+    padding: 1.5rem;
     border: 1px solid #e5e7eb;
-    border-radius: 6px;
+    border-radius: 12px;
     min-width: 0;
   }
 
@@ -355,47 +340,108 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
 
   .topic-icon {
     display: block;
-    margin-bottom: 0.6rem;
+    margin-bottom: 1rem;
     line-height: 1;
   }
 
   .topic-card h3 {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    margin: 0 0 0.35rem;
+    margin: 0 0 0.5rem;
     color: #1e293b;
     font-family: sans-serif;
     line-height: 1.3;
   }
 
   .topic-card p {
-    font-size: 0.8rem;
-    line-height: 1.5;
+    font-size: 0.9rem;
+    line-height: 1.6;
     color: #64748b;
     margin: 0;
-    overflow-wrap: break-word;
+  }
+
+  /* ── About preview ── */
+  .about-preview {
+    max-width: 720px;
+    padding: 3.5rem 0;
+  }
+
+  .about-preview h2 {
+    font-size: clamp(1.5rem, 3vw, 1.875rem);
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: #0f172a;
+    font-family: sans-serif;
+  }
+
+  .about-preview p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #475569;
+    margin: 0 0 1.25rem;
+  }
+
+  .about-link {
+    font-size: 0.9rem;
+    font-family: sans-serif;
+    font-weight: 600;
+    color: #2563eb;
+    text-decoration: none;
+  }
+
+  .about-link:hover {
+    color: #1e3a8a;
   }
 
   /* ── Mobile ── */
-  @media (max-width: 720px) {
-    .topics-grid {
-      grid-template-columns: repeat(2, 1fr);
+  @media (max-width: 768px) {
+    main {
+      padding: 0 1.25rem;
     }
 
     .hero {
-      padding: 1.5rem 0;
+      padding: 2.5rem 0 2rem;
+    }
+
+    .proof-grid {
+      grid-template-columns: 1fr;
+      gap: 0.625rem;
+    }
+
+    .featured {
+      padding: 2.5rem 0;
+    }
+
+    .topics {
+      padding: 2.5rem 0;
+    }
+
+    .topics-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .about-preview {
+      padding: 2.5rem 0;
     }
   }
 
-  @media (max-width: 400px) {
-    .proof-items {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0.25rem;
+  @media (max-width: 480px) {
+    main {
+      padding: 0 1rem;
     }
 
-    .proof-sep {
-      display: none;
+    .hero {
+      padding: 2rem 0 1.5rem;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      text-align: center;
     }
   }
 </style>
