@@ -139,11 +139,13 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
   }
 
   .tagline {
-    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-size: clamp(1.35rem, 4.5vw, 2rem);
     font-weight: 700;
     line-height: 1.3;
     margin: 0 0 1.25rem;
     color: #111;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .intro {
@@ -214,7 +216,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 
   .topics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 1.5rem;
   }
 
@@ -252,10 +254,6 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
   @media (max-width: 520px) {
     .hero {
       padding: 2.5rem 0 2rem;
-    }
-
-    .topics-grid {
-      grid-template-columns: 1fr;
     }
   }
 </style>
