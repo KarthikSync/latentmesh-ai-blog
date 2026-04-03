@@ -13,69 +13,32 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
-		<style>
-			main {
-				width: calc(100% - 2em);
-				max-width: 100%;
-				margin: 0;
-			}
-			.hero-image {
-				width: 100%;
-			}
-			.hero-image img {
-				display: block;
-				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
-			}
-			.prose {
-				width: 720px;
-				max-width: calc(100% - 2em);
-				margin: auto;
-				padding: 1em;
-				color: rgb(var(--gray-dark));
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
-			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
-			}
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
 	</head>
 
 	<body>
 		<Header />
 		<main>
 			<article>
-				<div class="hero-image">
-					{heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
-				</div>
+				{heroImage && (
+					<div class="hero-image">
+						<img width={1020} height={510} src={heroImage} alt="" />
+					</div>
+				)}
 				<div class="prose">
-					<div class="title">
+					<header class="essay-header">
 						<div class="date">
 							<FormattedDate date={pubDate} />
 							{
 								updatedDate && (
-									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
-									</div>
+									<span class="last-updated-on">
+										&middot; Updated <FormattedDate date={updatedDate} />
+									</span>
 								)
 							}
 						</div>
 						<h1>{title}</h1>
 						<hr />
-					</div>
+					</header>
 					<slot />
 				</div>
 			</article>
@@ -83,3 +46,155 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<Footer />
 	</body>
 </html>
+
+<style>
+	main {
+		width: 100%;
+		max-width: 760px;
+		margin: 0 auto;
+		padding: 0 1.25rem;
+	}
+
+	.hero-image {
+		margin: 2rem 0;
+	}
+
+	.hero-image img {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: 8px;
+	}
+
+	.prose {
+		padding: 2rem 0 3.5rem;
+	}
+
+	.essay-header {
+		margin-bottom: 2rem;
+	}
+
+	.essay-header h1 {
+		font-size: clamp(1.5rem, 4.5vw, 2.25rem);
+		font-weight: 800;
+		line-height: 1.2;
+		margin: 0 0 1rem;
+		color: #0f172a;
+		letter-spacing: -0.02em;
+	}
+
+	.date {
+		font-size: 0.85rem;
+		color: #94a3b8;
+		font-family: sans-serif;
+		margin-bottom: 0.75rem;
+	}
+
+	.last-updated-on {
+		font-style: italic;
+	}
+
+	hr {
+		border: none;
+		border-top: 1px solid #e5e7eb;
+		margin: 0;
+	}
+
+	/* Prose content styling */
+	.prose :global(h2) {
+		font-size: clamp(1.2rem, 3vw, 1.5rem);
+		font-weight: 700;
+		margin: 2.5rem 0 1rem;
+		color: #0f172a;
+		line-height: 1.3;
+	}
+
+	.prose :global(h3) {
+		font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+		font-weight: 700;
+		margin: 2rem 0 0.75rem;
+		color: #1e293b;
+		line-height: 1.3;
+	}
+
+	.prose :global(p) {
+		font-size: 1.05rem;
+		line-height: 1.8;
+		color: #374151;
+		margin: 0 0 1.25rem;
+	}
+
+	.prose :global(strong) {
+		color: #1e293b;
+	}
+
+	.prose :global(em) {
+		color: #475569;
+	}
+
+	.prose :global(a) {
+		color: #2563eb;
+		text-decoration: underline;
+		text-underline-offset: 2px;
+	}
+
+	.prose :global(a:hover) {
+		color: #1e3a8a;
+	}
+
+	.prose :global(blockquote) {
+		border-left: 3px solid #2563eb;
+		padding: 0 0 0 1.25rem;
+		margin: 1.5rem 0;
+		font-size: 1rem;
+	}
+
+	.prose :global(blockquote p) {
+		color: #475569;
+	}
+
+	.prose :global(code) {
+		font-size: 0.9em;
+		background: #f1f5f9;
+		padding: 0.15em 0.35em;
+		border-radius: 3px;
+	}
+
+	.prose :global(pre) {
+		background: #1e293b;
+		color: #e2e8f0;
+		padding: 1.25rem;
+		border-radius: 8px;
+		overflow-x: auto;
+		margin: 1.5rem 0;
+	}
+
+	.prose :global(pre code) {
+		background: none;
+		padding: 0;
+		font-size: 0.9rem;
+	}
+
+	.prose :global(ul),
+	.prose :global(ol) {
+		margin: 1rem 0 1.25rem;
+		padding-left: 1.5rem;
+	}
+
+	.prose :global(li) {
+		font-size: 1.05rem;
+		line-height: 1.8;
+		color: #374151;
+		margin-bottom: 0.5rem;
+	}
+
+	@media (max-width: 480px) {
+		main {
+			padding: 0 1rem;
+		}
+
+		.prose {
+			padding: 1.5rem 0 3rem;
+		}
+	}
+</style>
