@@ -11,9 +11,10 @@
 		"enabled": true
 	},
 	"upload_source_maps": true,
- "routes": [
-    {
-      "pattern": "latentmesh.ai",
-      "custom_domain": true
-    },
+	"routes": [
+		{
+			"pattern": "latentmesh.ai",
+			"custom_domain": true
+		}
+	]
 }
