@@ -83,13 +83,6 @@ import { SITE_TITLE } from "../consts";
         </text>
       </svg>
     </a>
-    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <line x1="3" y1="6" x2="21" y2="6" class="bar bar-top"/>
-        <line x1="3" y1="12" x2="21" y2="12" class="bar bar-mid"/>
-        <line x1="3" y1="18" x2="21" y2="18" class="bar bar-bot"/>
-      </svg>
-    </button>
     <div class="nav-links">
       <a href="/blog">Blog</a>
       <a href="/about">About</a>
@@ -102,7 +95,7 @@ import { SITE_TITLE } from "../consts";
 
   header {
     border-bottom: 1px solid #eee;
-    padding: 1rem 1.5rem;
+    padding: 0.75rem 1rem;
   }
 
   nav {
@@ -117,31 +110,24 @@ import { SITE_TITLE } from "../consts";
     text-decoration: none;
     display: flex;
     align-items: center;
+    flex-shrink: 1;
+    min-width: 0;
   }
 
   .site-logo {
-    height: 32px;
+    height: 28px;
     width: auto;
-  }
-
-  .menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #555;
-    padding: 0.25rem;
-    margin-left: auto;
   }
 
   .nav-links {
     display: flex;
-    gap: 1.5rem;
+    gap: 1.25rem;
+    flex-shrink: 0;
   }
 
   .nav-links a {
     font-family: sans-serif;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #555;
     text-decoration: none;
   }
@@ -149,42 +135,4 @@ import { SITE_TITLE } from "../consts";
   .nav-links a:hover {
     color: #111;
   }
-
-  @media (max-width: 520px) {
-    .menu-toggle {
-      display: block;
-    }
-
-    .nav-links {
-      display: none;
-      position: absolute;
-      top: 100%;
-      right: 0;
-      left: 0;
-      background: #fff;
-      flex-direction: column;
-      padding: 1rem 1.5rem;
-      border-bottom: 1px solid #eee;
-      gap: 1rem;
-    }
-
-    .nav-links.open {
-      display: flex;
-    }
-
-    nav {
-      position: relative;
-    }
-  }
 </style>
-
-<script>
-  const toggle = document.querySelector('.menu-toggle');
-  const nav = document.querySelector('.nav-links');
-  if (toggle && nav) {
-    toggle.addEventListener('click', () => {
-      const open = nav.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', String(open));
-    });
-  }
-</script>
