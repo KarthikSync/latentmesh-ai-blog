@@ -1,50 +1,234 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+
+    <main>
+      <!-- Hero -->
+      <section class="hero">
+        <p class="greeting">Hi, I'm Karthik Mahalingam.</p>
+        <h1 class="tagline">
+          Where distributed systems thinking meets AI risk and safety.
+        </h1>
+        <p class="intro">
+          A seasoned distributed systems architect who spent years designing
+          high-scale infrastructure, now applying that same systems thinking to
+          AI risk, safety, and governance at Microsoft. This is where I think in
+          public about agents, evals, compliance, trust, and the hard problems
+          that don't have clean answers yet.
+        </p>
+        <div class="hero-links">
+          <a href="/blog" class="btn-primary">Read the blog</a>
+          <a href="/about" class="btn-secondary">About me</a>
+        </div>
+      </section>
+
+      <!-- About strip -->
+      <section class="about-strip">
+        <p>
+          19+ years building high-scale distributed systems. Now designing
+          solutions at the frontier of AI risk, safety, and governance at
+          Microsoft. Spanning agent identity, privacy-by-design, AI system
+          evaluations, and responsible AI guardrails.
+        </p>
+      </section>
+
+      <!-- Topics -->
+      <section class="topics">
+        <h2>What I write about</h2>
+        <div class="topics-grid">
+          <div class="topic-card">
+            <span class="topic-icon">ðŸ¤–</span>
+            <h3>AI Agents</h3>
+            <p>
+              Governance, identity, autonomy, and what happens when agents
+              interact at scale.
+            </p>
+          </div>
+          <div class="topic-card">
+            <span class="topic-icon">ðŸ§ª</span>
+            <h3>AI System Evals</h3>
+            <p>
+              How to measure, test, and validate AI systems before and after
+              deployment.
+            </p>
+          </div>
+          <div class="topic-card">
+            <span class="topic-icon">ðŸ›¡ï¸</span>
+            <h3>AI Safety</h3>
+            <p>
+              Alignment, robustness, failure modes, and building systems that
+              behave as intended.
+            </p>
+          </div>
+          <div class="topic-card">
+            <span class="topic-icon">ðŸ”</span>
+            <h3>Privacy and Compliance</h3>
+            <p>GDPR, DMA, least-privilege, and regulatory realities.</p>
+          </div>
+          <div class="topic-card">
+            <span class="topic-icon">ðŸ—ï¸</span>
+            <h3>Distributed Systems</h3>
+            <p>
+              Hard-won patterns from building at scale, now applied to AI
+              infrastructure.
+            </p>
+          </div>
+          <div class="topic-card">
+            <span class="topic-icon">ðŸ“¡</span>
+            <h3>Field Notes</h3>
+            <p>
+              Observations from the frontier of responsible AI in big tech.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
 </html>
+
+<style>
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* Hero */
+  .hero {
+    padding: 4rem 0 3rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  .greeting {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 0 0.5rem;
+    font-family: monospace;
+  }
+
+  .tagline {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 1.25rem;
+    color: #111;
+  }
+
+  .intro {
+    font-size: 1.1rem;
+    line-height: 1.75;
+    color: #444;
+    margin: 0 0 2rem;
+    max-width: 640px;
+  }
+
+  .hero-links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: #111;
+    color: #fff;
+    padding: 0.6rem 1.4rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-family: sans-serif;
+  }
+
+  .btn-primary:hover {
+    background: #333;
+  }
+
+  .btn-secondary {
+    color: #111;
+    padding: 0.6rem 1.4rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-family: sans-serif;
+  }
+
+  .btn-secondary:hover {
+    border-color: #111;
+  }
+
+  /* About strip */
+  .about-strip {
+    padding: 2.5rem 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .about-strip p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #555;
+    margin: 0;
+  }
+
+  /* Topics */
+  .topics {
+    padding: 3rem 0 4rem;
+  }
+
+  .topics h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 2rem;
+    color: #111;
+    font-family: sans-serif;
+  }
+
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .topic-card {
+    padding: 1.5rem;
+    border: 1px solid #eee;
+    border-radius: 6px;
+  }
+
+  .topic-card:hover {
+    border-color: #ccc;
+  }
+
+  .topic-icon {
+    font-size: 1.5rem;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .topic-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+    color: #111;
+    font-family: sans-serif;
+  }
+
+  .topic-card p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #666;
+    margin: 0;
+  }
+</style>
