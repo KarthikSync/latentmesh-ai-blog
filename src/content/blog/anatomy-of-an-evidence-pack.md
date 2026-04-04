@@ -113,7 +113,7 @@ The distance between "we think we're compliant" and "we can prove it" is exactly
 
 ---
 
-*Next in this series: [Mapping the EU AI Act to engineering evidence](#) will take each major obligation from the Act and map it to a specific control, eval, and evidence artifact.*
+*Next in this series: [Mapping the EU AI Act to engineering evidence](/blog/mapping-the-eu-ai-act-to-engineering-evidence/) will take each major obligation from the Act and map it to a specific control, eval, and evidence artifact.*
 
 ---
 
