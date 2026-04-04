@@ -103,7 +103,7 @@ For each eval, assign an owner. When the eval fails, that person investigates. W
 
 The result is a chain. Obligation to mechanism to eval to evidence to owner. Each link is traceable. Each link is testable. Each link produces a record. This is what essay #6 introduced as the obligation, control, evaluation, evidence, response loop. This essay is the first concrete layer of that loop.
 
-![The Control Chain: Obligation → Mechanism → Eval → Evidence → Owner, with PII detection mapped as a concrete example at each step.](/images/control-chain-flowchart.svg)
+![The Control Chain: Obligation → Mechanism → Eval → Evidence → Owner, with PII detection mapped as a concrete example at each step.](/images/control-chain-flowchart.png)
 
 ## What this does not solve
 
