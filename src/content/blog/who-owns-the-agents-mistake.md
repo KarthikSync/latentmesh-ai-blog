@@ -1,7 +1,7 @@
 ---
 title: "Who Owns the Agent's Mistake?"
 description: "The legal answer is converging fast. Courts are rejecting the 'AI did it' defense. The question is whether your organization has the infrastructure to assign accountability when an agent fails."
-pubDate: "Apr 04 2026"
+pubDate: "Apr 04 2026 11:00"
 tags: ["compliance", "agents", "safety"]
 ---
 
