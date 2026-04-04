@@ -20,58 +20,66 @@ import { SITE_TITLE, LINKEDIN_URL } from '../consts';
 			<div class="about-header">
 				<h1>About Karthik and LatentMesh</h1>
 				<p class="role">
-					Engineering leader at Microsoft. 19+ years building systems at scale,
-					now focused on AI agents, evaluation, compliance, and governance.
+					I'm an engineering leader at Microsoft with 19+ years of experience
+					building systems at scale. LatentMesh is where I write about AI agents,
+					evaluation, safety, privacy, compliance, and governance from the
+					perspective of someone building these systems in practice.
 				</p>
 			</div>
 
 			<section class="about-section">
 				<h2>Background</h2>
 				<p>
-					I work at the intersection of large-scale systems, AI evaluation,
-					privacy, and governance. At Microsoft, I lead engineering for Purview
-					Data Lifecycle Management — building the services that handle retention,
-					compliance, and governance across millions of mailboxes and thousands
-					of enterprise tenants. Over the past few years, my work has increasingly
-					shifted toward AI: multi-agent systems, evaluation pipelines, RAG/CAG
-					architectures, and compliance automation at enterprise scale.
+					My work sits at the intersection of large-scale systems, AI evaluation,
+					privacy, and governance. At Microsoft, I lead engineering in Purview
+					Data Lifecycle Management, building services for retention, compliance,
+					and governance across large enterprise environments.
 				</p>
 				<p>
-					Before Microsoft, I spent nearly two decades building and leading
-					engineering teams across developer tools, semiconductor systems, and
-					enterprise cloud platforms — including Syncfusion and KLA. That
-					background shapes how I think about AI: not just as a model problem,
-					but as a systems problem.
+					Over the past several years, my focus has increasingly moved toward AI:
+					agent systems, evaluation pipelines, retrieval architectures, and
+					compliance automation. That background shapes how I think about AI. Not
+					just as a model problem, but as a systems problem.
 				</p>
 			</section>
 
 			<section class="about-section">
-				<h2>What LatentMesh is about</h2>
+				<h2>What I write about</h2>
 				<p>
-					LatentMesh is where I write about the problems I work on and around:
-					AI agents, system evaluation, safety, privacy, compliance, and the
-					distributed systems patterns underneath them. These are notes from
-					someone building these systems in practice, not observing them from
-					a distance. The questions here are practical: how do you govern agents
-					at scale, evaluate them before deployment, and make compliance real
-					when AI is in the loop?
+					Most writing about AI focuses on what models can do. I'm more interested
+					in what happens after deployment: the failures nobody planned for, the
+					evaluations that looked good in staging and fell apart in production, the
+					compliance requirements that arrive as legal text and somehow need to
+					become running code.
+				</p>
+				<p>
+					These are engineering problems, not policy abstractions. That's the gap
+					I write into.
+				</p>
+			</section>
+
+			<section class="about-section">
+				<h2>Why LatentMesh exists</h2>
+				<p>
+					A lot of writing about AI stays at the level of model capability or
+					product excitement. I am more interested in the engineering reality
+					underneath it: what breaks, what must be measured, what must be owned,
+					and what must be proved.
+				</p>
+				<p>
+					LatentMesh exists to make that layer legible.
 				</p>
 			</section>
 
 			<section class="about-section last">
 				<h2>Connect</h2>
 				<p>
-					LatentMesh is evolving around the hard problems of agent evaluation,
-					compliance, and governance. If you're building in this space or thinking
-					through these challenges inside your organization, I'd welcome the
-					conversation.
+					If you're working on AI evaluation, compliance, governance, or
+					production agent systems, I'd be glad to connect.
 				</p>
 				<div class="cta-box">
-					<p>
-						Interested in AI evaluation, compliance, or governance?
-					</p>
 					<a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">
-						Start a conversation
+						Connect on LinkedIn
 					</a>
 				</div>
 			</section>
@@ -138,17 +146,7 @@ import { SITE_TITLE, LINKEDIN_URL } from '../consts';
 	}
 
 	.cta-box {
-		background: var(--color-bg-secondary);
-		border: 1px solid var(--color-border);
-		border-radius: 8px;
-		padding: 1.5rem;
-		margin-top: 1.5rem;
-	}
-
-	.cta-box p {
-		margin: 0 0 1rem;
-		font-size: 0.95rem;
-		color: var(--color-text-secondary);
+		margin-top: 1rem;
 	}
 
 	.cta-box a {

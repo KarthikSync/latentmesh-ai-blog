@@ -3,14 +3,32 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
-import { SITE_TITLE, SITE_DESCRIPTION, LINKEDIN_URL } from "../consts";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { getCollection } from "astro:content";
 
 const allPosts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 const hasPosts = allPosts.length > 0 && allPosts[0].data.title !== "Coming Soon";
-const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
+const latestPosts = hasPosts ? allPosts.slice(0, 6) : [];
+
+const startHereEssays = [
+  {
+    slug: "agent-failures-are-distributed-systems-failures",
+    title: "Agent Failures Are Distributed Systems Failures",
+    summary: "Why agent failures are usually system failures, not just model failures.",
+  },
+  {
+    slug: "the-eval-gap",
+    title: "The Eval Gap",
+    summary: "Why staging success does not predict production reliability.",
+  },
+  {
+    slug: "controls-are-not-guardrails",
+    title: "Controls Are Not Guardrails",
+    summary: "Why runtime safety layers are not enough without evidence, ownership, and testing.",
+  },
+];
 ---
 
 <!doctype html>
@@ -24,19 +42,18 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
     <main>
       <!-- Hero -->
       <section class="hero">
-        <p class="eyebrow">Karthik Mahalingam</p>
+        <p class="eyebrow">Karthik Mahalingam writing at LatentMesh</p>
         <h1 class="headline">
           How AI systems fail.<br />
           How to evaluate them.<br />
           How to govern them in production.
         </h1>
         <p class="thesis">
-          Essays on agents, evals, safety, privacy, and compliance through the
-          lens of distributed systems and real-world engineering.
+          Most AI governance advice skips the engineering. These essays don't.
         </p>
         <div class="hero-actions">
           <a href="/blog" class="btn-primary">Read latest essays</a>
-          <a href="/about" class="btn-secondary">New readers start here</a>
+          <a href="#start-here" class="btn-secondary">Start with the series</a>
         </div>
       </section>
 
@@ -55,12 +72,34 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
         </div>
       </section>
 
-      <!-- Featured essays -->
-      {featuredPosts.length > 0 && (
+      <!-- Start here -->
+      <section class="start-here" id="start-here">
+        <h2>Start here</h2>
+        <p class="section-intro">New to LatentMesh? Start with the core essay series on how agent systems fail, how to evaluate them in the real world, and how governance becomes operational.</p>
+        <div class="start-here-grid">
+          {startHereEssays.map((essay) => (
+            <a href={`/blog/${essay.slug}/`} class="start-here-card">
+              <h3>{essay.title}</h3>
+              <p>{essay.summary}</p>
+            </a>
+          ))}
+        </div>
+        <a href="/blog/agent-failures-are-distributed-systems-failures/" class="view-all">Read the series &rarr;</a>
+      </section>
+
+      <!-- Series callout -->
+      <section class="series-callout">
+        <p class="series-label">Series: Reliable Agent Systems</p>
+        <p class="series-desc">Eight essays on failure, evaluation, safety, accountability, drift, proof, controls, and evidence.</p>
+      </section>
+
+      <!-- Latest essays -->
+      {latestPosts.length > 0 && (
         <section class="featured">
-          <h2>Featured essays</h2>
+          <h2>Latest essays</h2>
+          <p class="section-intro">Recent essays on agent reliability, evaluation, safety, and governance.</p>
           <div class="essay-list">
-            {featuredPosts.map((post) => (
+            {latestPosts.map((post) => (
               <a href={`/blog/${post.id}/`} class="essay-item">
                 <span class="essay-title">{post.data.title}</span>
                 {post.data.description && (
@@ -86,7 +125,7 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
                 <rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="3"/><path d="M12 8v3"/><circle cx="7" cy="16" r="1" fill="#2563eb"/><circle cx="17" cy="16" r="1" fill="#2563eb"/>
               </svg>
             </span>
-            <h3>Agents in production</h3>
+            <h3>Agent failure as system failure</h3>
             <p>How agent systems break, drift, and misbehave once they leave the demo.</p>
           </a>
           <a href="/topics/evals/" class="topic-card">
@@ -95,8 +134,8 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
                 <path d="M9 2h6l-1 7h4l-7 11 1-7H8z"/>
               </svg>
             </span>
-            <h3>Evals that catch real failures</h3>
-            <p>Practical evaluation strategies for regression detection, reliability, and trust.</p>
+            <h3>Evaluation that catches real failures</h3>
+            <p>Practical evals for regression, reliability, and operational trust.</p>
           </a>
           <a href="/topics/safety/" class="topic-card">
             <span class="topic-icon">
@@ -104,8 +143,8 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
               </svg>
             </span>
-            <h3>AI safety as systems engineering</h3>
-            <p>Safety through control surfaces, guardrails, observability, and failure design.</p>
+            <h3>Safety as systems engineering</h3>
+            <p>Guardrails, control surfaces, observability, containment, and human review.</p>
           </a>
           <a href="/topics/compliance/" class="topic-card">
             <span class="topic-icon">
@@ -113,8 +152,8 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
             </span>
-            <h3>Privacy, controls, and compliance</h3>
-            <p>How legal and policy obligations become technical architecture and operational workflows.</p>
+            <h3>Compliance that becomes architecture</h3>
+            <p>How legal and policy obligations turn into workflows, controls, and evidence.</p>
           </a>
         </div>
       </section>
@@ -125,7 +164,7 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
         <p>
           I write about AI systems from the perspective of someone who has spent
           nearly two decades building large-scale distributed systems. My focus is
-          on how agents behave in production, how evaluations can catch real
+          on how agents behave in production, how evaluations catch real
           failures, and how safety, privacy, and compliance become operational
           reality.
         </p>
@@ -235,7 +274,89 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
     line-height: 1.5;
   }
 
-  /* ── Featured essays ── */
+  /* ── Section intro ── */
+  .section-intro {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0 0 1.5rem;
+    max-width: 640px;
+  }
+
+  /* ── Start here ── */
+  .start-here {
+    max-width: 860px;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .start-here h2 {
+    font-size: clamp(1.5rem, 3vw, 1.875rem);
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+    color: var(--color-text-primary);
+    font-family: sans-serif;
+  }
+
+  .start-here-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .start-here-card {
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .start-here-card:hover {
+    border-color: var(--color-card-hover);
+  }
+
+  .start-here-card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    color: var(--color-text-primary);
+    font-family: sans-serif;
+    line-height: 1.3;
+  }
+
+  .start-here-card p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  /* ── Series callout ── */
+  .series-callout {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .series-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-link);
+    margin: 0 0 0.25rem;
+    font-family: sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .series-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* ── Latest essays ── */
   .featured {
     max-width: 860px;
     padding: 2.5rem 0;
@@ -245,7 +366,7 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
   .featured h2 {
     font-size: clamp(1.25rem, 3vw, 1.5rem);
     font-weight: 800;
-    margin: 0 0 1rem;
+    margin: 0 0 0.5rem;
     color: var(--color-text-primary);
     font-family: sans-serif;
     text-transform: uppercase;
@@ -414,6 +535,15 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
     .proof-grid {
       grid-template-columns: 1fr;
       gap: 0.625rem;
+    }
+
+    .start-here {
+      padding: 2.5rem 0;
+    }
+
+    .start-here-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
     }
 
     .featured {
