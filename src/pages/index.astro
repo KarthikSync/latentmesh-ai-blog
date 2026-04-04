@@ -80,7 +80,7 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
       <section class="topics">
         <h2>What I write about</h2>
         <div class="topics-grid">
-          <div class="topic-card">
+          <a href="/topics/agents/" class="topic-card">
             <span class="topic-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="3"/><path d="M12 8v3"/><circle cx="7" cy="16" r="1" fill="#2563eb"/><circle cx="17" cy="16" r="1" fill="#2563eb"/>
@@ -88,8 +88,8 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
             </span>
             <h3>Agents in production</h3>
             <p>How agent systems break, drift, and misbehave once they leave the demo.</p>
-          </div>
-          <div class="topic-card">
+          </a>
+          <a href="/topics/evals/" class="topic-card">
             <span class="topic-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 2h6l-1 7h4l-7 11 1-7H8z"/>
@@ -97,8 +97,8 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
             </span>
             <h3>Evals that catch real failures</h3>
             <p>Practical evaluation strategies for regression detection, reliability, and trust.</p>
-          </div>
-          <div class="topic-card">
+          </a>
+          <a href="/topics/safety/" class="topic-card">
             <span class="topic-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -106,8 +106,8 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
             </span>
             <h3>AI safety as systems engineering</h3>
             <p>Safety through control surfaces, guardrails, observability, and failure design.</p>
-          </div>
-          <div class="topic-card">
+          </a>
+          <a href="/topics/compliance/" class="topic-card">
             <span class="topic-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
@@ -115,7 +115,7 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
             </span>
             <h3>Privacy, controls, and compliance</h3>
             <p>How legal and policy obligations become technical architecture and operational workflows.</p>
-          </div>
+          </a>
         </div>
       </section>
 
@@ -337,6 +337,9 @@ const featuredPosts = hasPosts ? allPosts.slice(0, 5) : [];
     border: 1px solid var(--color-border);
     border-radius: 12px;
     min-width: 0;
+    text-decoration: none;
+    color: inherit;
+    display: block;
   }
 
   .topic-card:hover {
