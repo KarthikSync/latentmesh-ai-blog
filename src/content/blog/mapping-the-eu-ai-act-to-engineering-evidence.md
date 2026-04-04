@@ -183,7 +183,7 @@ That is what a regulator can inspect. That is what legal can defend. Good engine
 
 ---
 
-*Next in this series: "The incident response gap in AI systems," a walkthrough of what happens when an AI system fails and nobody has a process for capturing what went wrong.*
+*Next in this series: ["The incident response gap in AI systems,"](/blog/the-incident-response-gap-in-ai-systems/) a walkthrough of what happens when an AI system fails and nobody has a process for capturing what went wrong.*
 
 ---
 
