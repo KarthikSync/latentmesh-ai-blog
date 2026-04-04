@@ -44,7 +44,7 @@ const pageUrl = new URL(`/blog/${slug}/`, Astro.site).toString();
 						{tags && tags.length > 0 && (
 							<div class="tags">
 								{tags.map((tag) => (
-									<a href={`/topics/${tag}/`} class="tag">{tag}</a>
+									<a href={`/topics/${tag}/`} class="tag"># {tag}</a>
 								))}
 							</div>
 						)}
@@ -171,18 +171,20 @@ const pageUrl = new URL(`/blog/${slug}/`, Astro.site).toString();
 
 	.tag {
 		font-family: sans-serif;
-		font-size: 0.75rem;
+		font-size: 0.8rem;
 		font-weight: 500;
-		color: var(--color-link);
+		color: var(--color-text-secondary);
 		background: var(--color-bg-secondary);
-		padding: 0.2rem 0.6rem;
-		border-radius: 4px;
+		padding: 0.4rem 1rem;
+		border-radius: 999px;
 		text-decoration: none;
 		border: 1px solid var(--color-border);
 	}
 
 	.tag:hover {
+		color: var(--color-link);
 		border-color: var(--color-link);
+		background: var(--color-bg);
 	}
 
 	.essay-header h1 {
