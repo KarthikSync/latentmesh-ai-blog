@@ -2,7 +2,7 @@
 title: "Agent Failures Are Distributed Systems Failures"
 description: "You already have the mental models for agent reliability. Retries, circuit breakers, observability — the vocabulary changes, the physics don't."
 pubDate: "Apr 03 2026"
-tags: ["agents", "distributed-systems", "reliability"]
+tags: ["agents", "distributed-systems", "reliability", "safety"]
 ---
 
 *You already have the mental models. You just don't know it yet.*
