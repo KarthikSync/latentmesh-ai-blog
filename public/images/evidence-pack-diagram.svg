@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 520" font-family="'Georgia', 'Times New Roman', serif">
+  <defs>
+    <style>
+      .node-label { font-size: 15px; font-weight: bold; fill: #1a1a1a; }
+      .node-sub { font-size: 11.5px; fill: #555; font-style: italic; }
+      .edge-label { font-size: 10.5px; fill: #777; font-family: 'Menlo', 'Consolas', monospace; }
+      .center-label { font-size: 16px; font-weight: bold; fill: #fff; }
+      .center-sub { font-size: 11px; fill: rgba(255,255,255,0.8); font-style: italic; }
+      .title { font-size: 13px; fill: #999; letter-spacing: 0.08em; text-transform: uppercase; font-family: 'Menlo', 'Consolas', monospace; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="840" height="520" fill="#fafaf8" rx="4"/>
+
+  <!-- Title -->
+  <text x="420" y="36" text-anchor="middle" class="title">How an incident pulls the evidence pack together</text>
+
+  <!-- Connection lines from center to each node -->
+  <!-- Center point: 420, 270 -->
+
+  <!-- To Traces (top-left: 148, 130) -->
+  <line x1="383" y1="240" x2="210" y2="158" stroke="#c4c4c0" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <circle cx="296" cy="199" r="2" fill="#c4c4c0"/>
+
+  <!-- To Eval Results (top-right: 692, 130) -->
+  <line x1="457" y1="240" x2="630" y2="158" stroke="#c4c4c0" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <circle cx="544" cy="199" r="2" fill="#c4c4c0"/>
+
+  <!-- To Config Snapshots (bottom-left: 148, 410) -->
+  <line x1="383" y1="300" x2="210" y2="382" stroke="#c4c4c0" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <circle cx="296" cy="341" r="2" fill="#c4c4c0"/>
+
+  <!-- To Approval Records (bottom-right: 692, 410) -->
+  <line x1="457" y1="300" x2="630" y2="382" stroke="#c4c4c0" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <circle cx="544" cy="341" r="2" fill="#c4c4c0"/>
+
+  <!-- Edge labels -->
+  <text x="270" y="188" class="edge-label" text-anchor="middle" transform="rotate(-18, 270, 188)">which traces show the failure?</text>
+  <text x="570" y="188" class="edge-label" text-anchor="middle" transform="rotate(18, 570, 188)">what did evals show before it broke?</text>
+  <text x="270" y="354" class="edge-label" text-anchor="middle" transform="rotate(18, 270, 354)">what config was active?</text>
+  <text x="570" y="354" class="edge-label" text-anchor="middle" transform="rotate(-18, 570, 354)">who approved the fix?</text>
+
+  <!-- CENTER NODE: Incident Record -->
+  <rect x="338" y="232" width="164" height="76" rx="6" fill="#2c2c2c"/>
+  <rect x="338" y="232" width="164" height="76" rx="6" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+  <text x="420" y="264" text-anchor="middle" class="center-label">Incident Record</text>
+  <text x="420" y="282" text-anchor="middle" class="center-sub">what went wrong</text>
+  <text x="420" y="296" text-anchor="middle" class="center-sub">what changed as a result</text>
+
+  <!-- NODE 1: Traces (top-left) -->
+  <rect x="68" y="100" width="164" height="76" rx="6" fill="#fff" stroke="#d4d4d0" stroke-width="1.5"/>
+  <rect x="68" y="100" width="164" height="4" rx="0" fill="#b07d4a"/>
+  <text x="150" y="134" text-anchor="middle" class="node-label">Traces</text>
+  <text x="150" y="152" text-anchor="middle" class="node-sub">input → decision → output</text>
+  <text x="150" y="167" text-anchor="middle" class="node-sub">for a specific request</text>
+
+  <!-- NODE 2: Eval Results (top-right) -->
+  <rect x="608" y="100" width="164" height="76" rx="6" fill="#fff" stroke="#d4d4d0" stroke-width="1.5"/>
+  <rect x="608" y="100" width="164" height="4" rx="0" fill="#5a7a5e"/>
+  <text x="690" y="134" text-anchor="middle" class="node-label">Eval Results</text>
+  <text x="690" y="152" text-anchor="middle" class="node-sub">dated, versioned,</text>
+  <text x="690" y="167" text-anchor="middle" class="node-sub">reproducible test runs</text>
+
+  <!-- NODE 3: Config Snapshots (bottom-left) -->
+  <rect x="68" y="380" width="164" height="76" rx="6" fill="#fff" stroke="#d4d4d0" stroke-width="1.5"/>
+  <rect x="68" y="380" width="164" height="4" rx="0" fill="#6a7a8e"/>
+  <text x="150" y="414" text-anchor="middle" class="node-label">Config Snapshots</text>
+  <text x="150" y="432" text-anchor="middle" class="node-sub">model version, prompts,</text>
+  <text x="150" y="447" text-anchor="middle" class="node-sub">guardrails, tool definitions</text>
+
+  <!-- NODE 4: Approval Records (bottom-right) -->
+  <rect x="608" y="380" width="164" height="76" rx="6" fill="#fff" stroke="#d4d4d0" stroke-width="1.5"/>
+  <rect x="608" y="380" width="164" height="4" rx="0" fill="#8e6a6a"/>
+  <text x="690" y="414" text-anchor="middle" class="node-label">Approval Records</text>
+  <text x="690" y="432" text-anchor="middle" class="node-sub">who approved, when,</text>
+  <text x="690" y="447" text-anchor="middle" class="node-sub">what changed</text>
+
+  <!-- Footer annotation -->
+  <text x="420" y="500" text-anchor="middle" font-size="11" fill="#999" font-style="italic">Every artifact links to every other. That is what makes it a system, not a folder.</text>
+
+</svg>
