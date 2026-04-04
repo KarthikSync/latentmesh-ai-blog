@@ -575,7 +575,7 @@ const nextEssay = isInSeries && seriesIndex < seriesEssays.length - 1 ? seriesEs
 		margin: 0 0 0.75rem;
 	}
 
-	.email-capture-cta {
+	.prose :global(.email-capture-cta) {
 		display: inline-block;
 		background: var(--color-brand);
 		color: #fff;
@@ -587,8 +587,9 @@ const nextEssay = isInSeries && seriesIndex < seriesEssays.length - 1 ? seriesEs
 		font-weight: 600;
 	}
 
-	.email-capture-cta:hover {
+	.prose :global(.email-capture-cta:hover) {
 		background: var(--color-brand-hover);
+		color: #fff;
 	}
 
 	/* ── Reader feedback ── */
