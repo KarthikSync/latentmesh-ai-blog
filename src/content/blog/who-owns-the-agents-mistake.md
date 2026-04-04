@@ -73,10 +73,6 @@ These are not abstract aspirations. They are engineering requirements. You eithe
 
 ---
 
-*Previously: [Guardrails are not safety](/blog/guardrails-are-not-safety/). Next: why your agent system drifts from day one, and what to do about it.*
-
----
-
 ## Selected References
 
 **Moffatt v. Air Canada**, 2024 BCCRT 149 ([decision](https://www.canlii.org/en/bc/bccrt/doc/2024/2024bccrt149/2024bccrt149.html))

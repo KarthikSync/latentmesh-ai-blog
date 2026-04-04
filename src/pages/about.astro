@@ -2,7 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, LINKEDIN_URL } from '../consts';
+import { SITE_TITLE, LINKEDIN_URL, GITHUB_URL } from '../consts';
 ---
 
 <!doctype html>
@@ -78,9 +78,15 @@ import { SITE_TITLE, LINKEDIN_URL } from '../consts';
 					production agent systems, I'd be glad to connect.
 				</p>
 				<div class="cta-box">
-					<a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">
-						Connect on LinkedIn
-					</a>
+					<div class="cta-primary">
+						<a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" class="cta-btn">Connect on LinkedIn</a>
+						<a href="https://calendly.com/karthiksync" target="_blank" rel="noopener noreferrer" class="cta-btn">Book time</a>
+					</div>
+					<div class="cta-secondary">
+						<a href="mailto:karthik.m@live.in">Email</a>
+						<span class="cta-sep">&middot;</span>
+						<a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a>
+					</div>
 				</div>
 			</section>
 		</main>
@@ -146,10 +152,17 @@ import { SITE_TITLE, LINKEDIN_URL } from '../consts';
 	}
 
 	.cta-box {
-		margin-top: 1rem;
+		margin-top: 1.5rem;
 	}
 
-	.cta-box a {
+	.cta-primary {
+		display: flex;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+		margin-bottom: 1rem;
+	}
+
+	.cta-btn {
 		display: inline-block;
 		background: var(--color-brand);
 		color: #fff;
@@ -161,8 +174,27 @@ import { SITE_TITLE, LINKEDIN_URL } from '../consts';
 		font-weight: 600;
 	}
 
-	.cta-box a:hover {
+	.cta-btn:hover {
 		background: var(--color-brand-hover);
+	}
+
+	.cta-secondary {
+		font-size: 0.85rem;
+		font-family: sans-serif;
+		color: var(--color-text-muted);
+	}
+
+	.cta-secondary a {
+		color: var(--color-link);
+		text-decoration: none;
+	}
+
+	.cta-secondary a:hover {
+		text-decoration: underline;
+	}
+
+	.cta-sep {
+		margin: 0 0.35rem;
 	}
 
 	@media (max-width: 480px) {

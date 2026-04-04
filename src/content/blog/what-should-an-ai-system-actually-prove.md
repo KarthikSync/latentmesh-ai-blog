@@ -9,10 +9,6 @@ tags: ["compliance", "safety", "evals"]
 
 ---
 
-*This is the sixth essay in a series on building reliable agent systems. Previous essays covered [when agents fail](/blog/agent-failures-are-distributed-systems-failures/), [the eval gap](/blog/the-eval-gap/), [guardrails vs. safety](/blog/guardrails-are-not-safety/), [who owns the agent's mistake](/blog/who-owns-the-agents-mistake/), and [drift is the default](/blog/drift-is-the-default/).*
-
----
-
 In October 2025, the Australian government asked a Big Four consultancy a reasonable question: what happened with a AU$440,000 report you delivered to us? A university researcher had noticed something off. The 237-page report on welfare compliance contained citations to academic papers that did not exist. It quoted a Federal Court judgment that was fabricated. It referenced researchers at universities who had never written the papers attributed to them. The consultancy had used GPT-4o in its methodology and did not disclose this until after the errors were found. The firm issued a partial refund and quietly uploaded a corrected version.
 
 The part of this story that matters is not the hallucination. We know LLMs hallucinate. The part that matters is that the firm could not answer a basic question: can you show us that controls were active when this output was produced? They could not, because no such controls existed in any operational sense. The firm had AI principles. It sells responsible AI training to clients. What it did not have was a system that could prove, at the moment a reviewer asked, that a specific output had been checked, verified, and approved by someone accountable.

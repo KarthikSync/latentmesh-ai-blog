@@ -70,7 +70,3 @@ Regulation is starting to force the conversation, but in narrow slices. The EU A
 The teams that will operate agent systems safely are the ones that internalize what the security industry learned the hard way: the perimeter is the beginning, not the end. Safety is a property of the whole system, not just its edges. How it watches itself, how it contains damage, and whether it knows when to stop and ask for help.
 
 Guardrails are the locks on the doors. Safety is knowing where the doors are, watching who walks through them, and having a plan for when someone finds a window you forgot about.
-
----
-
-*This is the third essay in a series on AI systems engineering. Previously: [Agent failures are distributed systems failures](/blog/agent-failures-are-distributed-systems-failures/). Next: who is accountable when an agent chain makes a bad decision?*

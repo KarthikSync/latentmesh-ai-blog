@@ -9,10 +9,6 @@ tags: ["compliance", "safety", "agents"]
 
 ---
 
-*This is the seventh essay in a series on building reliable agent systems. Previous essays covered [when agents fail](/blog/agent-failures-are-distributed-systems-failures/), [the eval gap](/blog/the-eval-gap/), [guardrails vs. safety](/blog/guardrails-are-not-safety/), [who owns the agent's mistake](/blog/who-owns-the-agents-mistake/), [drift is the default](/blog/drift-is-the-default/), and [what an AI system should actually prove](/blog/what-should-an-ai-system-actually-prove/).*
-
----
-
 In July 2025, researchers at Noma Security submitted a customer inquiry through Salesforce's standard Web-to-Lead form. The form has a description field that accepts up to 42,000 characters. They used that space to hide a set of instructions for Agentforce, Salesforce's autonomous AI agent platform. The instructions told the agent to gather CRM data and send it to an external server. When an employee later asked Agentforce to review the submission, the agent did exactly what the hidden instructions said. It pulled customer emails, lead details, and internal records, then transmitted them to an attacker-controlled domain. The domain had cost five dollars to register. Salesforce's own Content Security Policy had whitelisted it years earlier and never removed it after the registration lapsed.
 
 Noma reported the vulnerability on July 28, 2025, scoring it at 9.4 out of 10. Salesforce implemented Trusted URL enforcement for Agentforce and Einstein AI on September 8. Noma disclosed publicly on September 25. But the interesting part of ForcedLeak is not the patch. It is what was missing before the patch.
