@@ -115,7 +115,7 @@ A guardrail without a control is a filter you hope works. A control without a gu
 
 ---
 
-*Next in this series: "Anatomy of an evidence pack," a walkthrough of what an audit-ready evidence package actually contains for an AI system in production.*
+*Next in this series: ["Anatomy of an evidence pack,"](/blog/anatomy-of-an-evidence-pack/) a walkthrough of what an audit-ready evidence package actually contains for an AI system in production.*
 
 ---
 
