@@ -8,7 +8,7 @@ export const prerender = false;
 let wasmInitialized = false;
 
 export const GET: APIRoute = async ({ params, request }) => {
-  const slug = params.slug;
+  const slug = params.slug?.replace(/\.png$/, '');
   if (!slug) {
     return new Response('Not found', { status: 404 });
   }
@@ -127,13 +127,14 @@ export const GET: APIRoute = async ({ params, request }) => {
       },
     );
 
-    // Initialize WASM only once
+    // Initialize WASM only once (loaded from deployed assets, not CDN)
     if (!wasmInitialized) {
       try {
-        await initWasm(fetch('https://unpkg.com/@resvg/resvg-wasm@2.6.2/index_bg.wasm'));
+        const wasmUrl = new URL('/resvg.wasm', request.url);
+        await initWasm(fetch(wasmUrl));
         wasmInitialized = true;
       } catch {
-        // May already be initialized
+        // May already be initialized in this isolate
         wasmInitialized = true;
       }
     }
