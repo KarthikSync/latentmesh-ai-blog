@@ -6,9 +6,9 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 
-type Props = CollectionEntry<'blog'>['data'] & { slug: string; readingTime?: number };
+type Props = CollectionEntry<'blog'>['data'] & { slug: string; readingTime?: number; tags?: string[] };
 
-const { title, description, pubDate, updatedDate, heroImage, slug, readingTime } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, slug, readingTime, tags } = Astro.props;
 const pageUrl = new URL(`/blog/${slug}/`, Astro.site).toString();
 ---
 
@@ -41,6 +41,13 @@ const pageUrl = new URL(`/blog/${slug}/`, Astro.site).toString();
 							}
 						</span>
 						<h1>{title}</h1>
+						{tags && tags.length > 0 && (
+							<div class="tags">
+								{tags.map((tag) => (
+									<a href={`/topics/${tag}/`} class="tag">{tag}</a>
+								))}
+							</div>
+						)}
 					</header>
 					<slot />
 
@@ -153,6 +160,29 @@ const pageUrl = new URL(`/blog/${slug}/`, Astro.site).toString();
 	/* ── Essay header: compact, reading-first ── */
 	.essay-header {
 		margin-bottom: 1.5rem;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin-top: 0.5rem;
+	}
+
+	.tag {
+		font-family: sans-serif;
+		font-size: 0.75rem;
+		font-weight: 500;
+		color: var(--color-link);
+		background: var(--color-bg-secondary);
+		padding: 0.2rem 0.6rem;
+		border-radius: 4px;
+		text-decoration: none;
+		border: 1px solid var(--color-border);
+	}
+
+	.tag:hover {
+		border-color: var(--color-link);
 	}
 
 	.essay-header h1 {
