@@ -5,83 +5,8 @@ import { SITE_TITLE, GITHUB_URL } from "../consts";
 <header>
   <nav>
     <a href="/" class="site-title" aria-label={SITE_TITLE}>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 100" class="site-logo" aria-hidden="true">
-        <defs>
-          <radialGradient id="hCoreGrad" cx="35%" cy="30%" r="65%">
-            <stop offset="0%" stop-color="#2563eb"/>
-            <stop offset="100%" stop-color="#1e3a8a"/>
-          </radialGradient>
-          <radialGradient id="hMidGrad" cx="35%" cy="30%" r="65%">
-            <stop offset="0%" stop-color="#3b82f6"/>
-            <stop offset="100%" stop-color="#1d4ed8"/>
-          </radialGradient>
-          <radialGradient id="hOuterGrad" cx="35%" cy="30%" r="65%">
-            <stop offset="0%" stop-color="#93c5fd"/>
-            <stop offset="100%" stop-color="#60a5fa"/>
-          </radialGradient>
-          <radialGradient id="hAccentGrad" cx="35%" cy="30%" r="65%">
-            <stop offset="0%" stop-color="#f59e0b"/>
-            <stop offset="100%" stop-color="#d97706"/>
-          </radialGradient>
-          <clipPath id="hIconClip">
-            <circle cx="50" cy="50" r="40"/>
-          </clipPath>
-        </defs>
-        <circle cx="50" cy="50" r="41" fill="#f0f4f9"/>
-        <g clip-path="url(#hIconClip)">
-          <g stroke="#bfdbfe" stroke-width="0.8" stroke-linecap="round">
-            <line x1="50" y1="12" x2="69" y2="21"/><line x1="50" y1="12" x2="31" y2="21"/>
-            <line x1="69" y1="21" x2="84" y2="36"/><line x1="31" y1="21" x2="16" y2="36"/>
-            <line x1="84" y1="36" x2="89" y2="54"/><line x1="16" y1="36" x2="11" y2="54"/>
-            <line x1="89" y1="54" x2="81" y2="73"/><line x1="11" y1="54" x2="19" y2="73"/>
-            <line x1="81" y1="73" x2="65" y2="85"/><line x1="19" y1="73" x2="35" y2="85"/>
-            <line x1="65" y1="85" x2="50" y2="89"/><line x1="35" y1="85" x2="50" y2="89"/>
-          </g>
-          <g stroke="#3b82f6" stroke-width="1.4" stroke-linecap="round" opacity="0.8">
-            <line x1="50" y1="50" x2="50" y2="22"/><line x1="50" y1="50" x2="78" y2="36"/>
-            <line x1="50" y1="50" x2="80" y2="68"/><line x1="50" y1="50" x2="63" y2="83"/>
-            <line x1="50" y1="50" x2="37" y2="83"/><line x1="50" y1="50" x2="20" y2="68"/>
-            <line x1="50" y1="50" x2="22" y2="36"/>
-          </g>
-          <g stroke="#2563eb" stroke-width="1.1" stroke-linecap="round" opacity="0.5">
-            <line x1="50" y1="22" x2="78" y2="36"/><line x1="78" y1="36" x2="80" y2="68"/>
-            <line x1="80" y1="68" x2="63" y2="83"/><line x1="63" y1="83" x2="37" y2="83"/>
-            <line x1="37" y1="83" x2="20" y2="68"/><line x1="20" y1="68" x2="22" y2="36"/>
-            <line x1="22" y1="36" x2="50" y2="22"/>
-          </g>
-          <g>
-            <circle cx="50" cy="12" r="2.8" fill="url(#hOuterGrad)" stroke="white" stroke-width="1.2"/>
-            <circle cx="69" cy="21" r="2.5" fill="url(#hOuterGrad)" stroke="white" stroke-width="1.2"/>
-            <circle cx="31" cy="21" r="2.5" fill="url(#hOuterGrad)" stroke="white" stroke-width="1.2"/>
-            <circle cx="84" cy="36" r="2.5" fill="url(#hOuterGrad)" stroke="white" stroke-width="1.2"/>
-            <circle cx="16" cy="36" r="2.5" fill="url(#hOuterGrad)" stroke="white" stroke-width="1.2"/>
-            <circle cx="89" cy="54" r="2.5" fill="url(#hOuterGrad)" stroke="white" stroke-width="1.2"/>
-            <circle cx="11" cy="54" r="2.5" fill="url(#hOuterGrad)" stroke="white" stroke-width="1.2"/>
-            <circle cx="81" cy="73" r="2.5" fill="url(#hOuterGrad)" stroke="white" stroke-width="1.2"/>
-            <circle cx="19" cy="73" r="2.5" fill="url(#hOuterGrad)" stroke="white" stroke-width="1.2"/>
-            <circle cx="65" cy="85" r="2.5" fill="url(#hOuterGrad)" stroke="white" stroke-width="1.2"/>
-            <circle cx="35" cy="85" r="2.5" fill="url(#hOuterGrad)" stroke="white" stroke-width="1.2"/>
-            <circle cx="50" cy="89" r="2.3" fill="url(#hOuterGrad)" stroke="white" stroke-width="1.2"/>
-          </g>
-          <g>
-            <circle cx="50" cy="22" r="4" fill="url(#hMidGrad)" stroke="white" stroke-width="1.8"/>
-            <circle cx="78" cy="36" r="4" fill="url(#hMidGrad)" stroke="white" stroke-width="1.8"/>
-            <circle cx="80" cy="68" r="4" fill="url(#hMidGrad)" stroke="white" stroke-width="1.8"/>
-            <circle cx="63" cy="83" r="4" fill="url(#hMidGrad)" stroke="white" stroke-width="1.8"/>
-            <circle cx="37" cy="83" r="4" fill="url(#hMidGrad)" stroke="white" stroke-width="1.8"/>
-            <circle cx="20" cy="68" r="4" fill="url(#hMidGrad)" stroke="white" stroke-width="1.8"/>
-            <circle cx="22" cy="36" r="4" fill="url(#hMidGrad)" stroke="white" stroke-width="1.8"/>
-          </g>
-          <circle cx="50" cy="50" r="8.5" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
-          <circle cx="50" cy="50" r="5.8" fill="url(#hCoreGrad)" stroke="white" stroke-width="1.8"/>
-          <circle cx="50" cy="50" r="2" fill="url(#hAccentGrad)" stroke="white" stroke-width="1"/>
-        </g>
-        <circle cx="50" cy="50" r="41" fill="none" stroke="#dbeafe" stroke-width="1.2"/>
-        <line class="logo-wordmark" x1="106" y1="22" x2="106" y2="78" stroke="#e2e8f0" stroke-width="1.5"/>
-        <text class="logo-wordmark" x="122" y="64" font-family="'Outfit', 'Segoe UI', sans-serif" font-size="36" letter-spacing="-0.5">
-          <tspan font-weight="700" fill="#1e3a8a">latentmesh</tspan><tspan font-weight="400" fill="#2563eb">.ai</tspan>
-        </text>
-      </svg>
+      <img src="/images/latentmesh-tight-lockup.png" alt="latentmesh.ai" class="logo-desktop" />
+      <img src="/images/latentmesh-icon-only.png" alt="latentmesh.ai" class="logo-mobile" />
     </a>
     <div class="nav-links">
       <a href="/blog">Essays</a>
@@ -107,8 +32,6 @@ import { SITE_TITLE, GITHUB_URL } from "../consts";
 </script>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
-
   header {
     border-bottom: 1px solid var(--color-border);
     padding: 0.75rem 2rem;
@@ -131,8 +54,15 @@ import { SITE_TITLE, GITHUB_URL } from "../consts";
     min-width: 0;
   }
 
-  .site-logo {
+  .logo-desktop {
     height: 48px;
+    width: auto;
+    display: block;
+  }
+
+  .logo-mobile {
+    display: none;
+    height: 36px;
     width: auto;
   }
 
@@ -175,12 +105,12 @@ import { SITE_TITLE, GITHUB_URL } from "../consts";
   .icon-moon { display: inline; }
 
   @media (max-width: 480px) {
-    .site-logo :global(.logo-wordmark) {
+    .logo-desktop {
       display: none;
     }
 
-    .site-logo {
-      height: 36px;
+    .logo-mobile {
+      display: block;
     }
 
     .hide-mobile {
