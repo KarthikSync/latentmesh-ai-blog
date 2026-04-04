@@ -10,12 +10,11 @@ type Props = CollectionEntry<'blog'>['data'] & { slug: string; readingTime?: num
 
 const { title, description, pubDate, updatedDate, heroImage, slug, readingTime } = Astro.props;
 const pageUrl = new URL(`/blog/${slug}/`, Astro.site).toString();
-const ogImage = `https://og.tailgraph.com/og?fontFamily=Inter&title=${encodeURIComponent(title)}&titleTailwind=${encodeURIComponent('text-white font-bold text-6xl')}&text=${encodeURIComponent(description ?? '')}&textTailwind=${encodeURIComponent('text-gray-400 text-2xl mt-4')}&bgTailwind=${encodeURIComponent('bg-[#0f172a]')}&footer=${encodeURIComponent('latentmesh.ai')}&footerTailwind=${encodeURIComponent('text-blue-400 font-semibold')}`;
 ---
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} image={ogImage} />
+		<BaseHead title={title} description={description} image="/og-default.png" type="article" pubDate={pubDate} />
 	</head>
 
 	<body>
