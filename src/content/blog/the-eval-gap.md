@@ -2,7 +2,7 @@
 title: "The Eval Gap: Why Your Agent Works in Staging and Breaks in Production"
 description: "Your benchmarks are passing. Your agent is failing. Most evals measure isolated performance under controlled conditions while production failure comes from distribution shift, tool-chain errors, and changing reality."
 pubDate: "Apr 04 2026 09:00"
-tags: ["evals", "agents", "reliability", "safety"]
+tags: ["evals", "reliability", "safety"]
 ---
 
 *Your benchmarks are passing. Your agent is failing. These are not contradictory statements.*

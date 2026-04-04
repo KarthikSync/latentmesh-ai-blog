@@ -2,7 +2,7 @@
 title: "Drift Is the Default"
 description: "Your agent worked yesterday. That is not a promise about today. Model updates, prompt changes, and shifting inputs cause silent behavioral regression that traditional monitoring doesn't catch."
 pubDate: "Apr 04 2026 12:00"
-tags: ["reliability", "agents", "evals", "safety"]
+tags: ["reliability", "evals", "safety"]
 ---
 
 *Your agent worked yesterday. That is not a promise about today.*
