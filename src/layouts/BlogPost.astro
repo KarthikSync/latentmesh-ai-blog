@@ -62,6 +62,9 @@ const nextEssay = isInSeries && seriesIndex < seriesEssays.length - 1 ? seriesEs
 							}
 						</span>
 						<h1>{title}</h1>
+						{description && (
+							<p class="dek">{description}</p>
+						)}
 						{tags && tags.length > 0 && (
 							<div class="tags">
 								{tags.map((tag) => (
@@ -144,10 +147,26 @@ const nextEssay = isInSeries && seriesIndex < seriesEssays.length - 1 ? seriesEs
 							</section>
 						)}
 
-						<!-- Email capture placeholder -->
+						<!-- Email capture -->
 						<div class="email-capture">
-							<p class="email-capture-label">Get new essays by email.</p>
-							<p class="email-capture-note">Coming soon.</p>
+							<p class="email-capture-label">Follow on LinkedIn for new essays — email signup coming soon.</p>
+							<a href="https://www.linkedin.com/in/karthiksync" target="_blank" rel="noopener noreferrer" class="email-capture-cta">Follow on LinkedIn</a>
+						</div>
+
+						<!-- Reader feedback -->
+						<div class="reader-feedback" id="reader-feedback">
+							<p class="feedback-prompt">Was this essay useful?</p>
+							<div class="feedback-options">
+								<button class="feedback-btn" data-value="very">Very useful</button>
+								<button class="feedback-btn" data-value="somewhat">Somewhat useful</button>
+								<button class="feedback-btn" data-value="not">Not useful</button>
+							</div>
+							<div class="feedback-followup" id="feedback-followup" style="display:none">
+								<label for="feedback-text" class="feedback-text-label">What would have made it more useful?</label>
+								<textarea id="feedback-text" class="feedback-textarea" rows="2" placeholder="Optional"></textarea>
+								<button class="feedback-submit" id="feedback-submit">Send</button>
+							</div>
+							<p class="feedback-thanks" id="feedback-thanks" style="display:none">Thanks for the feedback.</p>
 						</div>
 					</footer>
 				</div>
@@ -205,6 +224,40 @@ const nextEssay = isInSeries && seriesIndex < seriesEssays.length - 1 ? seriesEs
 				setTimeout(() => { btn.setAttribute('title', 'Copy link'); }, 2000);
 			}
 		});
+	});
+
+	// Reader feedback
+	document.querySelectorAll('.feedback-btn').forEach((btn) => {
+		btn.addEventListener('click', () => {
+			document.querySelectorAll('.feedback-btn').forEach((b) => b.classList.remove('selected'));
+			btn.classList.add('selected');
+			const followup = document.getElementById('feedback-followup');
+			if (followup) followup.style.display = 'block';
+		});
+	});
+
+	document.getElementById('feedback-submit')?.addEventListener('click', () => {
+		const selected = document.querySelector('.feedback-btn.selected') as HTMLElement | null;
+		const textEl = document.getElementById('feedback-text') as HTMLTextAreaElement | null;
+		const value = selected?.getAttribute('data-value') ?? '';
+		const text = textEl?.value ?? '';
+
+		if (slug && value) {
+			fetch(`/api/views/${slug}`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ feedback: value, feedbackText: text }),
+			}).catch(() => {});
+		}
+
+		const container = document.getElementById('reader-feedback');
+		const thanks = document.getElementById('feedback-thanks');
+		if (container) {
+			container.querySelectorAll('.feedback-options, .feedback-followup, .feedback-prompt').forEach((el) => {
+				(el as HTMLElement).style.display = 'none';
+			});
+		}
+		if (thanks) thanks.style.display = 'block';
 	});
 </script>
 
@@ -291,6 +344,14 @@ const nextEssay = isInSeries && seriesIndex < seriesEssays.length - 1 ? seriesEs
 		color: var(--color-text-secondary);
 		font-family: sans-serif;
 		margin-bottom: 0.5rem;
+	}
+
+	.dek {
+		font-size: 1.1rem;
+		line-height: 1.5;
+		color: var(--color-text-secondary);
+		margin: 0.5rem 0 0;
+		font-style: italic;
 	}
 
 	.last-updated-on {
@@ -510,12 +571,114 @@ const nextEssay = isInSeries && seriesIndex < seriesEssays.length - 1 ? seriesEs
 		font-weight: 600;
 		color: var(--color-text-primary);
 		font-family: sans-serif;
-		margin: 0 0 0.25rem;
+		margin: 0 0 0.75rem;
 	}
 
-	.email-capture-note {
+	.email-capture-cta {
+		display: inline-block;
+		background: var(--color-brand);
+		color: #fff;
+		padding: 0.6rem 1.25rem;
+		border-radius: 6px;
+		text-decoration: none;
+		font-size: 0.9rem;
+		font-family: sans-serif;
+		font-weight: 600;
+	}
+
+	.email-capture-cta:hover {
+		background: var(--color-brand-hover);
+	}
+
+	/* ── Reader feedback ── */
+	.reader-feedback {
+		margin-top: 2rem;
+		padding: 1.25rem 1.5rem;
+		background: var(--color-bg-secondary);
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
+	}
+
+	.feedback-prompt {
+		font-size: 0.95rem;
+		font-weight: 600;
+		color: var(--color-text-primary);
+		font-family: sans-serif;
+		margin: 0 0 0.75rem;
+	}
+
+	.feedback-options {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
+	.feedback-btn {
+		padding: 0.4rem 1rem;
+		border: 1px solid var(--color-border);
+		border-radius: 6px;
+		background: var(--color-bg);
+		color: var(--color-text-secondary);
+		font-size: 0.85rem;
+		font-family: sans-serif;
+		cursor: pointer;
+	}
+
+	.feedback-btn:hover {
+		border-color: var(--color-link);
+		color: var(--color-link);
+	}
+
+	.feedback-btn.selected {
+		border-color: var(--color-link);
+		background: var(--color-link);
+		color: #fff;
+	}
+
+	.feedback-followup {
+		margin-top: 0.75rem;
+	}
+
+	.feedback-text-label {
+		display: block;
 		font-size: 0.85rem;
 		color: var(--color-text-muted);
+		margin-bottom: 0.4rem;
+	}
+
+	.feedback-textarea {
+		width: 100%;
+		padding: 0.5rem;
+		border: 1px solid var(--color-border);
+		border-radius: 6px;
+		background: var(--color-bg);
+		color: var(--color-text-primary);
+		font-size: 0.85rem;
+		font-family: sans-serif;
+		resize: vertical;
+	}
+
+	.feedback-submit {
+		margin-top: 0.5rem;
+		padding: 0.4rem 1rem;
+		background: var(--color-brand);
+		color: #fff;
+		border: none;
+		border-radius: 6px;
+		font-size: 0.85rem;
+		font-family: sans-serif;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.feedback-submit:hover {
+		background: var(--color-brand-hover);
+	}
+
+	.feedback-thanks {
+		font-size: 0.9rem;
+		color: var(--color-text-muted);
+		font-style: italic;
 		margin: 0;
 	}
 

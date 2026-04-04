@@ -9,10 +9,6 @@ tags: ["compliance", "safety", "evidence", "agents"]
 
 ---
 
-*This is the ninth essay in a series on building reliable agent systems. Previous essays covered [when agents fail](/blog/agent-failures-are-distributed-systems-failures/), [the eval gap](/blog/the-eval-gap/), [guardrails vs. safety](/blog/guardrails-are-not-safety/), [who owns the agent's mistake](/blog/who-owns-the-agents-mistake/), [drift is the default](/blog/drift-is-the-default/), [what an AI system should actually prove](/blog/what-should-an-ai-system-actually-prove/), [controls are not guardrails](/blog/controls-are-not-guardrails/), and [anatomy of an evidence pack](/blog/anatomy-of-an-evidence-pack/).*
-
----
-
 In June 2025, Aim Security disclosed a vulnerability in Microsoft 365 Copilot that they called EchoLeak. A single email, containing no links, no attachments, and no malware, could cause the AI assistant to silently exfiltrate sensitive data from a user's entire M365 environment. The attacker embedded natural-language instructions in the body of the email. When Copilot later retrieved that email as context for a user's query, it followed the hidden instructions, pulled confidential files, chat logs, and internal documents, then transmitted them to an external server through a Microsoft Teams proxy that the content security policy had whitelisted. The user never clicked anything. The user never knew it happened.
 
 Microsoft assigned it CVE-2025-32711, scored it at 9.3, and patched it server-side within weeks. No customers were reported affected.
@@ -29,10 +25,10 @@ That is why most compliance programs start in the wrong place. They start with p
 
 Every meaningful obligation should map to four things:
 
-**Obligation.** What the law requires.
-**Control.** What your system or process does repeatedly.
-**Eval.** How you test that the control actually works.
-**Artifact.** What you retain as proof.
+1. **Obligation.** What the law requires.
+2. **Control.** What your system or process does repeatedly.
+3. **Eval.** How you test that the control actually works.
+4. **Artifact.** What you retain as proof.
 
 If you cannot point to all four, you do not have an operational compliance program. You have intent.
 

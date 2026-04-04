@@ -9,10 +9,6 @@ tags: ["compliance", "evidence", "agents"]
 
 ---
 
-*This is the eighth essay in a series on building reliable agent systems. Previous essays covered [when agents fail](/blog/agent-failures-are-distributed-systems-failures/), [the eval gap](/blog/the-eval-gap/), [guardrails vs. safety](/blog/guardrails-are-not-safety/), [who owns the agent's mistake](/blog/who-owns-the-agents-mistake/), [drift is the default](/blog/drift-is-the-default/), [what an AI system should actually prove](/blog/what-should-an-ai-system-actually-prove/), and [controls are not guardrails](/blog/controls-are-not-guardrails/).*
-
----
-
 In November 2025, OpenAI split a monolithic internal service into smaller microservices. During the migration, an engineer missed a single environment variable, a Kafka configuration that told one of the new services where to publish audit log events. The service started handling API requests. It stopped recording them. For three months, enterprise customers using OpenAI's API had gaps in their audit logs, and nobody at OpenAI noticed. The company's own monitoring had a separate, unrelated issue that prevented it from catching the drop in log volume. A customer finally reported the problem in February 2026. When OpenAI tried to backfill the missing data, they discovered that some fields, including the identity of who performed each action, could not be recovered. The underlying data simply was not stored anywhere else.
 
 OpenAI's postmortem was straightforward about what happened: the logs were gone, some of them permanently. Their advice to affected customers was equally direct. Use your own internal identity and change-management logs as a secondary source for investigations spanning this period.

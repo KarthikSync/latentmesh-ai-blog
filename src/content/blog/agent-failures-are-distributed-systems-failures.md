@@ -74,7 +74,3 @@ The claim is simple. If you know how to think about retries, idempotency, timeou
 The AI industry has a tendency to treat every problem as unprecedented. Some of it is. Foundation model training is new territory. But agent orchestration, tool-calling reliability, production monitoring, and failure containment? These are systems problems. We've solved systems problems before. Not perfectly, but with frameworks that work.
 
 The engineers best positioned to make agents reliable in production aren't necessarily the ones with the deepest ML expertise. They're the ones who've been on-call for distributed systems at scale and already know, in their bones, that anything that can fail independently will fail independently, and that the only question is whether you designed for it.
-
----
-
-*This is the first essay in a series on AI systems engineering. Next: how evaluation strategies fall apart between staging and production.*

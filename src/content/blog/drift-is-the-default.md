@@ -77,10 +77,6 @@ Drift is not a bug you fix. It's a condition you manage. The teams that accept t
 
 ---
 
-*This is the fifth and final essay in a series on building reliable agent systems. Previous essays covered [agent failures as distributed systems failures](/blog/agent-failures-are-distributed-systems-failures/), [the eval gap](/blog/the-eval-gap/), [guardrails vs. safety](/blog/guardrails-are-not-safety/), and [who owns the agent's mistake](/blog/who-owns-the-agents-mistake/).*
-
----
-
 ## Selected Sources
 
 - Lingjiao Chen, Matei Zaharia, and James Zou, "[How Is ChatGPT's Behavior Changing Over Time?](https://hdsr.mitpress.mit.edu/pub/y95zitmz)" *Harvard Data Science Review*, Special Issue 6.2, Spring 2024. Original preprint: "[arXiv:2307.09009](https://arxiv.org/abs/2307.09009)".

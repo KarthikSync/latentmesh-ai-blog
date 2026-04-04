@@ -80,7 +80,3 @@ The teams that run agents well in production treat evals the way SREs treat obse
 Your eval suite passing does not prove your agent is reliable. It proves your agent performs on the cases your eval suite knows how to see.
 
 Klarna's public arc suggests as much. The company didn't fix the problem by chasing a better benchmark. They started routing complex cases back to humans, and by most accounts, the experience improved. The headline metrics barely changed. What changed was what they chose to measure.
-
----
-
-*This is the second essay in a series on AI systems engineering. Previously: [Agent failures are distributed systems failures](/blog/agent-failures-are-distributed-systems-failures/). Next: why guardrails aren't safety.*
