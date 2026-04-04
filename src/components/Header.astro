@@ -62,8 +62,9 @@ import { SITE_TITLE, GITHUB_URL } from "../consts";
 
   .logo-mobile {
     display: none;
-    height: 36px;
-    width: auto;
+    height: 32px;
+    width: 32px;
+    object-fit: contain;
   }
 
   .nav-links {
@@ -105,12 +106,20 @@ import { SITE_TITLE, GITHUB_URL } from "../consts";
   .icon-moon { display: inline; }
 
   @media (max-width: 480px) {
+    header {
+      padding: 0.75rem 1rem;
+    }
+
     .logo-desktop {
       display: none;
     }
 
     .logo-mobile {
       display: block;
+    }
+
+    .nav-links {
+      gap: 1rem;
     }
 
     .hide-mobile {
