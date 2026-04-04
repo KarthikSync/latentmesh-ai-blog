@@ -200,6 +200,3 @@ dist
 
 ### Astro ###
 .astro/
-
-# Generated OG images (built during deploy)
-public/og/
