@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 700" width="1400" height="700" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <!-- Background -->
+  <rect width="1400" height="700" fill="#f5f3ef"/>
+
+  <!-- Title -->
+  <text x="65" y="60" font-size="32" font-weight="700" fill="#2d3748">The Control Chain</text>
+  <text x="65" y="95" font-size="16" fill="#718096" font-style="italic">Every link is traceable. Every link is testable. Every link produces a record.</text>
+
+  <!-- Divider -->
+  <line x1="65" y1="120" x2="1335" y2="120" stroke="#d4c9b8" stroke-width="1.5"/>
+
+  <!-- Step numbers -->
+  <text x="140" y="175" text-anchor="middle" font-size="14" fill="#a0aec0" font-family="monospace">01</text>
+  <text x="385" y="175" text-anchor="middle" font-size="14" fill="#a0aec0" font-family="monospace">02</text>
+  <text x="630" y="175" text-anchor="middle" font-size="14" fill="#a0aec0" font-family="monospace">03</text>
+  <text x="875" y="175" text-anchor="middle" font-size="14" fill="#a0aec0" font-family="monospace">04</text>
+  <text x="1120" y="175" text-anchor="middle" font-size="14" fill="#a0aec0" font-family="monospace">05</text>
+
+  <!-- Circles -->
+  <circle cx="140" cy="230" r="38" fill="#5a8fa8"/>
+  <text x="140" y="237" text-anchor="middle" font-size="22" font-weight="700" fill="white">O</text>
+
+  <circle cx="385" cy="230" r="38" fill="#8b7d3c"/>
+  <text x="385" y="237" text-anchor="middle" font-size="22" font-weight="700" fill="white">M</text>
+
+  <circle cx="630" cy="230" r="38" fill="#6b7f4e"/>
+  <text x="630" y="237" text-anchor="middle" font-size="22" font-weight="700" fill="white">E</text>
+
+  <circle cx="875" cy="230" r="38" fill="#7a6b5d"/>
+  <text x="875" y="237" text-anchor="middle" font-size="22" font-weight="700" fill="white">E</text>
+
+  <circle cx="1120" cy="230" r="38" fill="#6b5b7b"/>
+  <text x="1120" y="237" text-anchor="middle" font-size="22" font-weight="700" fill="white">O</text>
+
+  <!-- Arrows between circles -->
+  <line x1="183" y1="230" x2="340" y2="230" stroke="#718096" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="428" y1="230" x2="585" y2="230" stroke="#718096" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="673" y1="230" x2="830" y2="230" stroke="#718096" stroke-width="1.5" marker-end="url(#arr)"/>
+  <line x1="918" y1="230" x2="1075" y2="230" stroke="#718096" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Labels -->
+  <text x="140" y="295" text-anchor="middle" font-size="16" font-weight="600" fill="#2d3748">Obligation</text>
+  <text x="385" y="295" text-anchor="middle" font-size="16" font-weight="600" fill="#2d3748">Mechanism</text>
+  <text x="630" y="295" text-anchor="middle" font-size="16" font-weight="600" fill="#2d3748">Eval</text>
+  <text x="875" y="295" text-anchor="middle" font-size="16" font-weight="600" fill="#2d3748">Evidence</text>
+  <text x="1120" y="295" text-anchor="middle" font-size="16" font-weight="600" fill="#2d3748">Owner</text>
+
+  <!-- Detail cards -->
+  <!-- Obligation card -->
+  <rect x="30" y="330" width="220" height="170" rx="6" fill="white" stroke="#d4c9b8" stroke-width="1"/>
+  <rect x="30" y="330" width="4" height="170" rx="2" fill="#5a8fa8"/>
+  <text x="50" y="358" font-size="11" font-weight="700" fill="#5a8fa8" letter-spacing="1.5">OBLIGATION</text>
+  <text x="50" y="385" font-size="13" fill="#4a5568">GDPR Article 5(1)(f):</text>
+  <text x="50" y="405" font-size="13" fill="#4a5568">personal data must be</text>
+  <text x="50" y="425" font-size="13" fill="#4a5568">processed with appropriate</text>
+  <text x="50" y="445" font-size="13" fill="#4a5568">security.</text>
+
+  <!-- Mechanism card -->
+  <rect x="275" y="330" width="220" height="170" rx="6" fill="white" stroke="#d4c9b8" stroke-width="1"/>
+  <rect x="275" y="330" width="4" height="170" rx="2" fill="#8b7d3c"/>
+  <text x="295" y="358" font-size="11" font-weight="700" fill="#8b7d3c" letter-spacing="1.5">MECHANISM</text>
+  <text x="295" y="385" font-size="13" fill="#4a5568">PII detection filter scans</text>
+  <text x="295" y="405" font-size="13" fill="#4a5568">all outbound agent</text>
+  <text x="295" y="425" font-size="13" fill="#4a5568">messages for SSNs, credit</text>
+  <text x="295" y="445" font-size="13" fill="#4a5568">cards, emails.</text>
+
+  <!-- Eval card -->
+  <rect x="520" y="330" width="220" height="170" rx="6" fill="white" stroke="#d4c9b8" stroke-width="1"/>
+  <rect x="520" y="330" width="4" height="170" rx="2" fill="#6b7f4e"/>
+  <text x="540" y="358" font-size="11" font-weight="700" fill="#6b7f4e" letter-spacing="1.5">EVAL</text>
+  <text x="540" y="385" font-size="13" fill="#4a5568">Weekly adversarial test:</text>
+  <text x="540" y="405" font-size="13" fill="#4a5568">200+ payloads including</text>
+  <text x="540" y="425" font-size="13" fill="#4a5568">obfuscated formats and</text>
+  <text x="540" y="445" font-size="13" fill="#4a5568">encoded PII.</text>
+
+  <!-- Evidence card -->
+  <rect x="765" y="330" width="220" height="170" rx="6" fill="white" stroke="#d4c9b8" stroke-width="1"/>
+  <rect x="765" y="330" width="4" height="170" rx="2" fill="#7a6b5d"/>
+  <text x="785" y="358" font-size="11" font-weight="700" fill="#7a6b5d" letter-spacing="1.5">EVIDENCE</text>
+  <text x="785" y="385" font-size="13" fill="#4a5568">Stored eval results,</text>
+  <text x="785" y="405" font-size="13" fill="#4a5568">production fire-rate logs,</text>
+  <text x="785" y="425" font-size="13" fill="#4a5568">false positive reviews,</text>
+  <text x="785" y="445" font-size="13" fill="#4a5568">change history.</text>
+
+  <!-- Owner card -->
+  <rect x="1010" y="330" width="220" height="170" rx="6" fill="white" stroke="#d4c9b8" stroke-width="1"/>
+  <rect x="1010" y="330" width="4" height="170" rx="2" fill="#6b5b7b"/>
+  <text x="1030" y="358" font-size="11" font-weight="700" fill="#6b5b7b" letter-spacing="1.5">OWNER</text>
+  <text x="1030" y="385" font-size="13" fill="#4a5568">Named engineer.</text>
+  <text x="1030" y="405" font-size="13" fill="#4a5568">Investigates eval failures,</text>
+  <text x="1030" y="425" font-size="13" fill="#4a5568">reviews incidents,</text>
+  <text x="1030" y="445" font-size="13" fill="#4a5568">approves filter changes.</text>
+
+  <!-- Bottom divider -->
+  <line x1="65" y1="550" x2="1335" y2="550" stroke="#d4c9b8" stroke-width="1.5"/>
+
+  <!-- Footer -->
+  <text x="65" y="590" font-size="15" fill="#718096">A guardrail is the mechanism alone. A control is the full chain: obligation to mechanism to eval to evidence to owner.</text>
+  <text x="65" y="615" font-size="15" fill="#718096">The guardrail does the work. The control proves the work was done.</text>
+
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#718096"/>
+    </marker>
+  </defs>
+</svg>
