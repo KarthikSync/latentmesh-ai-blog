@@ -1,0 +1,400 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE } from '../../consts';
+
+const title = "How to Prove AI Systems Work";
+const description = "A ten-part series on building AI systems that are reliable enough to govern. From failure diagnosis to engineering evidence.";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`${title} | ${SITE_TITLE}`} description={description} image="/og-default.png" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<header class="series-header">
+				<p class="series-label">Series</p>
+				<h1>{title}</h1>
+				<p class="series-dek">A ten-part series on building AI systems that are reliable enough to govern.</p>
+			</header>
+
+			<div class="series-intro">
+				<p>Most organizations shipping AI agents today cannot answer a simple question: how do you know this system is working correctly?</p>
+				<p>Not "did it pass a benchmark." Not "does it have a guardrail." Can you show, with evidence, that the system does what it is supposed to do, that you tested the things that matter, and that you will know when something changes?</p>
+				<p>That question sits at the intersection of engineering, evaluation, governance, and compliance. This series works through it from both directions. The first five essays diagnose why most teams cannot answer it today. The next five build toward what the answer actually looks like.</p>
+			</div>
+
+			<section class="series-section">
+				<h2>The diagnosis</h2>
+				<ol class="essay-list">
+					<li>
+						<a href="/blog/agent-failures-are-distributed-systems-failures/" class="essay-link">
+							<span class="essay-number">01</span>
+							<div class="essay-content">
+								<h3>Agent failures are distributed systems failures</h3>
+								<p>AI agents fail the same way distributed systems fail: cascading errors, partial availability, Byzantine faults, missing observability. The mental models that make distributed systems reliable apply directly. Most teams have not made the connection yet.</p>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="/blog/the-eval-gap/" class="essay-link">
+							<span class="essay-number">02</span>
+							<div class="essay-content">
+								<h3>The eval gap</h3>
+								<p>Your agent works in staging. It breaks in production. The gap is not a bug. It is a structural mismatch between how teams evaluate AI systems and how those systems actually behave under real traffic, real user inputs, and real tool-call chains.</p>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="/blog/guardrails-are-not-safety/" class="essay-link">
+							<span class="essay-number">03</span>
+							<div class="essay-content">
+								<h3>Guardrails are not safety</h3>
+								<p>Input/output filters are the AI equivalent of perimeter security. Necessary, but nowhere near sufficient. Real safety requires observability into the reasoning chain, containment when confidence drops, least-privilege tool access, and structural human review. Most teams are in their "we have a firewall" era.</p>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="/blog/who-owns-the-agents-mistake/" class="essay-link">
+							<span class="essay-number">04</span>
+							<div class="essay-content">
+								<h3>Who owns the agent's mistake?</h3>
+								<p>When an agent chain makes a bad decision across three tool calls and two LLM hops, who is accountable? Courts are already answering this question. Air Canada's chatbot ruling, the Workday hiring discrimination case, and California's proposed liability laws all point in the same direction: the deployer owns it.</p>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="/blog/drift-is-the-default/" class="essay-link">
+							<span class="essay-number">05</span>
+							<div class="essay-content">
+								<h3>Drift is the default</h3>
+								<p>The model you shipped last month is not the model running today. Provider updates, config changes, shifting user behavior, and tool API drift mean agent systems change constantly. If you are not testing for behavioral regression continuously, you are hoping. Hope is not an engineering strategy.</p>
+							</div>
+						</a>
+					</li>
+				</ol>
+			</section>
+
+			<section class="series-section">
+				<h2>The answer</h2>
+				<ol class="essay-list" start="6">
+					<li>
+						<a href="/blog/what-should-an-ai-system-actually-prove/" class="essay-link">
+							<span class="essay-number">06</span>
+							<div class="essay-content">
+								<h3>What should an AI system actually prove?</h3>
+								<p>The bridge. Five essays of diagnosis lead to one structural question: what would it take to actually demonstrate that an AI system is reliable, fair, transparent, and safe? Not as a policy statement. As a system that runs in production and generates evidence. This essay introduces the obligation, control, evaluation, evidence, and response loop.</p>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="/blog/controls-are-not-guardrails/" class="essay-link">
+							<span class="essay-number">07</span>
+							<div class="essay-content">
+								<h3>Controls are not guardrails</h3>
+								<p>A guardrail catches bad output. A control proves the system works. This essay draws the line between runtime filters and auditable controls, and shows what a control looks like when it is mapped to an obligation, tested by an eval, and backed by stored evidence. The Salesforce Agentforce breach is the opening case study.</p>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="/blog/anatomy-of-an-evidence-pack/" class="essay-link">
+							<span class="essay-number">08</span>
+							<div class="essay-content">
+								<h3>Anatomy of an evidence pack</h3>
+								<p>What does audit-ready proof actually look like? Traces, test runs, approval records, model cards, change logs, sign-offs. This essay makes the abstract framework from essays 6 and 7 tangible by walking through the artifacts a team would need to produce when someone with authority asks to see their work.</p>
+							</div>
+						</a>
+					</li>
+					<li>
+						<a href="/blog/mapping-the-eu-ai-act-to-engineering-evidence/" class="essay-link">
+							<span class="essay-number">09</span>
+							<div class="essay-content">
+								<h3>Mapping the EU AI Act to engineering evidence</h3>
+								<p>The EU AI Act's high-risk obligations take effect August 2026. This essay maps each major requirement, Articles 9 through 15 plus deployer obligations under Articles 26 and 27, to a specific control, evaluation, and evidence artifact. Shorter mappings cover NIST AI RMF and ISO 42001. This is the essay that gets forwarded between engineering leaders and legal teams.</p>
+							</div>
+						</a>
+					</li>
+					<li>
+						<div class="essay-link coming-soon">
+							<span class="essay-number">10</span>
+							<div class="essay-content">
+								<h3>The incident response gap in AI systems <span class="coming-soon-badge">coming soon</span></h3>
+								<p>What happens when an AI system fails and nobody has a process for capturing what went wrong? Most incident response playbooks were written for infrastructure outages, not for a model that silently started giving worse answers. This essay covers what AI-specific incident response looks like when the failure is behavioral, not mechanical.</p>
+							</div>
+						</div>
+					</li>
+				</ol>
+			</section>
+
+			<section class="reading-guide">
+				<h2>How to read this</h2>
+				<div class="guide-grid">
+					<div class="guide-card">
+						<p class="guide-audience">If you build AI systems</p>
+						<p>Start at essay 1 and read forward. The series is cumulative.</p>
+					</div>
+					<div class="guide-card">
+						<p class="guide-audience">If you are in governance, compliance, or legal</p>
+						<p>Start at essay 6. The first five will make more sense after you see where they lead.</p>
+					</div>
+					<div class="guide-card">
+						<p class="guide-audience">If you want the single most practical essay</p>
+						<p>Read <a href="/blog/mapping-the-eu-ai-act-to-engineering-evidence/">essay 9</a>. It is the one with the regulatory mapping table.</p>
+					</div>
+				</div>
+				<p class="thesis">If you want the thesis in one sentence: AI systems that cannot produce evidence of their own reliability are not ready for production, and the organizations that figure out how to generate that evidence systematically will be the ones that ship with confidence while everyone else is still hoping for the best.</p>
+			</section>
+
+			<footer class="series-footer">
+				<p>This series is written by Karthik Mahalingam at <a href="/">Latent Mesh</a>. New essays and practical tools are published regularly.</p>
+			</footer>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: 100%;
+		max-width: 760px;
+		margin: 0 auto;
+		padding: 0 1.25rem 3.5rem;
+	}
+
+	/* ── Header ── */
+	.series-header {
+		padding: 3rem 0 2rem;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.series-label {
+		font-size: 0.8rem;
+		font-weight: 700;
+		color: var(--color-link);
+		margin: 0 0 0.5rem;
+		font-family: sans-serif;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+
+	.series-header h1 {
+		font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+		font-weight: 800;
+		margin: 0 0 0.75rem;
+		color: var(--color-text-primary);
+		letter-spacing: -0.02em;
+		line-height: 1.15;
+	}
+
+	.series-dek {
+		font-size: 1.1rem;
+		color: var(--color-text-secondary);
+		margin: 0;
+		line-height: 1.6;
+		font-style: italic;
+	}
+
+	/* ── Intro ── */
+	.series-intro {
+		padding: 2rem 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.series-intro p {
+		font-size: 1rem;
+		line-height: 1.75;
+		color: var(--color-text-body);
+		margin: 0 0 1rem;
+	}
+
+	.series-intro p:last-child {
+		margin-bottom: 0;
+	}
+
+	/* ── Sections ── */
+	.series-section {
+		padding: 2.5rem 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.series-section h2 {
+		font-size: 1.5rem;
+		font-weight: 800;
+		margin: 0 0 1.5rem;
+		color: var(--color-text-primary);
+		font-family: sans-serif;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	/* ── Essay list ── */
+	.essay-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.essay-link {
+		display: flex;
+		gap: 1.25rem;
+		padding: 1.25rem 1.5rem;
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
+		text-decoration: none;
+		color: inherit;
+		align-items: flex-start;
+	}
+
+	a.essay-link:hover {
+		border-color: var(--color-card-hover);
+	}
+
+	a.essay-link:hover h3 {
+		color: var(--color-brand);
+	}
+
+	.essay-link.coming-soon {
+		opacity: 0.7;
+	}
+
+	.essay-number {
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: var(--color-text-muted);
+		font-family: monospace;
+		flex-shrink: 0;
+		padding-top: 0.15rem;
+	}
+
+	.essay-content h3 {
+		font-size: 1.1rem;
+		font-weight: 700;
+		margin: 0 0 0.4rem;
+		color: var(--color-text-primary);
+		font-family: sans-serif;
+		line-height: 1.3;
+	}
+
+	.essay-content p {
+		font-size: 0.9rem;
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+
+	.coming-soon-badge {
+		font-size: 0.7rem;
+		font-weight: 600;
+		color: var(--color-text-muted);
+		background: var(--color-bg-secondary);
+		border: 1px solid var(--color-border);
+		padding: 0.15rem 0.5rem;
+		border-radius: 4px;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		vertical-align: middle;
+		margin-left: 0.5rem;
+	}
+
+	/* ── Reading guide ── */
+	.reading-guide {
+		padding: 2.5rem 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.reading-guide h2 {
+		font-size: 1.25rem;
+		font-weight: 700;
+		margin: 0 0 1.25rem;
+		color: var(--color-text-primary);
+		font-family: sans-serif;
+	}
+
+	.guide-grid {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.guide-card {
+		padding: 1rem 1.25rem;
+		background: var(--color-bg-secondary);
+		border-radius: 8px;
+	}
+
+	.guide-audience {
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: var(--color-text-primary);
+		font-family: sans-serif;
+		margin: 0 0 0.25rem;
+	}
+
+	.guide-card p {
+		font-size: 0.9rem;
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+
+	.guide-card a {
+		color: var(--color-link);
+		text-decoration: none;
+	}
+
+	.guide-card a:hover {
+		text-decoration: underline;
+	}
+
+	.thesis {
+		font-size: 1rem;
+		line-height: 1.75;
+		color: var(--color-text-body);
+		margin: 0;
+		font-style: italic;
+	}
+
+	/* ── Footer ── */
+	.series-footer {
+		padding: 2rem 0 0;
+	}
+
+	.series-footer p {
+		font-size: 0.9rem;
+		color: var(--color-text-muted);
+		line-height: 1.6;
+	}
+
+	.series-footer a {
+		color: var(--color-link);
+		text-decoration: none;
+	}
+
+	.series-footer a:hover {
+		text-decoration: underline;
+	}
+
+	@media (max-width: 480px) {
+		main {
+			padding: 0 1rem 3rem;
+		}
+
+		.series-header {
+			padding: 2rem 0 1.5rem;
+		}
+
+		.essay-link {
+			flex-direction: column;
+			gap: 0.5rem;
+			padding: 1rem 1.25rem;
+		}
+	}
+</style>
