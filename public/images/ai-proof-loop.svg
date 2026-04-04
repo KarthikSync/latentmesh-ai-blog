@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" width="900" height="520" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+  <!-- Background -->
+  <rect width="900" height="520" rx="12" fill="#f8f9fa"/>
+
+  <!-- Title -->
+  <text x="450" y="52" text-anchor="middle" font-size="26" font-weight="700" fill="#1e293b">The Proof Loop</text>
+
+  <!-- Top row boxes -->
+  <!-- Obligation -->
+  <rect x="40" y="90" width="170" height="80" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="125" y="122" text-anchor="middle" font-size="16" font-weight="700" fill="#1e293b">Obligation</text>
+  <text x="125" y="145" text-anchor="middle" font-size="13" fill="#64748b" font-style="italic">What must it do?</text>
+
+  <!-- Arrow 1 -->
+  <line x1="215" y1="130" x2="260" y2="130" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Control -->
+  <rect x="265" y="90" width="170" height="80" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="350" y="122" text-anchor="middle" font-size="16" font-weight="700" fill="#1e293b">Control</text>
+  <text x="350" y="145" text-anchor="middle" font-size="13" fill="#64748b" font-style="italic">What enforces it?</text>
+
+  <!-- Arrow 2 -->
+  <line x1="440" y1="130" x2="485" y2="130" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Evaluation -->
+  <rect x="490" y="90" width="170" height="80" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="575" y="122" text-anchor="middle" font-size="16" font-weight="700" fill="#1e293b">Evaluation</text>
+  <text x="575" y="145" text-anchor="middle" font-size="13" fill="#64748b" font-style="italic">Is it working?</text>
+
+  <!-- Arrow 3 -->
+  <line x1="665" y1="130" x2="710" y2="130" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Evidence -->
+  <rect x="715" y="90" width="150" height="80" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="790" y="122" text-anchor="middle" font-size="16" font-weight="700" fill="#1e293b">Evidence</text>
+  <text x="790" y="145" text-anchor="middle" font-size="13" fill="#64748b" font-style="italic">Can you prove it?</text>
+
+  <!-- Descriptions under boxes -->
+  <text x="125" y="198" text-anchor="middle" font-size="11" fill="#94a3b8">Concrete, testable,</text>
+  <text x="125" y="213" text-anchor="middle" font-size="11" fill="#94a3b8">tied to business context</text>
+
+  <text x="350" y="198" text-anchor="middle" font-size="11" fill="#94a3b8">Runtime mechanisms,</text>
+  <text x="350" y="213" text-anchor="middle" font-size="11" fill="#94a3b8">not just prompt instructions</text>
+
+  <text x="575" y="198" text-anchor="middle" font-size="11" fill="#94a3b8">Continuous behavioral evals,</text>
+  <text x="575" y="213" text-anchor="middle" font-size="11" fill="#94a3b8">not one-time benchmarks</text>
+
+  <text x="790" y="198" text-anchor="middle" font-size="11" fill="#94a3b8">Logs, traces, audit records,</text>
+  <text x="790" y="213" text-anchor="middle" font-size="11" fill="#94a3b8">approval chains</text>
+
+  <!-- Response box (bottom center) -->
+  <rect x="320" y="290" width="185" height="90" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+  <text x="412" y="325" text-anchor="middle" font-size="16" font-weight="700" fill="#1e293b">Response</text>
+  <text x="412" y="348" text-anchor="middle" font-size="13" fill="#64748b" font-style="italic">What happens when</text>
+  <text x="412" y="365" text-anchor="middle" font-size="13" fill="#64748b" font-style="italic">it doesn't?</text>
+
+  <text x="412" y="410" text-anchor="middle" font-size="11" fill="#94a3b8">Defined, documented,</text>
+  <text x="412" y="425" text-anchor="middle" font-size="11" fill="#94a3b8">accountable incident response</text>
+
+  <!-- Curved arrow: Evidence → Response -->
+  <path d="M790,175 C790,260 550,300 510,320" fill="none" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Curved arrow: Response → Obligation -->
+  <path d="M320,335 C200,335 80,260 100,175" fill="none" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Footer text -->
+  <text x="450" y="485" text-anchor="middle" font-size="14" fill="#64748b" font-style="italic">The loop runs continuously. If any step is missing, compliance is a claim, not a fact.</text>
+
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+    </marker>
+  </defs>
+</svg>
