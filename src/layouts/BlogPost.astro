@@ -169,6 +169,12 @@ const nextEssay = isInSeries && seriesIndex < seriesEssays.length - 1 ? seriesEs
 							</div>
 							<p class="feedback-thanks" id="feedback-thanks" style="display:none">Thanks for the feedback.</p>
 						</div>
+
+						<!-- Giscus comments -->
+						<section class="giscus-section">
+							<h2>Discuss this essay</h2>
+							<div class="giscus"></div>
+						</section>
 					</footer>
 				</div>
 			</article>
@@ -260,6 +266,40 @@ const nextEssay = isInSeries && seriesIndex < seriesEssays.length - 1 ? seriesEs
 		}
 		if (thanks) thanks.style.display = 'block';
 	});
+
+	// Giscus: load with correct theme and sync on toggle
+	function getGiscusTheme() {
+		return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+	}
+
+	const giscusScript = document.createElement('script');
+	giscusScript.src = 'https://giscus.app/client.js';
+	giscusScript.setAttribute('data-repo', 'KarthikSync/latentmesh-ai-discussions');
+	giscusScript.setAttribute('data-repo-id', 'R_kgDOR6N67Q');
+	giscusScript.setAttribute('data-category', 'General');
+	giscusScript.setAttribute('data-category-id', 'DIC_kwDOR6N67c4C6GDw');
+	giscusScript.setAttribute('data-mapping', 'pathname');
+	giscusScript.setAttribute('data-strict', '1');
+	giscusScript.setAttribute('data-reactions-enabled', '1');
+	giscusScript.setAttribute('data-emit-metadata', '0');
+	giscusScript.setAttribute('data-input-position', 'top');
+	giscusScript.setAttribute('data-theme', getGiscusTheme());
+	giscusScript.setAttribute('data-lang', 'en');
+	giscusScript.setAttribute('data-loading', 'lazy');
+	giscusScript.crossOrigin = 'anonymous';
+	giscusScript.async = true;
+	document.querySelector('.giscus')?.appendChild(giscusScript);
+
+	const themeObserver = new MutationObserver(() => {
+		const giscusFrame = document.querySelector('iframe.giscus-frame') as HTMLIFrameElement | null;
+		if (giscusFrame?.contentWindow) {
+			giscusFrame.contentWindow.postMessage(
+				{ giscus: { setConfig: { theme: getGiscusTheme() } } },
+				'https://giscus.app'
+			);
+		}
+	});
+	themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 </script>
 
 <style>
@@ -682,6 +722,21 @@ const nextEssay = isInSeries && seriesIndex < seriesEssays.length - 1 ? seriesEs
 		color: var(--color-text-muted);
 		font-style: italic;
 		margin: 0;
+	}
+
+	/* ── Giscus comments ── */
+	.giscus-section {
+		margin-top: 2rem;
+		padding-top: 2rem;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.giscus-section h2 {
+		font-size: 1.1rem;
+		font-weight: 700;
+		margin: 0 0 1rem;
+		color: var(--color-text-primary);
+		font-family: sans-serif;
 	}
 
 	/* ── Prose content styling ── */
