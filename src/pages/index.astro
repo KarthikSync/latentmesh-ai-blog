@@ -46,7 +46,6 @@ function formatMonth(date: Date): string {
     <main>
       <!-- Hero -->
       <section class="hero">
-        <div class="hero-label">Reliable Agent Systems &middot; Ten-essay series</div>
         <h1>How AI systems <em>fail</em>, how to evaluate them, and how to govern them in production.</h1>
         <p class="hero-sub">Most AI governance advice skips the engineering. These essays close the gap between compliance intent and production evidence.</p>
         <div class="hero-cta-row">
@@ -127,30 +126,6 @@ function formatMonth(date: Date): string {
         </section>
       )}
 
-      <!-- About -->
-      <section class="about-strip">
-        <div class="about-inner">
-          <div class="about-text">
-            <h2>About the author</h2>
-            <p>I write about AI systems from the perspective of someone who has spent nearly two decades building large-scale distributed systems. My focus is on how agents behave in production, how evaluations catch real failures, and how safety, privacy, and compliance become operational reality.</p>
-            <a href="/about" class="about-link">More about me &rarr;</a>
-          </div>
-          <div class="about-stats">
-            <div class="about-stat">
-              <div class="stat-num">10</div>
-              <div class="stat-label">Essay series</div>
-            </div>
-            <div class="about-stat">
-              <div class="stat-num">19+</div>
-              <div class="stat-label">Years in systems</div>
-            </div>
-            <div class="about-stat">
-              <div class="stat-num">4</div>
-              <div class="stat-label">Topic areas</div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
 
     <Footer />
@@ -167,29 +142,6 @@ function formatMonth(date: Date): string {
     max-width: 1120px;
     margin: 0 auto;
     padding: 5rem 2rem 4.5rem;
-  }
-
-  .hero-label {
-    font-family: monospace;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-link);
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .hero-label::before {
-    content: '';
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--color-link);
-    opacity: 0.5;
   }
 
   .hero h1 {
@@ -462,87 +414,12 @@ function formatMonth(date: Date): string {
     letter-spacing: 0.02em;
   }
 
-  /* ── About Strip ── */
-  .about-strip {
-    background: var(--color-text-primary);
-    color: var(--color-bg);
-    padding: 4.5rem 2rem;
-  }
-
-  .about-inner {
-    max-width: 1120px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 4rem;
-    align-items: center;
-  }
-
-  .about-text h2 {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    color: rgba(255,255,255,0.95);
-    font-family: sans-serif;
-  }
-
-  .about-text p {
-    font-size: 0.88rem;
-    color: rgba(255,255,255,0.55);
-    line-height: 1.75;
-    max-width: 500px;
-    margin: 0;
-  }
-
-  .about-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    margin-top: 1.5rem;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: rgba(255,255,255,0.75);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
-    padding-bottom: 0.15rem;
-    transition: color 0.2s;
-  }
-
-  .about-link:hover { color: #fff; border-color: rgba(255,255,255,0.5); }
-
-  .about-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  .about-stat { text-align: center; }
-
-  .stat-num {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: rgba(255,255,255,0.9);
-    letter-spacing: -0.03em;
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-size: 0.68rem;
-    color: rgba(255,255,255,0.4);
-    margin-top: 0.4rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-family: monospace;
-  }
-
   /* ── Responsive ── */
   @media (max-width: 768px) {
     .hero { padding: 3rem 1.25rem 2.5rem; }
     .topics { padding: 3rem 1.25rem; }
     .latest { padding: 3rem 1.25rem; }
-    .about-strip { padding: 3rem 1.25rem; }
     .topic-grid { grid-template-columns: repeat(2, 1fr); }
-    .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
     .essay-item { grid-template-columns: 1fr; gap: 0.5rem; }
     .essay-meta-right { text-align: left; display: flex; gap: 0.75rem; }
     .essay-read { display: inline; margin-top: 0; }
@@ -552,7 +429,6 @@ function formatMonth(date: Date): string {
     .hero { padding: 2rem 1rem; }
     .topics { padding: 2.5rem 1rem; }
     .latest { padding: 2.5rem 1rem; }
-    .about-strip { padding: 2.5rem 1rem; }
     .topic-grid { grid-template-columns: 1fr; }
     .hero-cta-row { flex-direction: column; }
     .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
