@@ -1,0 +1,758 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const title = "EU AI Act: High-Risk AI Operational Control Reference";
+const description = "Interactive reference mapping EU AI Act high-risk obligations to operating controls, verification methods, evidence artifacts, owners, and review cadence. 25 controls across 8 clusters.";
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <Header />
+    <main class="ref-page">
+      <div class="ref-back-nav">
+        <a href="/blog/the-regulatory-mapping-table/">&larr; Back to essay</a>
+      </div>
+
+      <div class="ref-header">
+        <h1>EU AI Act: High-Risk AI Operational Control Reference</h1>
+        <p class="ref-subtitle">From obligations to controls, evals, evidence, owners, and review cadence.</p>
+        <span class="ref-pub-tag">LatentMesh &middot; C5</span>
+      </div>
+
+<div class="intro">
+  <p>This reference turns core high-risk AI obligations into operating controls, verification methods, evidence artifacts, owners, and review cadence. Each row answers: what control do I need, how do I verify it holds, what evidence does that produce, who owns it, and when must it be reviewed?</p>
+  <p>It does not re-explain the regulation. <a href="https://latentmesh.ai/blog/mapping-the-eu-ai-act-to-engineering-evidence">Essay #9</a> covers interpretation. <a href="https://latentmesh.ai/blog/from-obligation-to-evidence-in-90-minutes">C2</a> walks through the obligation-to-evidence loop for a single article. This reference operationalizes many obligations at once. Click any row for interpretation notes, framework crosswalks, and source links.</p>
+  <p class="usage-hint">Start with role or article. Then use owner and cadence to map each obligation into operating responsibilities.</p>
+
+  <div class="scope-box">
+    <strong>Scope.</strong> Under Article 6, high-risk classification arises through two paths: AI systems that are safety components of, or are themselves, products covered by Annex I sectoral legislation; and AI systems in the areas listed in Annex III, subject to the Article 6(3) carveout for systems that do not pose a significant risk of harm (except where profiling is involved). <strong>This version focuses on Annex III high-risk AI systems and selected provider/deployer operational duties under Articles 9-15, 26-27, and 72-73.</strong> It does not yet cover high-risk AI systems embedded in regulated products, conformity assessment procedures, EU database registration, or value-chain obligations in full.
+    <br><br>
+    <strong>Dates.</strong> Under the AI Act as currently in force, Annex III high-risk obligations apply from 2 August 2026 and high-risk AI systems embedded in regulated products from 2 August 2027. The Commission has proposed amendments through the Digital Omnibus (published 19 November 2025), but those changes should be treated as proposals until formally adopted.
+  </div>
+
+  <div class="coverage-note">
+    <strong>Version 1 coverage:</strong> Core operational requirements (Arts. 9-15), selected deployer duties (Arts. 26-27), and post-market/incident provisions (Arts. 72-73). Future revisions will add quality management system obligations, registration, conformity assessment, corrective action, cooperation with authorities, and provider/deployer/importer/distributor obligations across the value chain.
+  </div>
+</div>
+
+
+
+<div class="filters-bar">
+  <div class="filter-group"><label>Role</label><select id="fRole"><option value="all">All</option><option value="Provider">Provider</option><option value="Deployer">Deployer</option></select></div>
+  <div class="filter-group"><label>Cluster</label><select id="fCluster"><option value="all">All</option><option value="risk-management">Risk Management</option><option value="data-governance">Data Governance</option><option value="technical-documentation">Technical Documentation</option><option value="logging-traceability">Logging &amp; Traceability</option><option value="transparency">Transparency</option><option value="human-oversight">Human Oversight</option><option value="accuracy-robustness-cybersecurity">Accuracy, Robustness &amp; Cybersecurity</option><option value="post-market-incidents">Post-Market &amp; Incidents</option></select></div>
+  <div class="filter-group"><label>Owner</label><select id="fOwner"><option value="all">All</option><option value="Platform Eng">Platform Eng</option><option value="Applied AI">Applied AI</option><option value="Safety">Safety</option><option value="Compliance">Compliance</option><option value="Product">Product</option><option value="Ops">Ops</option></select></div>
+  <div class="filter-group"><label>Cadence</label><select id="fCadence"><option value="all">All</option><option value="Pre-release">Pre-release</option><option value="Per-change">Per-change</option><option value="Continuous">Continuous</option><option value="Incident-triggered">Incident-triggered</option></select></div>
+  <div class="filter-group"><label>Article</label><select id="fArticle"><option value="all">All</option><option value="9">Art. 9</option><option value="10">Art. 10</option><option value="11">Art. 11</option><option value="12">Art. 12</option><option value="13">Art. 13</option><option value="14">Art. 14</option><option value="15">Art. 15</option><option value="26">Art. 26</option><option value="27">Art. 27</option><option value="72">Art. 72</option><option value="73">Art. 73</option></select></div>
+  <div class="filter-group"><label>Evidence</label><select id="fEvidence"><option value="all">All</option><option value="documentation">Documentation</option><option value="test-results">Test / eval results</option><option value="monitoring">Monitoring records</option><option value="incident">Incident records</option><option value="process">Process records</option></select></div>
+  <button class="filter-reset" onclick="resetFilters()">Reset filters</button>
+</div>
+
+<div class="count-bar" id="countBar"></div>
+
+<div class="main" id="mainContent">
+
+<!-- ===== CLUSTER 1: Risk Management ===== -->
+<div class="cluster-section" data-cluster="risk-management">
+  <button class="cluster-toggle" aria-expanded="true" onclick="toggleCluster(this)"><div><span class="cluster-title">Risk Management</span><span class="cluster-articles">Art. 9</span></div><div class="cluster-meta"><span class="cluster-count"></span><span class="cluster-chevron">&#9660;</span></div></button>
+  <div class="cluster-body"><table class="ctrl-table" role="grid" aria-label="Risk Management controls">
+  <thead class="sr-only"><tr><th>Obligation</th><th>Role</th><th>Control Objective</th><th>Eval</th><th>Evidence</th><th>Owner</th><th>Cadence</th><th>Frameworks</th></tr></thead>
+  <tbody>
+    <tr class="data-row" data-role="Provider" data-owner="Safety" data-cadence="Pre-release" data-articles="9" data-evidence="documentation" data-cluster="risk-management" id="r1">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d1" onclick="toggleRow(this,'d1')"><span class="obl-name">Identify and analyze known and foreseeable risks</span><span class="art-ref">Art. 9(2)(a)-(b)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">Documented risk register covers health, safety, and fundamental rights risks for intended use and reasonably foreseeable misuse</td>
+      <td data-label="Eval / Verification">Red-team exercise targeting identified risk categories; structured review against threat taxonomy</td>
+      <td data-label="Evidence Artifact">Risk register with severity ratings, test coverage mapping, review sign-off</td>
+      <td data-label="Owner">Safety</td>
+      <td data-label="Cadence">Pre-release</td>
+      <td data-label="Frameworks">NIST AI RMF: Map (MP 3-5) · ISO 42001: 6.1.2</td>
+    </tr>
+    <tr class="detail-row" id="d1" role="region" aria-label="Details"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 9(2)(a) requires identification of "known and reasonably foreseeable risks" to health, safety, and fundamental rights. Art. 9(2)(b) separately addresses risk estimation and evaluation "when the high-risk AI system is used in accordance with its intended purpose and under conditions of reasonably foreseeable misuse." Risk registers that cover only intended use miss the 9(2)(b) obligation.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/mapping-the-eu-ai-act-to-engineering-evidence">Essay #9</a> on provider obligation structure. <a href="https://latentmesh.ai/blog/the-accountability-gap-in-agent-chains">Essay #4</a> on risk in multi-agent chains.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Provider" data-owner="Applied AI" data-cadence="Per-change" data-articles="9" data-evidence="documentation" data-cluster="risk-management" id="r2">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d2" onclick="toggleRow(this,'d2')"><span class="obl-name">Adopt risk management measures</span><span class="art-ref">Art. 9(2)(d), 9(7)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">Each identified risk has a corresponding mitigation measure; residual risk is within acceptable thresholds</td>
+      <td data-label="Eval / Verification">Traceability matrix linking risk register entries to implemented mitigations; residual risk assessment per change</td>
+      <td data-label="Evidence Artifact">Risk-to-control traceability matrix, residual risk scores, mitigation test results</td>
+      <td data-label="Owner">Applied AI</td>
+      <td data-label="Cadence">Per-change</td>
+      <td data-label="Frameworks">NIST AI RMF: Manage (MG 1-2) · ISO 42001: 6.1.4</td>
+    </tr>
+    <tr class="detail-row" id="d2" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 9(7) establishes a priority order: elimination through design first, then reduction, then information and training. Teams must document why elimination was not feasible before relying on downstream mitigations.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/controls-are-not-guardrails">Essay #3</a> on guardrails vs. controls.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Provider" data-owner="Applied AI" data-cadence="Pre-release" data-articles="9" data-evidence="test-results" data-cluster="risk-management" id="r3">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d3" onclick="toggleRow(this,'d3')"><span class="obl-name">Test for consistent performance and compliance</span><span class="art-ref">Art. 9(5)-(6)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">Testing demonstrates system performs consistently for intended purpose and meets requirements of Arts. 9-15</td>
+      <td data-label="Eval / Verification">Pre-release eval suite covering accuracy, safety, fairness, and robustness; results compared to declared performance levels</td>
+      <td data-label="Evidence Artifact">Eval run results, pass/fail summary, comparison against declared metrics</td>
+      <td data-label="Owner">Applied AI</td>
+      <td data-label="Cadence">Pre-release</td>
+      <td data-label="Frameworks">NIST AI RMF: Measure (MS 1-2) · ISO 42001: 9.1</td>
+    </tr>
+    <tr class="detail-row" id="d3" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 9(6) specifies testing "at any time throughout the development process, and, in any event, prior to the placing on the market or the putting into service." Testing is not a gate at the end; it must be integrated throughout development.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/the-eval-gap">Essay #2</a> on the eval gap. <a href="https://latentmesh.ai/blog/building-an-eval-harness-that-survives-production">C1</a> on harness architecture (loader/runner/scorer separation).<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Provider" data-owner="Compliance" data-cadence="Pre-release" data-articles="9" data-evidence="documentation" data-cluster="risk-management" id="r4">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d4" onclick="toggleRow(this,'d4')"><span class="obl-name">Communicate residual risks to deployers</span><span class="art-ref">Art. 9(4)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">Instructions for use include residual risks and any required deployer-side mitigations</td>
+      <td data-label="Eval / Verification">Documentation review: residual risk register cross-referenced against deployer instructions</td>
+      <td data-label="Evidence Artifact">Deployer instructions with residual risk section, sign-off from documentation review</td>
+      <td data-label="Owner">Compliance</td>
+      <td data-label="Cadence">Pre-release</td>
+      <td data-label="Frameworks">NIST AI RMF: Govern (GV 4) · ISO 42001: 8.4</td>
+    </tr>
+    <tr class="detail-row" id="d4" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>This creates a handoff dependency: the deployer's ability to comply with Art. 26 depends on receiving accurate residual risk information from the provider. Gaps here cascade into deployer non-compliance.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/anatomy-of-an-evidence-pack">Essay #8</a> on evidence pack structure.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+  </tbody></table></div>
+</div>
+
+<!-- ===== CLUSTER 2: Data Governance ===== -->
+<div class="cluster-section" data-cluster="data-governance">
+  <button class="cluster-toggle" aria-expanded="true" onclick="toggleCluster(this)"><div><span class="cluster-title">Data Governance</span><span class="cluster-articles">Art. 10</span></div><div class="cluster-meta"><span class="cluster-count"></span><span class="cluster-chevron">&#9660;</span></div></button>
+  <div class="cluster-body"><table class="ctrl-table" role="grid"><thead class="sr-only"><tr><th>Obligation</th><th>Role</th><th>Control</th><th>Eval</th><th>Evidence</th><th>Owner</th><th>Cadence</th><th>Frameworks</th></tr></thead><tbody>
+    <tr class="data-row" data-role="Provider" data-owner="Applied AI" data-cadence="Per-change" data-articles="10" data-evidence="documentation" data-cluster="data-governance" id="r5">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d5" onclick="toggleRow(this,'d5')"><span class="obl-name">Establish governance practices for training, validation, and test data</span><span class="art-ref">Art. 10(2)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">Data management practices cover collection, labeling, cleaning, enrichment, and aggregation with documented choices at each stage</td>
+      <td data-label="Eval / Verification">Data lineage audit; schema validation checks on training and evaluation datasets</td>
+      <td data-label="Evidence Artifact">Data governance documentation, lineage records, dataset version manifests</td>
+      <td data-label="Owner">Applied AI</td><td data-label="Cadence">Per-change</td>
+      <td data-label="Frameworks">NIST AI RMF: Map (MP 2) · ISO 42001: A.7.4</td>
+    </tr>
+    <tr class="detail-row" id="d5" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 10(2) lists specific governance practices including design choices, data collection processes, and preparation operations such as annotation and labeling. "Governance" here is operational, not just policy.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/drift-is-the-default">Essay #5</a> on data dependency drift. <a href="https://latentmesh.ai/blog/drift-detection-patterns-for-production-agents">C4</a> on detection patterns.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Provider" data-owner="Safety" data-cadence="Pre-release" data-articles="10" data-evidence="test-results" data-cluster="data-governance" id="r6">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d6" onclick="toggleRow(this,'d6')"><span class="obl-name">Examine datasets for biases</span><span class="art-ref">Art. 10(2)(f)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">Datasets examined for possible biases likely to affect health, safety, or lead to discrimination</td>
+      <td data-label="Eval / Verification">Bias-specific evals across protected attributes; distributional analysis of training data</td>
+      <td data-label="Evidence Artifact">Bias evaluation report with methodology, metrics, findings, and mitigation actions</td>
+      <td data-label="Owner">Safety</td><td data-label="Cadence">Pre-release</td>
+      <td data-label="Frameworks">NIST AI RMF: Measure (MS 2.6-2.11) · ISO 42001: A.9.3</td>
+    </tr>
+    <tr class="detail-row" id="d6" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>The threshold is "possible biases that are likely to affect the health and safety of persons, have a negative impact on fundamental rights or lead to discrimination." Possibility and likelihood, not proof. Absence of evidence is not sufficient.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/the-eval-gap">Essay #2</a> on capability vs. safety evals.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Provider" data-owner="Applied AI" data-cadence="Per-change" data-articles="10" data-evidence="test-results" data-cluster="data-governance" id="r7">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d7" onclick="toggleRow(this,'d7')"><span class="obl-name">Ensure data relevance, representativeness, and correctness</span><span class="art-ref">Art. 10(3)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">Training data is relevant to intended purpose, sufficiently representative, and free of errors to the degree possible</td>
+      <td data-label="Eval / Verification">Coverage analysis against intended deployment population; data quality checks</td>
+      <td data-label="Evidence Artifact">Data quality report, coverage metrics, error rate analysis</td>
+      <td data-label="Owner">Applied AI</td><td data-label="Cadence">Per-change</td>
+      <td data-label="Frameworks">NIST AI RMF: Map (MP 2.3) · ISO 42001: A.7.5</td>
+    </tr>
+    <tr class="detail-row" id="d7" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 10(3) uses "to the best extent possible": a proportionality standard. Document what measures were taken and why further improvement was impractical.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+  </tbody></table></div>
+</div>
+
+<!-- ===== CLUSTER 3: Technical Documentation ===== -->
+<div class="cluster-section" data-cluster="technical-documentation">
+  <button class="cluster-toggle" aria-expanded="true" onclick="toggleCluster(this)"><div><span class="cluster-title">Technical Documentation</span><span class="cluster-articles">Art. 11, Annex IV</span></div><div class="cluster-meta"><span class="cluster-count"></span><span class="cluster-chevron">&#9660;</span></div></button>
+  <div class="cluster-body"><table class="ctrl-table" role="grid"><thead class="sr-only"><tr><th>Obligation</th><th>Role</th><th>Control</th><th>Eval</th><th>Evidence</th><th>Owner</th><th>Cadence</th><th>Frameworks</th></tr></thead><tbody>
+    <tr class="data-row" data-role="Provider" data-owner="Compliance" data-cadence="Pre-release" data-articles="11" data-evidence="documentation" data-cluster="technical-documentation" id="r8">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d8" onclick="toggleRow(this,'d8')"><span class="obl-name">Draw up and maintain technical documentation</span><span class="art-ref">Art. 11(1), Annex IV</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">Technical documentation exists before market placement, covers all Annex IV requirements, and is kept up to date</td>
+      <td data-label="Eval / Verification">Completeness checklist against Annex IV elements; periodic documentation review</td>
+      <td data-label="Evidence Artifact">Technical documentation package, completeness checklist with sign-off, revision history</td>
+      <td data-label="Owner">Compliance</td><td data-label="Cadence">Pre-release</td>
+      <td data-label="Frameworks">NIST AI RMF: Govern (GV 1) · ISO 42001: 7.5</td>
+    </tr>
+    <tr class="detail-row" id="d8" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Annex IV specifies contents including general description, design specifications, development process, monitoring and testing, risk management, changes, performance metrics, and cybersecurity measures. Substantially more comprehensive than a model card.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/anatomy-of-an-evidence-pack">Essay #8</a> on evidence pack structure (maps to a subset of Annex IV).<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Provider" data-owner="Compliance" data-cadence="Per-change" data-articles="11" data-evidence="documentation" data-cluster="technical-documentation" id="r9">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d9" onclick="toggleRow(this,'d9')"><span class="obl-name">Keep documentation current throughout lifecycle</span><span class="art-ref">Art. 11(1)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">Documentation reflects current system state; changes trigger updates within defined SLA</td>
+      <td data-label="Eval / Verification">Change log cross-referenced against documentation revisions; timestamp audit</td>
+      <td data-label="Evidence Artifact">Documentation revision history, change-to-update mapping, staleness audit report</td>
+      <td data-label="Owner">Compliance</td><td data-label="Cadence">Per-change</td>
+      <td data-label="Frameworks">NIST AI RMF: Govern (GV 1.2) · ISO 42001: 7.5.3</td>
+    </tr>
+    <tr class="detail-row" id="d9" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>The "kept up to date" requirement is one of the most operationally demanding provisions. Without automation, documentation staleness is the default.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/drift-is-the-default">Essay #5</a> on drift. <a href="https://latentmesh.ai/blog/drift-detection-patterns-for-production-agents">C4</a> on detection patterns.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+  </tbody></table></div>
+</div>
+
+<!-- ===== CLUSTER 4: Logging & Traceability ===== -->
+<div class="cluster-section" data-cluster="logging-traceability">
+  <button class="cluster-toggle" aria-expanded="true" onclick="toggleCluster(this)"><div><span class="cluster-title">Logging and Traceability</span><span class="cluster-articles">Art. 12, Art. 26(6)</span></div><div class="cluster-meta"><span class="cluster-count"></span><span class="cluster-chevron">&#9660;</span></div></button>
+  <div class="cluster-body"><table class="ctrl-table" role="grid"><thead class="sr-only"><tr><th>Obligation</th><th>Role</th><th>Control</th><th>Eval</th><th>Evidence</th><th>Owner</th><th>Cadence</th><th>Frameworks</th></tr></thead><tbody>
+    <tr class="data-row" data-role="Provider" data-owner="Platform Eng" data-cadence="Pre-release" data-articles="12" data-evidence="test-results" data-cluster="logging-traceability" id="r10">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d10" onclick="toggleRow(this,'d10')"><span class="obl-name">Design system for automatic event logging</span><span class="art-ref">Art. 12(1)-(2)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">System technically allows automatic recording of events relevant to risk identification, post-market monitoring, and operation monitoring</td>
+      <td data-label="Eval / Verification">Log completeness tests: trigger known events, verify they appear in structured logs with required fields</td>
+      <td data-label="Evidence Artifact">Log schema specification, completeness test results, sample structured logs</td>
+      <td data-label="Owner">Platform Eng</td><td data-label="Cadence">Pre-release</td>
+      <td data-label="Frameworks">NIST AI RMF: Measure (MS 4) · ISO 42001: A.7.2</td>
+    </tr>
+    <tr class="detail-row" id="d10" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 12 requires the system to "technically allow" automatic logging: a design obligation on the provider. The Act does not prescribe a specific schema. For agentic systems, structured logging of inputs, outputs, tool calls, versions, human interventions, and operational context exceeds the statutory minimum but is the safest path to meeting traceability standards.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/what-your-agent-logged-vs-what-the-auditor-needed">C3</a> on the gap between what teams capture and what auditors need.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Deployer" data-owner="Ops" data-cadence="Continuous" data-articles="12,26" data-evidence="monitoring" data-cluster="logging-traceability" id="r11">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d11" onclick="toggleRow(this,'d11')"><span class="obl-name">Retain logs and provide access for monitoring</span><span class="art-ref">Art. 12(1), Art. 26(6)</span></button></td>
+      <td data-label="Role"><span class="role-tag deployer">Deployer</span></td>
+      <td data-label="Control Objective">Logs retained for minimum 6 months (per Art. 26(6), subject to applicable law) and accessible for compliance monitoring</td>
+      <td data-label="Eval / Verification">Log retention audit: verify logs from N months ago are retrievable, complete, and unaltered</td>
+      <td data-label="Evidence Artifact">Retention policy document, retrieval test results, access control records</td>
+      <td data-label="Owner">Ops</td><td data-label="Cadence">Continuous</td>
+      <td data-label="Frameworks">NIST AI RMF: Govern (GV 1.1) · ISO 42001: A.6.2.3</td>
+    </tr>
+    <tr class="detail-row" id="d11" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 26(6) places the retention duty on the deployer. The six-month minimum is subject to applicable Union or national law. Deployers must ensure logs remain under their control and are not solely stored in provider infrastructure without access guarantees.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/what-your-agent-logged-vs-what-the-auditor-needed">C3</a> on operational logs vs. audit-ready evidence.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+  </tbody></table></div>
+</div>
+
+<!-- ===== CLUSTER 5: Transparency ===== -->
+<div class="cluster-section" data-cluster="transparency">
+  <button class="cluster-toggle" aria-expanded="true" onclick="toggleCluster(this)"><div><span class="cluster-title">Transparency</span><span class="cluster-articles">Art. 13</span></div><div class="cluster-meta"><span class="cluster-count"></span><span class="cluster-chevron">&#9660;</span></div></button>
+  <div class="cluster-body"><table class="ctrl-table" role="grid"><thead class="sr-only"><tr><th>Obligation</th><th>Role</th><th>Control</th><th>Eval</th><th>Evidence</th><th>Owner</th><th>Cadence</th><th>Frameworks</th></tr></thead><tbody>
+    <tr class="data-row" data-role="Provider" data-owner="Product" data-cadence="Pre-release" data-articles="13" data-evidence="test-results" data-cluster="transparency" id="r12">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d12" onclick="toggleRow(this,'d12')"><span class="obl-name">Design system so deployers can interpret output appropriately</span><span class="art-ref">Art. 13(1)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">System output includes sufficient context for deployers to interpret results and use them appropriately</td>
+      <td data-label="Eval / Verification">Interpretability assessment: present outputs to deployer-representative users, measure comprehension</td>
+      <td data-label="Evidence Artifact">Interpretability test results, deployer comprehension scores, output format specification</td>
+      <td data-label="Owner">Product</td><td data-label="Cadence">Pre-release</td>
+      <td data-label="Frameworks">NIST AI RMF: Map (MP 5) · ISO 42001: A.8.2</td>
+    </tr>
+    <tr class="detail-row" id="d12" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>A design obligation: the system must be built to be interpretable, not merely documented after the fact. "Appropriate" interpretation, not complete explainability.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Provider" data-owner="Compliance" data-cadence="Pre-release" data-articles="13" data-evidence="documentation" data-cluster="transparency" id="r13">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d13" onclick="toggleRow(this,'d13')"><span class="obl-name">Provide instructions for use covering capabilities, limitations, and risks</span><span class="art-ref">Art. 13(2)-(3)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">Instructions cover provider identity, system characteristics, performance metrics, known limitations, human oversight measures, expected lifetime, and maintenance</td>
+      <td data-label="Eval / Verification">Completeness checklist against Art. 13(3) requirements; deployer comprehension review</td>
+      <td data-label="Evidence Artifact">Instructions for use document, completeness checklist, revision history</td>
+      <td data-label="Owner">Compliance</td><td data-label="Cadence">Pre-release</td>
+      <td data-label="Frameworks">NIST AI RMF: Govern (GV 4) · ISO 42001: A.8.4</td>
+    </tr>
+    <tr class="detail-row" id="d13" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 13(3)(b)(ii) requires disclosure of "known or foreseeable circumstances... which may lead to risks." A continuing disclosure obligation as new risks are discovered post-deployment.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/mapping-the-eu-ai-act-to-engineering-evidence">Essay #9</a> on transparency obligations.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+  </tbody></table></div>
+</div>
+
+<!-- ===== CLUSTER 6: Human Oversight ===== -->
+<div class="cluster-section" data-cluster="human-oversight">
+  <button class="cluster-toggle" aria-expanded="true" onclick="toggleCluster(this)"><div><span class="cluster-title">Human Oversight</span><span class="cluster-articles">Art. 14, Art. 26(2)</span></div><div class="cluster-meta"><span class="cluster-count"></span><span class="cluster-chevron">&#9660;</span></div></button>
+  <div class="cluster-body"><table class="ctrl-table" role="grid"><thead class="sr-only"><tr><th>Obligation</th><th>Role</th><th>Control</th><th>Eval</th><th>Evidence</th><th>Owner</th><th>Cadence</th><th>Frameworks</th></tr></thead><tbody>
+    <tr class="data-row" data-role="Provider" data-owner="Platform Eng" data-cadence="Pre-release" data-articles="14" data-evidence="test-results" data-cluster="human-oversight" id="r14">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d14" onclick="toggleRow(this,'d14')"><span class="obl-name">Design system to allow effective human oversight</span><span class="art-ref">Art. 14(1)-(2)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">System includes mechanisms enabling oversight persons to monitor operation and intervene during period of use</td>
+      <td data-label="Eval / Verification">Oversight workflow test: simulate scenarios requiring intervention, verify mechanisms function correctly</td>
+      <td data-label="Evidence Artifact">Oversight mechanism specification, intervention test results, workflow documentation</td>
+      <td data-label="Owner">Platform Eng</td><td data-label="Cadence">Pre-release</td>
+      <td data-label="Frameworks">NIST AI RMF: Govern (GV 3) · ISO 42001: A.8.5</td>
+    </tr>
+    <tr class="detail-row" id="d14" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 14(2): oversight aims to "prevent or minimise the risks to health, safety or fundamental rights." A design obligation: the system must be built for oversight, not merely accompanied by a process document.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/from-obligation-to-evidence-in-90-minutes">C2</a> walks the Article 14 loop end to end.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Provider" data-owner="Platform Eng" data-cadence="Pre-release" data-articles="14" data-evidence="test-results" data-cluster="human-oversight" id="r15">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d15" onclick="toggleRow(this,'d15')"><span class="obl-name">Enable override, reversal, and interruption of system output</span><span class="art-ref">Art. 14(4)(d)-(e)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">Oversight person can decide not to use the system, disregard, override, or reverse its output, and interrupt operation via a stop mechanism</td>
+      <td data-label="Eval / Verification">Override capability test: trigger override/stop actions, verify system responds; log capture test for override events</td>
+      <td data-label="Evidence Artifact">Override mechanism test results, stop-button test results, override event log samples</td>
+      <td data-label="Owner">Platform Eng</td><td data-label="Cadence">Pre-release</td>
+      <td data-label="Frameworks">NIST AI RMF: Govern (GV 3.2) · ISO 42001: A.8.5</td>
+    </tr>
+    <tr class="detail-row" id="d15" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 14(4)(d): "not to use the high-risk AI system or to otherwise disregard, override or reverse the output." Art. 14(4)(e) adds "interrupt the operation" via a stop mechanism. The logging requirements for proving these rights are exercisable sit in Art. 12 and Annex IV, not Art. 14 itself.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/from-obligation-to-evidence-in-90-minutes">C2</a> on Article 14. <a href="https://latentmesh.ai/blog/what-your-agent-logged-vs-what-the-auditor-needed">C3</a> on logging gap.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Deployer" data-owner="Ops" data-cadence="Continuous" data-articles="14,26" data-evidence="process" data-cluster="human-oversight" id="r16">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d16" onclick="toggleRow(this,'d16')"><span class="obl-name">Assign competent oversight persons</span><span class="art-ref">Art. 14(4), Art. 26(2)</span></button></td>
+      <td data-label="Role"><span class="role-tag deployer">Deployer</span></td>
+      <td data-label="Control Objective">Persons assigned to oversight have necessary competence, training, and authority; understand system capabilities and limitations</td>
+      <td data-label="Eval / Verification">Role assignment records; competence assessment against provider instructions; periodic training verification</td>
+      <td data-label="Evidence Artifact">Oversight assignment records, training completion logs, competence assessment results</td>
+      <td data-label="Owner">Ops</td><td data-label="Cadence">Continuous</td>
+      <td data-label="Frameworks">NIST AI RMF: Govern (GV 3.1) · ISO 42001: 7.2</td>
+    </tr>
+    <tr class="detail-row" id="d16" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 26(2): assign oversight "to natural persons who have the necessary competence, training and authority." Competence must be assessed and documented. The deployer cannot outsource this to the provider.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/the-accountability-gap-in-agent-chains">Essay #4</a> on accountability gaps.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+  </tbody></table></div>
+</div>
+
+<!-- ===== CLUSTER 7: Accuracy, Robustness & Cybersecurity ===== -->
+<div class="cluster-section" data-cluster="accuracy-robustness-cybersecurity">
+  <button class="cluster-toggle" aria-expanded="true" onclick="toggleCluster(this)"><div><span class="cluster-title">Accuracy, Robustness and Cybersecurity</span><span class="cluster-articles">Art. 15</span></div><div class="cluster-meta"><span class="cluster-count"></span><span class="cluster-chevron">&#9660;</span></div></button>
+  <div class="cluster-body"><table class="ctrl-table" role="grid"><thead class="sr-only"><tr><th>Obligation</th><th>Role</th><th>Control</th><th>Eval</th><th>Evidence</th><th>Owner</th><th>Cadence</th><th>Frameworks</th></tr></thead><tbody>
+    <tr class="data-row" data-role="Provider" data-owner="Applied AI" data-cadence="Pre-release" data-articles="15" data-evidence="test-results" data-cluster="accuracy-robustness-cybersecurity" id="r17">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d17" onclick="toggleRow(this,'d17')"><span class="obl-name">Achieve and declare appropriate accuracy levels</span><span class="art-ref">Art. 15(1)-(2)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">System achieves accuracy levels appropriate to intended purpose; levels declared in instructions for use</td>
+      <td data-label="Eval / Verification">Accuracy eval suite across intended use scenarios; results compared to declared thresholds; confidence intervals</td>
+      <td data-label="Evidence Artifact">Accuracy evaluation report, declared performance metrics, eval dataset descriptions</td>
+      <td data-label="Owner">Applied AI</td><td data-label="Cadence">Pre-release</td>
+      <td data-label="Frameworks">NIST AI RMF: Measure (MS 1) · ISO 42001: A.9.2</td>
+    </tr>
+    <tr class="detail-row" id="d17" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>"Appropriate" is not defined quantitatively. The provider determines levels based on intended purpose and risks. The key obligation is transparency: declared accuracy must match tested accuracy.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/the-eval-gap">Essay #2</a> on benchmarks vs. production. <a href="https://latentmesh.ai/blog/building-an-eval-harness-that-survives-production">C1</a> on harness architecture.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Provider" data-owner="Applied AI" data-cadence="Per-change" data-articles="15" data-evidence="test-results" data-cluster="accuracy-robustness-cybersecurity" id="r18">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d18" onclick="toggleRow(this,'d18')"><span class="obl-name">Ensure resilience against errors, faults, and inconsistencies</span><span class="art-ref">Art. 15(3)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">System maintains performance under errors, faults, or inconsistencies in inputs or environment</td>
+      <td data-label="Eval / Verification">Robustness eval: inject malformed inputs, simulate tool failures, verify graceful degradation</td>
+      <td data-label="Evidence Artifact">Robustness test results, fault injection logs, degradation behavior documentation</td>
+      <td data-label="Owner">Applied AI</td><td data-label="Cadence">Per-change</td>
+      <td data-label="Frameworks">NIST AI RMF: Measure (MS 2.4) · ISO 42001: A.9.4</td>
+    </tr>
+    <tr class="detail-row" id="d18" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 15(3) includes "inconsistencies within or among the components of the high-risk AI system or its environment." For agentic systems: test when tools return unexpected responses, retrieval indices change, or upstream dependencies shift.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/agent-failures-are-distributed-systems-failures">Essay #1</a> on distributed systems failures. <a href="https://latentmesh.ai/blog/drift-is-the-default">Essay #5</a> on drift.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Provider" data-owner="Platform Eng" data-cadence="Continuous" data-articles="15" data-evidence="test-results" data-cluster="accuracy-robustness-cybersecurity" id="r19">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d19" onclick="toggleRow(this,'d19')"><span class="obl-name">Protect against unauthorized alteration; include fail-safe measures</span><span class="art-ref">Art. 15(4)-(5)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">System is resilient against unauthorized attempts to alter its use or performance; technical redundancy and fail-safe measures in place</td>
+      <td data-label="Eval / Verification">Adversarial testing (prompt injection, data poisoning, model extraction); fail-safe trigger tests</td>
+      <td data-label="Evidence Artifact">Adversarial test results, security assessment report, fail-safe documentation and test logs</td>
+      <td data-label="Owner">Platform Eng</td><td data-label="Cadence">Continuous</td>
+      <td data-label="Frameworks">NIST AI RMF: Manage (MG 2.5) · ISO 42001: A.9.5</td>
+    </tr>
+    <tr class="detail-row" id="d19" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 15(4) covers both traditional cybersecurity and AI-specific attack vectors. For agentic systems, prompt injection and tool-use manipulation are within scope. Art. 15(5): "technical redundancy solutions, which may include backup or fail-safe plans": not just monitoring, but fallback mechanisms.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/controls-are-not-guardrails">Essay #3</a> on guardrails vs. controls.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+  </tbody></table></div>
+</div>
+
+<!-- ===== CLUSTER 8: Post-Market Monitoring & Incidents ===== -->
+<div class="cluster-section" data-cluster="post-market-incidents">
+  <button class="cluster-toggle" aria-expanded="true" onclick="toggleCluster(this)"><div><span class="cluster-title">Post-Market Monitoring and Incidents</span><span class="cluster-articles">Arts. 26-27, 72-73</span></div><div class="cluster-meta"><span class="cluster-count"></span><span class="cluster-chevron">&#9660;</span></div></button>
+  <div class="cluster-body"><table class="ctrl-table" role="grid"><thead class="sr-only"><tr><th>Obligation</th><th>Role</th><th>Control</th><th>Eval</th><th>Evidence</th><th>Owner</th><th>Cadence</th><th>Frameworks</th></tr></thead><tbody>
+    <tr class="data-row" data-role="Provider" data-owner="Safety" data-cadence="Continuous" data-articles="72" data-evidence="monitoring" data-cluster="post-market-incidents" id="r20">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d20" onclick="toggleRow(this,'d20')"><span class="obl-name">Establish post-market monitoring system</span><span class="art-ref">Art. 72(1)-(2)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">Proportionate system actively collects, documents, and analyzes relevant data throughout system lifetime</td>
+      <td data-label="Eval / Verification">Monitoring coverage audit: verify data collection covers intended-purpose scenarios; review analysis cadence</td>
+      <td data-label="Evidence Artifact">Post-market monitoring plan, data collection records, periodic analysis reports</td>
+      <td data-label="Owner">Safety</td><td data-label="Cadence">Continuous</td>
+      <td data-label="Frameworks">NIST AI RMF: Manage (MG 3-4) · ISO 42001: 10.1</td>
+    </tr>
+    <tr class="detail-row" id="d20" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 72(2): "actively and systematically" collecting data. Passive log aggregation alone may not satisfy this. Must be "proportionate to the nature of the AI technologies and the risks."</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/drift-detection-patterns-for-production-agents">C4</a> on drift detection. <a href="https://latentmesh.ai/blog/the-incident-response-gap-in-ai-systems">Essay #10</a> on incident response.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Deployer" data-owner="Ops" data-cadence="Continuous" data-articles="26" data-evidence="monitoring" data-cluster="post-market-incidents" id="r21">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d21" onclick="toggleRow(this,'d21')"><span class="obl-name">Monitor operation based on provider instructions</span><span class="art-ref">Art. 26(5)</span></button></td>
+      <td data-label="Role"><span class="role-tag deployer">Deployer</span></td>
+      <td data-label="Control Objective">Operational monitoring follows provider instructions; anomalies detected and acted upon</td>
+      <td data-label="Eval / Verification">Monitoring implementation audit: verify deployer monitoring covers provider-specified indicators</td>
+      <td data-label="Evidence Artifact">Monitoring configuration records, alert logs, anomaly response records</td>
+      <td data-label="Owner">Ops</td><td data-label="Cadence">Continuous</td>
+      <td data-label="Frameworks">NIST AI RMF: Manage (MG 3.1) · ISO 42001: 9.1</td>
+    </tr>
+    <tr class="detail-row" id="d21" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 26(5): the deployer monitors "on the basis of the instructions for use." If the provider's instructions are vague, the deployer's monitoring obligation is difficult to satisfy. Shared-responsibility chain.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/the-accountability-gap-in-agent-chains">Essay #4</a> on accountability chains.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Provider" data-owner="Compliance" data-cadence="Incident-triggered" data-articles="73" data-evidence="incident" data-cluster="post-market-incidents" id="r22">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d22" onclick="toggleRow(this,'d22')"><span class="obl-name">Report serious incidents to market surveillance authorities</span><span class="art-ref">Art. 73(1), (4)-(5)</span></button></td>
+      <td data-label="Role"><span class="role-tag provider">Provider</span></td>
+      <td data-label="Control Objective">Serious incidents reported immediately after establishing a causal link, within 15 days at most</td>
+      <td data-label="Eval / Verification">Incident classification test: simulate incidents, verify severity classification; tabletop exercise</td>
+      <td data-label="Evidence Artifact">Incident response playbook, classification criteria, tabletop exercise records</td>
+      <td data-label="Owner">Compliance</td><td data-label="Cadence">Incident-triggered</td>
+      <td data-label="Frameworks">NIST AI RMF: Manage (MG 4) · ISO 42001: 10.2</td>
+    </tr>
+    <tr class="detail-row" id="d22" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 73(4): initial report "immediately after the provider has established a causal link" or within 15 days. Art. 73(5): report must include all information necessary to determine severity. A team without a pre-established workflow cannot meet this timeline.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/the-incident-response-gap-in-ai-systems">Essay #10</a> on incident response gap.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Deployer" data-owner="Compliance" data-cadence="Incident-triggered" data-articles="26" data-evidence="incident" data-cluster="post-market-incidents" id="r23">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d23" onclick="toggleRow(this,'d23')"><span class="obl-name">Report incidents and notify provider immediately</span><span class="art-ref">Art. 26(5)</span></button></td>
+      <td data-label="Role"><span class="role-tag deployer">Deployer</span></td>
+      <td data-label="Control Objective">Deployer informs provider and, where required by applicable law, the relevant authority upon awareness of a serious incident or malfunction</td>
+      <td data-label="Eval / Verification">Incident escalation workflow test: simulate deployer-detected incidents, verify notification reaches provider</td>
+      <td data-label="Evidence Artifact">Escalation workflow documentation, notification records, provider communication logs</td>
+      <td data-label="Owner">Compliance</td><td data-label="Cadence">Incident-triggered</td>
+      <td data-label="Frameworks">NIST AI RMF: Manage (MG 4) · ISO 42001: 10.2</td>
+    </tr>
+    <tr class="detail-row" id="d23" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>The deployer's primary incident duty sits in Art. 26(5): inform the provider and, where applicable, the relevant authority. Art. 73 is principally a provider obligation; it applies to deployers only in limited circumstances, such as when the deployer cannot reach the provider. Both parties may need to report the same incident through different channels.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/the-incident-response-gap-in-ai-systems">Essay #10</a> on incident response. <a href="https://latentmesh.ai/blog/the-accountability-gap-in-agent-chains">Essay #4</a> on accountability.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Deployer" data-owner="Compliance" data-cadence="Pre-release" data-articles="27" data-evidence="documentation" data-cluster="post-market-incidents" id="r24">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d24" onclick="toggleRow(this,'d24')"><span class="obl-name">Conduct fundamental rights impact assessment</span><span class="art-ref">Art. 27(1)</span></button></td>
+      <td data-label="Role"><span class="role-tag deployer">Deployer</span></td>
+      <td data-label="Control Objective">Assessment covering elements in Art. 27(1)(a)-(f) completed before deployment</td>
+      <td data-label="Eval / Verification">FRIA completeness review against Art. 27(1)(a)-(f) elements; legal and domain-expert review</td>
+      <td data-label="Evidence Artifact">FRIA document, reviewer sign-off, notification to authority per Art. 27(3)</td>
+      <td data-label="Owner">Compliance</td><td data-label="Cadence">Pre-release</td>
+      <td data-label="Frameworks">NIST AI RMF: Map (MP 5) · ISO 42001: 6.1.2</td>
+    </tr>
+    <tr class="detail-row" id="d24" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 27(1) applies to specific deployer categories: bodies governed by public law, private entities providing public services, and certain other listed categories. Not all deployers are required. Assessment contents: Art. 27(1)(a)-(f). Art. 27(3) separately requires notification. First assessment before first use; update when relevant changes occur.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://latentmesh.ai/blog/mapping-the-eu-ai-act-to-engineering-evidence">Essay #9</a> on deployer obligations.<br><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+
+    <tr class="data-row" data-role="Deployer" data-owner="Ops" data-cadence="Continuous" data-articles="26" data-evidence="process" data-cluster="post-market-incidents" id="r25">
+      <td data-label="Obligation"><button class="expand-btn" aria-expanded="false" aria-controls="d25" onclick="toggleRow(this,'d25')"><span class="obl-name">Inform workers and their representatives</span><span class="art-ref">Art. 26(7)</span></button></td>
+      <td data-label="Role"><span class="role-tag deployer">Deployer</span></td>
+      <td data-label="Control Objective">Workers subject to the use of high-risk AI systems are informed, including worker representatives where relevant</td>
+      <td data-label="Eval / Verification">Notification process audit: verify records exist and cover all affected roles</td>
+      <td data-label="Evidence Artifact">Worker notification records, communication logs, representative acknowledgments</td>
+      <td data-label="Owner">Ops</td><td data-label="Cadence">Continuous</td>
+      <td data-label="Frameworks">NIST AI RMF: Govern (GV 4) · ISO 42001: 7.3</td>
+    </tr>
+    <tr class="detail-row" id="d25" role="region"><td colspan="8"><div class="detail-grid">
+      <div class="detail-item"><label>Interpretation Notes</label><p>Art. 26(7): workers must be informed "before being subject to the use of the system." New deployments, expanded use cases, or significant system changes trigger fresh notification. Interacts with Member State labor law.</p></div>
+      <div class="detail-item"><label>Cross-references</label><p><a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689" class="eur-lex-link">Official text: Regulation (EU) 2024/1689</a></p></div>
+    </div></td></tr>
+  </tbody></table></div>
+</div>
+
+</div><!-- .main -->
+
+<div class="footer">
+  <h3>Interpretation Limits</h3>
+  <p>This reference reflects the EU AI Act as enacted (<a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689">Regulation (EU) 2024/1689</a>). It provides engineering guidance for building compliance-ready infrastructure. It is not legal advice and does not replace qualified legal counsel. Obligation summaries are simplified; consult the full text for binding interpretation.</p>
+  <p>Framework crosswalks (NIST AI RMF 1.0, ISO/IEC 42001:2023) are indicative mappings, not authoritative equivalences. Compliance with one framework does not guarantee compliance with the EU AI Act or any other regulatory regime.</p>
+  <p>This version is designed for engineering and governance teams operationalizing compliance, not for legal qualification of whether a system is high-risk.</p>
+  <div class="update-log">Last updated: April 2026 · Version 1.0 · <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689">Official text: Regulation (EU) 2024/1689 (EUR-Lex)</a></div>
+</div>
+
+<script>
+function toggleCluster(btn) {
+  const sec = btn.closest('.cluster-section');
+  const collapsed = sec.getAttribute('data-collapsed') === 'true';
+  sec.setAttribute('data-collapsed', collapsed ? 'false' : 'true');
+  btn.setAttribute('aria-expanded', collapsed ? 'true' : 'false');
+}
+
+function toggleRow(btn, detailId) {
+  const detail = document.getElementById(detailId);
+  if (!detail) return;
+  const isOpen = detail.classList.contains('open');
+  detail.classList.toggle('open');
+  btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+}
+
+function resetFilters() {
+  ['fRole','fCluster','fOwner','fCadence','fArticle','fEvidence'].forEach(function(id) { document.getElementById(id).value = 'all'; });
+  applyFilters();
+}
+
+function applyFilters() {
+  var role = document.getElementById('fRole').value;
+  var cluster = document.getElementById('fCluster').value;
+  var owner = document.getElementById('fOwner').value;
+  var cadence = document.getElementById('fCadence').value;
+  var article = document.getElementById('fArticle').value;
+  var evidence = document.getElementById('fEvidence').value;
+
+  var totalVisible = 0, totalRows = 0;
+
+  document.querySelectorAll('.cluster-section').forEach(function(sec) {
+    var clusterMatch = cluster === 'all' || sec.dataset.cluster === cluster;
+    var sectionVisible = 0;
+
+    sec.querySelectorAll('tr.data-row').forEach(function(row) {
+      totalRows++;
+      var detail = row.nextElementSibling;
+      var roleMatch = role === 'all' || row.dataset.role === role;
+      var ownerMatch = owner === 'all' || row.dataset.owner === owner;
+      var cadenceMatch = cadence === 'all' || row.dataset.cadence === cadence;
+      var articleMatch = article === 'all' || (row.dataset.articles || '').split(',').indexOf(article) !== -1;
+      var evidenceMatch = evidence === 'all' || row.dataset.evidence === evidence;
+
+      if (clusterMatch && roleMatch && ownerMatch && cadenceMatch && articleMatch && evidenceMatch) {
+        row.classList.remove('hidden-row');
+        if (detail && detail.classList.contains('detail-row')) {
+          detail.classList.remove('hidden-row');
+        }
+        sectionVisible++;
+        totalVisible++;
+      } else {
+        row.classList.add('hidden-row');
+        if (detail && detail.classList.contains('detail-row')) {
+          detail.classList.remove('open');
+          detail.classList.add('hidden-row');
+        }
+      }
+    });
+
+    if (!clusterMatch || sectionVisible === 0) { sec.classList.add('hidden-cluster'); }
+    else { sec.classList.remove('hidden-cluster'); sec.removeAttribute('data-collapsed'); sec.querySelector('.cluster-toggle').setAttribute('aria-expanded','true'); }
+  });
+
+  document.getElementById('countBar').textContent = 'Showing ' + totalVisible + ' of ' + totalRows + ' controls';
+}
+
+function updateCounts() {
+  document.querySelectorAll('.cluster-section').forEach(function(sec) {
+    var c = sec.querySelectorAll('tr.data-row').length;
+    sec.querySelector('.cluster-count').textContent = c + ' control' + (c !== 1 ? 's' : '');
+  });
+}
+
+['fRole','fCluster','fOwner','fCadence','fArticle','fEvidence'].forEach(function(id) {
+  document.getElementById(id).addEventListener('change', applyFilters);
+});
+
+updateCounts();
+applyFilters();
+</script>
+
+<div class="footer">
+  <h3>Interpretation Limits</h3>
+  <p>This reference reflects the EU AI Act as enacted (<a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689">Regulation (EU) 2024/1689</a>). It provides engineering guidance for building compliance-ready infrastructure. It is not legal advice and does not replace qualified legal counsel. Obligation summaries are simplified; consult the full text for binding interpretation.</p>
+  <p>Framework crosswalks (NIST AI RMF 1.0, ISO/IEC 42001:2023) are indicative mappings, not authoritative equivalences. Compliance with one framework does not guarantee compliance with the EU AI Act or any other regulatory regime.</p>
+  <p>This version is designed for engineering and governance teams operationalizing compliance, not for legal qualification of whether a system is high-risk.</p>
+  <div class="update-log">Last updated: April 2026 · Version 1.0 · <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689">Official text: Regulation (EU) 2024/1689 (EUR-Lex)</a></div>
+</div>
+
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  /* ── Back navigation ── */
+  .ref-back-nav {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 1rem 2rem 0;
+  }
+  .ref-back-nav a {
+    font-family: sans-serif;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+  .ref-back-nav a:hover {
+    color: var(--color-text-primary);
+  }
+
+  /* ── Page header (replaces standalone .header) ── */
+  .ref-header {
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 2rem 2rem 1.5rem;
+  }
+  .ref-header h1 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.25rem;
+    color: var(--color-text-primary);
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+  .ref-subtitle {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+  .ref-pub-tag {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ── Remap interactive widget variables to blog theme ── */
+  .ref-page {
+    --bg: var(--color-bg);
+    --surface: var(--color-bg);
+    --border: var(--color-border);
+    --border-light: var(--color-border-light);
+    --text: var(--color-text-primary);
+    --text-secondary: var(--color-text-secondary);
+    --text-tertiary: var(--color-text-muted);
+    --accent: var(--color-brand);
+    --accent-light: var(--color-link);
+    --accent-bg: var(--color-bg-secondary);
+    --cluster-bg: var(--color-bg-secondary);
+    --tag-provider: #2c4a3e;
+    --tag-deployer: #6b4c2c;
+    --tag-provider-bg: #eef3f0;
+    --tag-deployer-bg: #f5f0ea;
+    --expand-bg: var(--color-bg-secondary);
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+  }
+
+  :global([data-theme="dark"]) .ref-page {
+    --tag-provider: #7ec8a8;
+    --tag-deployer: #c8a87e;
+    --tag-provider-bg: #1a2f26;
+    --tag-deployer-bg: #2f2a1a;
+    --shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+
+  /* ── Intro section ── */
+  .ref-page :global(.intro) { max-width: 1360px; margin: 0 auto; padding: 0 2rem 0.75rem; }
+  .ref-page :global(.intro p) { max-width: 780px; font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 0.75rem; line-height: 1.7; }
+  .ref-page :global(.intro a) { color: var(--accent-light); text-decoration: underline; text-underline-offset: 2px; }
+  .ref-page :global(.intro .usage-hint) { max-width: 780px; font-size: 0.85rem; color: var(--text-tertiary); font-style: italic; margin-bottom: 1rem; }
+  .ref-page :global(.scope-box) { max-width: 780px; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--text-tertiary); border-left: 2px solid var(--border); padding: 0.75rem 1rem; margin-top: 0.5rem; line-height: 1.65; }
+  .ref-page :global(.scope-box strong) { color: var(--text-secondary); font-weight: 500; }
+  .ref-page :global(.coverage-note) { max-width: 780px; font-size: 0.83rem; color: var(--text-tertiary); background: var(--cluster-bg); border-radius: 4px; padding: 0.75rem 1rem; margin-top: 1rem; line-height: 1.6; }
+
+  /* ── Filters ── */
+  .ref-page :global(.filters-bar) { max-width: 1360px; margin: 0 auto; padding: 1.25rem 2rem 1rem; display: flex; flex-wrap: wrap; gap: 0.65rem; align-items: center; }
+  .ref-page :global(.filter-group) { display: flex; align-items: center; gap: 0.35rem; }
+  .ref-page :global(.filter-group label) { font-size: 0.73rem; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.04em; }
+  .ref-page :global(.filter-group select) { font-family: 'IBM Plex Sans', sans-serif; font-size: 0.83rem; padding: 0.35rem 2rem 0.35rem 0.6rem; border: 1px solid var(--border); border-radius: 4px; background: var(--surface); color: var(--text); cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a8880'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.6rem center; }
+  .ref-page :global(.filter-group select:focus) { outline: none; border-color: var(--accent); }
+  .ref-page :global(.filter-reset) { font-family: 'IBM Plex Sans', sans-serif; font-size: 0.78rem; color: var(--accent-light); background: none; border: none; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; padding: 0.35rem 0; }
+
+  .ref-page :global(.count-bar) { max-width: 1360px; margin: 0 auto; padding: 0 2rem 0.75rem; font-size: 0.78rem; color: var(--text-tertiary); font-family: 'IBM Plex Mono', monospace; }
+  .ref-page :global(.main) { max-width: 1360px; margin: 0 auto; padding: 0 2rem 3rem; }
+
+  /* ── Cluster sections ── */
+  .ref-page :global(.cluster-section) { margin-bottom: 1.25rem; border: 1px solid var(--border-light); border-radius: 6px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow); }
+  .ref-page :global(.cluster-toggle) { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0.8rem 1.25rem; background: var(--cluster-bg); border: none; border-bottom: 1px solid var(--border-light); cursor: pointer; font-family: inherit; text-align: left; color: inherit; }
+  .ref-page :global(.cluster-toggle:hover) { opacity: 0.85; }
+  .ref-page :global(.cluster-toggle:focus-visible) { outline: 2px solid var(--accent); outline-offset: -2px; }
+  .ref-page :global(.cluster-title) { font-size: 0.93rem; font-weight: 600; color: var(--text); }
+  .ref-page :global(.cluster-articles) { font-family: 'IBM Plex Mono', monospace; font-size: 0.73rem; color: var(--text-tertiary); margin-left: 0.6rem; }
+  .ref-page :global(.cluster-meta) { display: flex; align-items: center; gap: 0.75rem; }
+  .ref-page :global(.cluster-count) { font-size: 0.76rem; color: var(--text-tertiary); }
+  .ref-page :global(.cluster-chevron) { font-size: 0.65rem; color: var(--text-tertiary); transition: transform 0.2s ease; display: inline-block; }
+  .ref-page :global(.cluster-section[data-collapsed="true"] .cluster-chevron) { transform: rotate(-90deg); }
+  .ref-page :global(.cluster-section[data-collapsed="true"] .cluster-body) { display: none; }
+
+  /* ── Table ── */
+  .ref-page :global(.ctrl-table) { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .ref-page :global(.ctrl-table th) { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-tertiary); padding: 0.5rem 0.6rem; text-align: left; background: var(--surface); border-bottom: 1px solid var(--border-light); }
+  .ref-page :global(.ctrl-table th:first-child) { padding-left: 1.25rem; }
+  .ref-page :global(.col-obl) { width: 17%; }
+  .ref-page :global(.col-role) { width: 8%; }
+  .ref-page :global(.col-ctrl) { width: 15%; }
+  .ref-page :global(.col-eval) { width: 15%; }
+  .ref-page :global(.col-evid) { width: 15%; }
+  .ref-page :global(.col-owner) { width: 8%; }
+  .ref-page :global(.col-cadence) { width: 9%; }
+  .ref-page :global(.col-fw) { width: 13%; }
+  .ref-page :global(.sr-only) { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+  /* ── Rows ── */
+  .ref-page :global(tr.data-row) { border-bottom: 1px solid var(--border-light); }
+  .ref-page :global(tr.data-row:last-of-type) { border-bottom: none; }
+  .ref-page :global(tr.data-row:hover td) { background: var(--cluster-bg); }
+  .ref-page :global(tr.data-row td) { font-size: 0.82rem; color: var(--text); padding: 0.75rem 0.6rem; vertical-align: top; line-height: 1.5; }
+  .ref-page :global(tr.data-row td:first-child) { padding-left: 1.25rem; }
+
+  .ref-page :global(.expand-btn) { background: none; border: none; cursor: pointer; font-family: inherit; font-size: inherit; color: inherit; text-align: left; padding: 0; line-height: 1.5; display: block; width: 100%; }
+  .ref-page :global(.expand-btn:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  .ref-page :global(.obl-name) { font-weight: 500; display: block; }
+  .ref-page :global(.art-ref) { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--text-tertiary); display: block; margin-top: 0.15rem; }
+  .ref-page :global(.expand-hint) { font-size: 0.68rem; color: var(--text-tertiary); margin-top: 0.2rem; display: block; }
+  .ref-page :global(.role-tag) { display: inline-block; font-size: 0.72rem; font-weight: 500; padding: 0.12rem 0.45rem; border-radius: 3px; }
+  .ref-page :global(.role-tag.provider) { background: var(--tag-provider-bg); color: var(--tag-provider); }
+  .ref-page :global(.role-tag.deployer) { background: var(--tag-deployer-bg); color: var(--tag-deployer); }
+
+  /* ── Detail rows ── */
+  .ref-page :global(tr.detail-row) { display: none; }
+  .ref-page :global(tr.detail-row.open) { display: table-row; }
+  .ref-page :global(tr.detail-row td) { padding: 0.75rem 1.25rem 1rem; background: var(--expand-bg); border-bottom: 1px solid var(--border-light); }
+  .ref-page :global(.detail-grid) { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 2rem; max-width: 920px; }
+  .ref-page :global(.detail-item label) { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-tertiary); display: block; margin-bottom: 0.15rem; }
+  .ref-page :global(.detail-item p) { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.55; }
+  .ref-page :global(.detail-item a) { color: var(--accent-light); text-decoration: underline; text-underline-offset: 2px; }
+  .ref-page :global(.eur-lex-link) { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; }
+
+  /* ── Reference footer ── */
+  .ref-page :global(.footer) { max-width: 1360px; margin: 0 auto; padding: 2rem; border-top: 1px solid var(--border-light); }
+  .ref-page :global(.footer h3) { font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text); }
+  .ref-page :global(.footer p) { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 0.5rem; max-width: 780px; }
+  .ref-page :global(.footer a) { color: var(--accent-light); text-decoration: underline; text-underline-offset: 2px; }
+  .ref-page :global(.footer .update-log) { font-family: 'IBM Plex Mono', monospace; font-size: 0.76rem; color: var(--text-tertiary); margin-top: 1.5rem; }
+
+  /* ── Visibility ── */
+  .ref-page :global(.hidden-row) { display: none !important; }
+  .ref-page :global(.hidden-cluster) { display: none !important; }
+
+  /* ── Responsive ── */
+  @media (max-width: 1100px) {
+    .ref-page :global(.ctrl-table th.col-eval),
+    .ref-page :global(.ctrl-table th.col-evid),
+    .ref-page :global(.ctrl-table th.col-fw) { display: none; }
+    .ref-page :global(tr.data-row td:nth-child(4)),
+    .ref-page :global(tr.data-row td:nth-child(5)),
+    .ref-page :global(tr.data-row td:nth-child(8)) { display: none; }
+    .ref-page :global(.detail-grid) { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 700px) {
+    .ref-back-nav { padding: 1rem 1.25rem 0; }
+    .ref-header { padding: 1.5rem 1.25rem 1rem; }
+    .ref-page :global(.intro),
+    .ref-page :global(.filters-bar),
+    .ref-page :global(.main),
+    .ref-page :global(.footer),
+    .ref-page :global(.count-bar) { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .ref-page :global(.ctrl-table thead) { position: static; }
+    .ref-page :global(.ctrl-table th) { display: none; }
+    .ref-page :global(tr.data-row) { display: block; padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border-light); }
+    .ref-page :global(tr.data-row td) { display: block; padding: 0.15rem 0; }
+    .ref-page :global(tr.data-row td::before) { content: attr(data-label); display: block; font-size: 0.66rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-tertiary); }
+    .ref-page :global(tr.data-row td:nth-child(4)),
+    .ref-page :global(tr.data-row td:nth-child(5)),
+    .ref-page :global(tr.data-row td:nth-child(8)) { display: block; }
+    .ref-page :global(tr.detail-row.open) { display: block; }
+    .ref-page :global(.filters-bar) { flex-direction: column; align-items: flex-start; }
+  }
+</style>
