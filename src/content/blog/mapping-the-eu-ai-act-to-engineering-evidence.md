@@ -190,7 +190,7 @@ That is what a regulator can inspect. That is what legal can defend. Good engine
 **Selected References**
 
 - EU AI Act (Regulation (EU) 2024/1689), Articles 9-15, 16-21, 25-26, 43, 47-49, 72-73. Entered into force 1 August 2024; high-risk obligations applicable 2 August 2026; embedded-product high-risk obligations applicable 2 August 2027.
-- Noma Security, ["ForcedLeak: Exploiting Salesforce Agentforce to Exfiltrate CRM Data via Indirect Prompt Injection,"](https://www.noma.ai/blog/forcedleak-exploiting-salesforce-agentforce-to-exfiltrate-crm-data-via-indirect-prompt-injection) disclosed September 2025. CVSS 9.4, reported July 28, 2025. Salesforce patched September 8, 2025.
+- Noma Security, ["ForcedLeak: Exploiting Salesforce Agentforce to Exfiltrate CRM Data via Indirect Prompt Injection,"](https://noma.security/blog/forcedleak-agent-risks-exposed-in-salesforce-agentforce/) disclosed September 2025. CVSS 9.4, reported July 28, 2025. Salesforce patched September 8, 2025.
 - NIST AI RMF 1.0 (NIST AI 100-1), January 2023. Four functions: Govern, Map, Measure, Manage.
 - NIST AI 600-1, Generative AI Profile, July 2024. Cross-sectoral profile extending AI RMF to generative AI risks.
 - ISO/IEC 42001:2023, AI Management System standard. 38 controls across 9 control objectives. Published December 2023.
