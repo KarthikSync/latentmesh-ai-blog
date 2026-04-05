@@ -9,9 +9,9 @@ tags: ["compliance", "safety", "evidence", "agents"]
 
 ---
 
-In June 2025, Aim Security disclosed a vulnerability in Microsoft 365 Copilot that they called EchoLeak. A single email, containing no links, no attachments, and no malware, could cause the AI assistant to silently exfiltrate sensitive data from a user's entire M365 environment. The attacker embedded natural-language instructions in the body of the email. When Copilot later retrieved that email as context for a user's query, it followed the hidden instructions, pulled confidential files, chat logs, and internal documents, then transmitted them to an external server through a Microsoft Teams proxy that the content security policy had whitelisted. The user never clicked anything. The user never knew it happened.
+In July 2025, researchers at Noma Security submitted a customer inquiry through Salesforce's standard Web-to-Lead form. The form has a description field that accepts up to 42,000 characters. They used that space to hide a set of instructions for Agentforce, Salesforce's autonomous AI agent platform. The instructions told the agent to gather CRM data and send it to an external server. When an employee later asked Agentforce to review the submission, the agent did exactly what the hidden instructions said. It pulled customer emails, lead details, and internal records, then transmitted them to an attacker-controlled domain. The domain had cost five dollars to register. Salesforce's own Content Security Policy had whitelisted it years earlier and never removed it after the registration lapsed.
 
-Microsoft assigned it CVE-2025-32711, scored it at 9.3, and patched it server-side within weeks. No customers were reported affected.
+Noma reported the vulnerability on July 28, 2025, scoring it at 9.4 out of 10. Salesforce implemented Trusted URL enforcement for Agentforce and Einstein AI on September 8. Noma disclosed publicly on September 25.
 
 The vulnerability is real and the response was fast. But consider what would happen if a failure of this shape occurred in a high-risk AI system covered by the EU AI Act. Patching the platform would not end the legal story. The provider would owe a serious-incident report to market surveillance authorities. The deployer would owe notice to the provider and, where applicable, to affected persons. Both would need to produce evidence that the system had been tested for this class of risk, that logging captured what happened, and that oversight mechanisms were in place. "We fixed it" would not be the whole answer.
 
@@ -70,7 +70,7 @@ This is where most organizations have the largest gap. The Act is not asking for
 
 For agent systems, the engineering best practice is to log the events that matter for traceability: context retrieved, tools invoked, outputs produced, human interventions, overrides, stop events, and system versions. This goes beyond what the statutory text literally requires, which is logging appropriate to intended purpose. But for systems with meaningful autonomy, broad traceability is the strongest way to demonstrate that the logging obligation is met.
 
-The EchoLeak vulnerability illustrates why this matters. When Copilot followed hidden instructions in that email, the logs existed in Microsoft's infrastructure, not in the deployer's environment. The deployer could not independently verify what data was accessed or where it was sent. Under the Act, the provider must design the system to enable automatic logging. The deployer, under Article 26, must keep automatically generated logs to the extent those logs are under their control. Relying solely on the provider's logging infrastructure leaves the deployer unable to fulfill their own obligations.
+The ForcedLeak vulnerability illustrates why this matters. When Agentforce followed hidden instructions in that web form submission, the logs existed in Salesforce's infrastructure, not in the deployer's environment. The deployer could not independently verify what data was accessed or where it was sent. Under the Act, the provider must design the system to enable automatic logging. The deployer, under Article 26, must keep automatically generated logs to the extent those logs are under their control. Relying solely on the provider's logging infrastructure leaves the deployer unable to fulfill their own obligations.
 
 ### Article 13: Transparency and provision of information to deployers
 
@@ -98,7 +98,7 @@ Accuracy is the obligation that most teams already measure, but they measure it 
 
 Robustness is where drift monitoring connects to compliance. Essay #5 covered how model behavior can change substantially without any code change. The evidence for robustness is a monitoring system that detects when performance degrades, and an alert or gate that prevents the system from continuing to operate when performance drops below the acceptable threshold.
 
-Cybersecurity for AI systems goes beyond traditional application security. The EchoLeak attack was not a buffer overflow or a SQL injection. It was a prompt injection that exploited the fundamental architecture of retrieval-augmented generation. The evidence for cybersecurity includes adversarial testing specifically designed for AI systems: prompt injection tests, data poisoning tests, model extraction tests, and jailbreak tests. These are not standard penetration tests. The evidence must show that these tests were conducted, what was found, and what mitigations were applied.
+Cybersecurity for AI systems goes beyond traditional application security. The ForcedLeak attack was not a buffer overflow or a SQL injection. It was a prompt injection that exploited the fundamental architecture of an AI agent with tool access and a whitelisted network boundary. The evidence for cybersecurity includes adversarial testing specifically designed for AI systems: prompt injection tests, data poisoning tests, model extraction tests, and jailbreak tests. These are not standard penetration tests. The evidence must show that these tests were conducted, what was found, and what mitigations were applied.
 
 ## Part two: Article 26, deployer obligations
 
@@ -190,9 +190,8 @@ That is what a regulator can inspect. That is what legal can defend. Good engine
 **Selected References**
 
 - EU AI Act (Regulation (EU) 2024/1689), Articles 9-15, 16-21, 25-26, 43, 47-49, 72-73. Entered into force 1 August 2024; high-risk obligations applicable 2 August 2026; embedded-product high-risk obligations applicable 2 August 2027.
-- Aim Security, "EchoLeak: Zero-Click AI Vulnerability in Microsoft 365 Copilot" (CVE-2025-32711, CVSS 9.3), disclosed June 2025.
+- Noma Security, ["ForcedLeak: Exploiting Salesforce Agentforce to Exfiltrate CRM Data via Indirect Prompt Injection,"](https://www.noma.ai/blog/forcedleak-exploiting-salesforce-agentforce-to-exfiltrate-crm-data-via-indirect-prompt-injection) disclosed September 2025. CVSS 9.4, reported July 28, 2025. Salesforce patched September 8, 2025.
 - NIST AI RMF 1.0 (NIST AI 100-1), January 2023. Four functions: Govern, Map, Measure, Manage.
 - NIST AI 600-1, Generative AI Profile, July 2024. Cross-sectoral profile extending AI RMF to generative AI risks.
 - ISO/IEC 42001:2023, AI Management System standard. 38 controls across 9 control objectives. Published December 2023.
-- Microsoft ISO/IEC 42001 certification for Microsoft 365 Copilot and Copilot Chat, March 2025.
 - Parminder Singh, "Due Diligence is Not Due Care: The AI Compliance Gap," March 2026.
