@@ -2,9 +2,9 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import FormattedDate from "../components/FormattedDate.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { SITE_TITLE, SITE_DESCRIPTION, LINKEDIN_URL } from "../consts";
 import { getCollection } from "astro:content";
+import { getReadingTime } from "../utils/reading-time";
 
 const allPosts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -12,23 +12,27 @@ const allPosts = (await getCollection("blog")).sort(
 const hasPosts = allPosts.length > 0 && allPosts[0].data.title !== "Coming Soon";
 const latestPosts = hasPosts ? allPosts.slice(0, 6) : [];
 
-const startHereEssays = [
-  {
-    slug: "agent-failures-are-distributed-systems-failures",
-    title: "Agent Failures Are Distributed Systems Failures",
-    summary: "Why agent failures are usually system failures, not just model failures.",
-  },
-  {
-    slug: "the-eval-gap",
-    title: "The Eval Gap",
-    summary: "Why staging success does not predict production reliability.",
-  },
-  {
-    slug: "controls-are-not-guardrails",
-    title: "Controls Are Not Guardrails",
-    summary: "Why runtime safety layers are not enough without evidence, ownership, and testing.",
-  },
-];
+// Map first tag to a display category
+function getCategory(tags: string[] | undefined): string {
+  if (!tags || tags.length === 0) return "Essay";
+  const map: Record<string, string> = {
+    reliability: "Reliability",
+    evals: "Evaluation",
+    compliance: "Compliance",
+    safety: "Safety",
+    evidence: "Evidence",
+    practical: "Walkthrough",
+    agents: "Agents",
+  };
+  for (const tag of tags) {
+    if (map[tag]) return map[tag];
+  }
+  return "Essay";
+}
+
+function formatMonth(date: Date): string {
+  return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+}
 ---
 
 <!doctype html>
@@ -42,125 +46,110 @@ const startHereEssays = [
     <main>
       <!-- Hero -->
       <section class="hero">
-        <p class="eyebrow">Karthik Mahalingam writing at LatentMesh</p>
-        <h1 class="headline">
-          How AI systems fail.<br />
-          How to evaluate them.<br />
-          How to govern them in production.
-        </h1>
-        <p class="thesis">
-          Most AI governance advice skips the engineering. These essays don't.
-        </p>
-        <div class="hero-actions">
-          <a href="/blog" class="btn-primary">Read latest essays</a>
-          <a href="/series" class="btn-secondary">Start with the series</a>
+        <div class="hero-label">Reliable Agent Systems &middot; Ten-essay series</div>
+        <h1>How AI systems <em>fail</em>, how to evaluate them, and how to govern them in production.</h1>
+        <p class="hero-sub">Most AI governance advice skips the engineering. These essays close the gap between compliance intent and production evidence.</p>
+        <div class="hero-cta-row">
+          <a href="/series" class="btn-primary">Start with the series &rarr;</a>
+          <a href="/blog" class="btn-secondary">Read latest essays</a>
         </div>
-      </section>
-
-      <!-- Credibility strip -->
-      <section class="proof">
-        <div class="proof-grid">
-          <div class="proof-item">
-            <span class="proof-text">19+ years building distributed systems at scale</span>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <strong>Author</strong>
+            Karthik Mahalingam
           </div>
-          <div class="proof-item">
-            <span class="proof-text">Engineering leader writing on AI systems, evals, safety, and governance</span>
+          <div class="hero-meta-item">
+            <strong>Background</strong>
+            19+ years in distributed systems
+          </div>
+          <div class="hero-meta-item">
+            <strong>Focus</strong>
+            Agents &middot; Evals &middot; Safety &middot; Governance
           </div>
         </div>
       </section>
-
-      <!-- Start here -->
-      <section class="start-here" id="start-here">
-        <p class="series-label">Series: Reliable Agent Systems &middot; Ten essays</p>
-        <h2>Start here</h2>
-        <p class="section-intro">New to LatentMesh? Start with the core essay series on how agent systems fail, how to evaluate them in the real world, and how governance becomes operational.</p>
-        <div class="start-here-grid">
-          {startHereEssays.map((essay) => (
-            <a href={`/blog/${essay.slug}/`} class="start-here-card">
-              <h3>{essay.title}</h3>
-              <p>{essay.summary}</p>
-            </a>
-          ))}
-        </div>
-        <a href="/series" class="view-all">Read the series &rarr;</a>
-      </section>
-
-      <!-- Latest essays -->
-      {latestPosts.length > 0 && (
-        <section class="featured">
-          <h2>Latest essays</h2>
-          <p class="section-intro">Recent essays on agent reliability, evaluation, safety, and governance.</p>
-          <div class="essay-list">
-            {latestPosts.map((post) => (
-              <a href={`/blog/${post.id}/`} class="essay-item">
-                <span class="essay-title">{post.data.title}</span>
-                {post.data.description && (
-                  <span class="essay-summary">{post.data.description}</span>
-                )}
-                <span class="essay-date">
-                  <FormattedDate date={post.data.pubDate} />
-                </span>
-              </a>
-            ))}
-          </div>
-          <a href="/blog" class="view-all">View all essays &rarr;</a>
-        </section>
-      )}
 
       <!-- Topics -->
       <section class="topics">
-        <h2>What I write about</h2>
-        <div class="topics-grid">
-          <a href="/topics/agents/" class="topic-card">
-            <span class="topic-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="3"/><path d="M12 8v3"/><circle cx="7" cy="16" r="1" fill="#2563eb"/><circle cx="17" cy="16" r="1" fill="#2563eb"/>
-              </svg>
-            </span>
-            <h3>Agent failure as system failure</h3>
-            <p>How agent systems break, drift, and misbehave once they leave the demo.</p>
-          </a>
-          <a href="/topics/evals/" class="topic-card">
-            <span class="topic-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 2h6l-1 7h4l-7 11 1-7H8z"/>
-              </svg>
-            </span>
-            <h3>Evaluation that catches real failures</h3>
-            <p>Practical evals for regression, reliability, and operational trust.</p>
-          </a>
-          <a href="/topics/safety/" class="topic-card">
-            <span class="topic-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
-            </span>
-            <h3>Safety as systems engineering</h3>
-            <p>Guardrails, control surfaces, observability, containment, and human review.</p>
-          </a>
-          <a href="/topics/compliance/" class="topic-card">
-            <span class="topic-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-              </svg>
-            </span>
-            <h3>Compliance that becomes architecture</h3>
-            <p>How legal and policy obligations turn into workflows, controls, and evidence.</p>
-          </a>
+        <div class="topics-inner">
+          <div class="section-header">
+            <h2>What I write about</h2>
+          </div>
+          <div class="topic-grid">
+            <a href="/topics/agents/" class="topic-cell">
+              <div class="topic-icon t-agents">&ofcir;</div>
+              <h3>Agent failures</h3>
+              <p>How agent systems break, drift, and misbehave once they leave the demo environment.</p>
+            </a>
+            <a href="/topics/evals/" class="topic-cell">
+              <div class="topic-icon t-evals">&target;</div>
+              <h3>Evaluation</h3>
+              <p>Practical evals for regression, reliability, and operational trust in production.</p>
+            </a>
+            <a href="/topics/safety/" class="topic-cell">
+              <div class="topic-icon t-safety">&osol;</div>
+              <h3>Safety</h3>
+              <p>Guardrails, control surfaces, observability, containment, and human review loops.</p>
+            </a>
+            <a href="/topics/compliance/" class="topic-cell">
+              <div class="topic-icon t-gov">&equiv;</div>
+              <h3>Governance</h3>
+              <p>How legal and policy obligations become workflows, controls, and evidence artifacts.</p>
+            </a>
+          </div>
         </div>
       </section>
 
-      <!-- About preview -->
-      <section class="about-preview">
-        <h2>About</h2>
-        <p>
-          I write about AI systems from the perspective of someone who has spent
-          nearly two decades building large-scale distributed systems. My focus is
-          on how agents behave in production, how evaluations catch real
-          failures, and how safety, privacy, and compliance become operational
-          reality.
-        </p>
-        <a href="/about" class="about-link">More about me &rarr;</a>
+      <!-- Latest Essays -->
+      {latestPosts.length > 0 && (
+        <section class="latest">
+          <div class="section-header">
+            <h2>Latest essays</h2>
+            <a href="/blog" class="view-all-link">View all &rarr;</a>
+          </div>
+          <div class="essay-list">
+            {latestPosts.map((post) => (
+              <a href={`/blog/${post.id}/`} class="essay-item">
+                <div>
+                  <div class="essay-cat">{getCategory(post.data.tags)}</div>
+                  <div class="essay-title">{post.data.title}</div>
+                  {post.data.description && (
+                    <div class="essay-desc">{post.data.description}</div>
+                  )}
+                </div>
+                <div class="essay-meta-right">
+                  <span class="essay-date">{formatMonth(post.data.pubDate)}</span>
+                  <span class="essay-read">{getReadingTime(post.body ?? '')} min</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- About -->
+      <section class="about-strip">
+        <div class="about-inner">
+          <div class="about-text">
+            <h2>About the author</h2>
+            <p>I write about AI systems from the perspective of someone who has spent nearly two decades building large-scale distributed systems. My focus is on how agents behave in production, how evaluations catch real failures, and how safety, privacy, and compliance become operational reality.</p>
+            <a href="/about" class="about-link">More about me &rarr;</a>
+          </div>
+          <div class="about-stats">
+            <div class="about-stat">
+              <div class="stat-num">10</div>
+              <div class="stat-label">Essay series</div>
+            </div>
+            <div class="about-stat">
+              <div class="stat-num">19+</div>
+              <div class="stat-label">Years in systems</div>
+            </div>
+            <div class="about-stat">
+              <div class="stat-num">4</div>
+              <div class="stat-label">Topic areas</div>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
 
@@ -171,185 +160,234 @@ const startHereEssays = [
 <style>
   main {
     width: 100%;
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 0 2rem;
   }
 
   /* ── Hero ── */
   .hero {
-    max-width: 720px;
-    padding: 2.5rem 0 2rem;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 5rem 2rem 4.5rem;
   }
 
-  .eyebrow {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--color-link);
-    margin: 0 0 0.75rem;
-    font-family: sans-serif;
-    letter-spacing: 0.06em;
+  .hero-label {
+    font-family: monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-  }
-
-  .headline {
-    font-size: clamp(2.25rem, 5.5vw, 3.5rem);
-    font-weight: 800;
-    line-height: 1.1;
-    margin: 0 0 1.25rem;
-    color: var(--color-text-primary);
-    letter-spacing: -0.025em;
-  }
-
-  .thesis {
-    font-size: clamp(1.05rem, 2vw, 1.35rem);
-    line-height: 1.6;
-    color: var(--color-text-secondary);
-    margin: 0 0 1.75rem;
-  }
-
-  .hero-actions {
+    color: var(--color-link);
+    margin-bottom: 1.5rem;
     display: flex;
-    gap: 0.75rem;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .hero-label::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-link);
+    opacity: 0.5;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    max-width: 720px;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .hero h1 em {
+    color: var(--color-link);
+    font-style: italic;
+  }
+
+  .hero-sub {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    max-width: 560px;
+    line-height: 1.65;
+  }
+
+  .hero-cta-row {
+    margin-top: 2.25rem;
+    display: flex;
+    gap: 1rem;
     flex-wrap: wrap;
   }
 
   .btn-primary {
-    background: var(--color-brand);
-    color: #fff;
-    padding: 0.75rem 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.7rem 1.5rem;
+    background: var(--color-text-primary);
+    color: var(--color-bg);
+    font-family: sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
     border-radius: 6px;
     text-decoration: none;
-    font-size: 0.95rem;
-    font-family: sans-serif;
-    font-weight: 600;
+    transition: opacity 0.2s;
   }
 
-  .btn-primary:hover {
-    background: var(--color-brand-hover);
-  }
+  .btn-primary:hover { opacity: 0.85; }
 
   .btn-secondary {
-    color: var(--color-text-primary);
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px;
-    border: 1px solid var(--color-border);
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-family: sans-serif;
-    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.7rem 1.5rem;
     background: transparent;
+    color: var(--color-text-primary);
+    font-family: sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s;
   }
 
   .btn-secondary:hover {
-    border-color: var(--color-text-primary);
+    border-color: var(--color-text-muted);
+    background: var(--color-bg-secondary);
   }
 
-  /* ── Credibility strip ── */
-  .proof {
-    padding: 1.25rem 0;
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
+  .hero-meta {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border-light);
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
   }
 
-  .proof-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  .proof-text {
-    font-family: sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--color-text-secondary);
+  .hero-meta-item {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
     line-height: 1.5;
   }
 
-  /* ── Section intro ── */
-  .section-intro {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--color-text-secondary);
-    margin: 0 0 1.5rem;
-    max-width: 640px;
-  }
-
-  /* ── Start here ── */
-  .start-here {
-    max-width: 860px;
-    padding: 2.5rem 0;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .start-here h2 {
-    font-size: clamp(1.5rem, 3vw, 1.875rem);
-    font-weight: 700;
-    margin: 0 0 0.75rem;
-    color: var(--color-text-primary);
-    font-family: sans-serif;
-  }
-
-  .start-here-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
-  }
-
-  .start-here-card {
-    padding: 1.5rem;
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    text-decoration: none;
-    color: inherit;
+  .hero-meta-item strong {
     display: block;
+    font-family: monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.2rem;
   }
 
-  .start-here-card:hover {
-    border-color: var(--color-card-hover);
+  /* ── Topics ── */
+  .topics {
+    background: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border-light);
+    border-bottom: 1px solid var(--color-border-light);
+    padding: 4rem 2rem;
   }
 
-  .start-here-card h3 {
-    font-size: 1.05rem;
+  .topics-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.5rem;
     font-weight: 700;
-    margin: 0 0 0.5rem;
+    letter-spacing: -0.015em;
     color: var(--color-text-primary);
     font-family: sans-serif;
-    line-height: 1.3;
-  }
-
-  .start-here-card p {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: var(--color-text-secondary);
     margin: 0;
   }
 
-  .series-label {
-    font-size: 0.8rem;
-    font-weight: 700;
+  .view-all-link {
+    font-size: 0.82rem;
     color: var(--color-link);
-    margin: 0 0 0.25rem;
-    font-family: sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    text-decoration: none;
+    font-weight: 500;
   }
 
-  /* ── Latest essays ── */
-  .featured {
-    max-width: 860px;
-    padding: 2.5rem 0;
-    border-bottom: 1px solid var(--color-border);
+  .view-all-link:hover { text-decoration: underline; }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--color-border-light);
+    border: 1px solid var(--color-border-light);
+    border-radius: 8px;
+    overflow: hidden;
   }
 
-  .featured h2 {
-    font-size: clamp(1.25rem, 3vw, 1.5rem);
-    font-weight: 800;
-    margin: 0 0 0.5rem;
+  .topic-cell {
+    background: var(--color-bg);
+    padding: 2rem 1.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+  }
+
+  .topic-cell:hover { background: var(--color-bg-secondary); }
+
+  .topic-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .topic-icon.t-agents { background: #fef2f2; color: #dc2626; }
+  .topic-icon.t-evals { background: #fffbeb; color: #d97706; }
+  .topic-icon.t-safety { background: #eff6ff; color: #2563eb; }
+  .topic-icon.t-gov { background: #f0fdf4; color: #16a34a; }
+
+  :global([data-theme="dark"]) .topic-icon.t-agents { background: #3b1515; }
+  :global([data-theme="dark"]) .topic-icon.t-evals { background: #3b2e10; }
+  :global([data-theme="dark"]) .topic-icon.t-safety { background: #15253b; }
+  :global([data-theme="dark"]) .topic-icon.t-gov { background: #153b1f; }
+
+  .topic-cell h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
     color: var(--color-text-primary);
     font-family: sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+  }
+
+  .topic-cell p {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* ── Latest Essays ── */
+  .latest {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
   }
 
   .essay-list {
@@ -358,207 +396,166 @@ const startHereEssays = [
   }
 
   .essay-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 1.25rem 1.5rem;
-    border-left: 3px solid var(--color-link);
-    background: var(--color-bg-secondary);
-    border-radius: 0 8px 8px 0;
-    margin-bottom: 1rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    padding: 1.4rem 0;
+    border-bottom: 1px solid var(--color-border-light);
     text-decoration: none;
     color: inherit;
+    align-items: baseline;
+    transition: all 0.15s;
   }
+
+  .essay-item:first-child { border-top: 1px solid var(--color-border-light); }
 
   .essay-item:hover {
-    border-left-color: var(--color-brand);
+    background: var(--color-bg-secondary);
+    margin: 0 -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 6px;
   }
 
-  .essay-item:hover .essay-title {
-    color: var(--color-brand);
+  .essay-cat {
+    font-family: monospace;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-link);
+    margin-bottom: 0.3rem;
   }
 
   .essay-title {
-    font-size: clamp(1.15rem, 2.5vw, 1.5rem);
-    font-weight: 700;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
     color: var(--color-text-primary);
-    font-family: sans-serif;
-    line-height: 1.3;
   }
 
-  .essay-summary {
-    font-size: 0.95rem;
-    color: var(--color-text-secondary);
-    line-height: 1.6;
+  .essay-desc {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin-top: 0.3rem;
+    line-height: 1.5;
+    max-width: 600px;
+  }
+
+  .essay-meta-right {
+    text-align: right;
+    white-space: nowrap;
   }
 
   .essay-date {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: var(--color-text-muted);
-    font-family: sans-serif;
   }
 
-  .view-all {
-    display: inline-block;
-    margin-top: 1.25rem;
-    font-size: 0.9rem;
-    font-family: sans-serif;
-    font-weight: 600;
-    color: var(--color-link);
-    text-decoration: none;
+  .essay-read {
+    display: block;
+    font-family: monospace;
+    font-size: 0.65rem;
+    color: var(--color-text-muted);
+    margin-top: 0.2rem;
+    letter-spacing: 0.02em;
   }
 
-  .view-all:hover {
-    color: var(--color-brand);
+  /* ── About Strip ── */
+  .about-strip {
+    background: var(--color-text-primary);
+    color: var(--color-bg);
+    padding: 4.5rem 2rem;
   }
 
-  /* ── Topics ── */
-  .topics {
-    padding: 3.5rem 0;
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .topics h2 {
-    font-size: clamp(1.5rem, 3vw, 1.875rem);
-    font-weight: 700;
-    margin: 0 0 1.5rem;
-    color: var(--color-text-primary);
-    font-family: sans-serif;
-  }
-
-  .topics-grid {
+  .about-inner {
+    max-width: 1120px;
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 4rem;
+    align-items: center;
   }
 
-  .topic-card {
-    padding: 1.5rem;
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    min-width: 0;
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-
-  .topic-card:hover {
-    border-color: var(--color-card-hover);
-  }
-
-  .topic-icon {
-    display: block;
-    margin-bottom: 1rem;
-    line-height: 1;
-  }
-
-  .topic-card h3 {
-    font-size: 1.1rem;
+  .about-text h2 {
+    font-size: 1.4rem;
     font-weight: 700;
-    margin: 0 0 0.5rem;
-    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+    color: rgba(255,255,255,0.95);
     font-family: sans-serif;
-    line-height: 1.3;
   }
 
-  .topic-card p {
-    font-size: 0.9rem;
-    line-height: 1.6;
-    color: var(--color-text-secondary);
+  .about-text p {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.75;
+    max-width: 500px;
     margin: 0;
   }
 
-  /* ── About preview ── */
-  .about-preview {
-    max-width: 720px;
-    padding: 3.5rem 0;
-  }
-
-  .about-preview h2 {
-    font-size: clamp(1.5rem, 3vw, 1.875rem);
-    font-weight: 700;
-    margin: 0 0 1rem;
-    color: var(--color-text-primary);
-    font-family: sans-serif;
-  }
-
-  .about-preview p {
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: var(--color-text-secondary);
-    margin: 0 0 1.25rem;
-  }
-
   .about-link {
-    font-size: 0.9rem;
-    font-family: sans-serif;
-    font-weight: 600;
-    color: var(--color-link);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.75);
     text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 0.15rem;
+    transition: color 0.2s;
   }
 
-  .about-link:hover {
-    color: var(--color-brand);
+  .about-link:hover { color: #fff; border-color: rgba(255,255,255,0.5); }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
   }
 
-  /* ── Mobile ── */
+  .about-stat { text-align: center; }
+
+  .stat-num {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: monospace;
+  }
+
+  /* ── Responsive ── */
   @media (max-width: 768px) {
-    main {
-      padding: 0 1.25rem;
-    }
-
-    .hero {
-      padding: 1.5rem 0 1.25rem;
-    }
-
-    .proof-grid {
-      grid-template-columns: 1fr;
-      gap: 0.625rem;
-    }
-
-    .start-here {
-      padding: 2.5rem 0;
-    }
-
-    .start-here-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-
-    .featured {
-      padding: 2.5rem 0;
-    }
-
-    .topics {
-      padding: 2.5rem 0;
-    }
-
-    .topics-grid {
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-
-    .about-preview {
-      padding: 2.5rem 0;
-    }
+    .hero { padding: 3rem 1.25rem 2.5rem; }
+    .topics { padding: 3rem 1.25rem; }
+    .latest { padding: 3rem 1.25rem; }
+    .about-strip { padding: 3rem 1.25rem; }
+    .topic-grid { grid-template-columns: repeat(2, 1fr); }
+    .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .essay-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .essay-meta-right { text-align: left; display: flex; gap: 0.75rem; }
+    .essay-read { display: inline; margin-top: 0; }
   }
 
   @media (max-width: 480px) {
-    main {
-      padding: 0 1rem;
-    }
-
-    .hero {
-      padding: 1.25rem 0 1rem;
-    }
-
-    .hero-actions {
-      flex-direction: column;
-    }
-
-    .btn-primary,
-    .btn-secondary {
-      text-align: center;
-    }
+    .hero { padding: 2rem 1rem; }
+    .topics { padding: 2.5rem 1rem; }
+    .latest { padding: 2.5rem 1rem; }
+    .about-strip { padding: 2.5rem 1rem; }
+    .topic-grid { grid-template-columns: 1fr; }
+    .hero-cta-row { flex-direction: column; }
+    .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
+    .hero-meta { flex-direction: column; gap: 1rem; }
   }
 </style>
