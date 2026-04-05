@@ -15,6 +15,9 @@ import { GITHUB_URL, LINKEDIN_URL } from "../consts";
       <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </div>
   </div>
+  <div class="footer-disclaimer">
+    <p>The views expressed on this website are my own and do not represent the views of my employer.</p>
+  </div>
 </footer>
 
 <style>
@@ -68,6 +71,20 @@ import { GITHUB_URL, LINKEDIN_URL } from "../consts";
 
   .footer-links a:hover {
     color: var(--color-text-primary);
+  }
+
+  .footer-disclaimer {
+    max-width: 1120px;
+    margin: 1.25rem auto 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  .footer-disclaimer p {
+    font-family: sans-serif;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin: 0;
   }
 
   @media (max-width: 480px) {
