@@ -119,7 +119,7 @@ A guardrail without a control is a filter you hope works. A control without a gu
 
 - Noma Security, ["ForcedLeak: AI Agent risks exposed in Salesforce AgentForce,"](https://noma.security/noma-labs/forcedleak/) September 2025. CVSS 9.4 vulnerability chain in Agentforce via indirect prompt injection through Web-to-Lead forms. Reported July 28, patched September 8, disclosed September 25.
 - PromptArmor, ["Data Exfiltration from Slack AI via indirect prompt injection,"](https://promptarmor.substack.com/p/data-exfiltration-from-slack-ai-via) August 2024. Demonstrated private channel data leakage through poisoned public channel messages.
-- Gravitee, ["State of AI Agent Security 2026."](https://gravitee.io) 81% of agents beyond planning, 14.4% with full security approval.
+- Gravitee, ["State of AI Agent Security 2026."](https://www.gravitee.io/blog/state-of-ai-agent-security-2026-report-when-adoption-outpaces-control) 81% of agents beyond planning, 14.4% with full security approval.
 - [EU AI Act](https://eur-lex.europa.eu/eli/reg/2024/1689/oj), main regime applicable 2 August 2026, certain high-risk obligations phased through August 2027.
 - California [SB 243](https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202320240SB243), effective January 2026. Companion chatbot disclosure, self-harm intervention, and minor-specific requirements. Excludes customer service, operational, and internal research systems.
 - [SOC 2 Trust Services Criteria](https://us.aicpa.org/interestareas/frc/assuranceadvisoryservices/trustservicescriteria), AICPA. Security, Availability, Processing Integrity, Confidentiality, Privacy.

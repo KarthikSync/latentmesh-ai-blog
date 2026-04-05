@@ -93,5 +93,5 @@ Official EU text covering defective products, including software in scope, with 
 **OWASP Top 10 for Agentic Applications for 2026** ([framework](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/))
 OWASP's agentic risk framework, published December 9, 2025, developed with input from more than 100 experts.
 
-**Singapore Model AI Governance Framework for Agentic AI** ([framework](https://www.imda.gov.sg/resources/press-releases-factsheets-and-speeches/press-releases/2026/singapore-launches-model-ai-governance-framework-for-agentic-ai)) · [IMDA launch announcement](https://www.imda.gov.sg/resources/press-releases-factsheets-and-speeches/press-releases/2026/singapore-launches-model-ai-governance-framework-for-agentic-ai)
+**Singapore Model AI Governance Framework for Agentic AI** ([framework](https://www.imda.gov.sg/resources/press-releases-factsheets-and-speeches/press-releases/2026/new-model-ai-governance-framework-for-agentic-ai)) · [IMDA launch announcement](https://www.imda.gov.sg/resources/press-releases-factsheets-and-speeches/press-releases/2026/new-model-ai-governance-framework-for-agentic-ai)
 Official Singapore framework and launch note emphasizing responsible deployment and human accountability.
