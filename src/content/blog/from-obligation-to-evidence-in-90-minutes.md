@@ -127,7 +127,7 @@ Ninety minutes to build one complete chain is not fast. It is the minimum viable
 
 ---
 
-*Previously: [What Should an AI System Actually Prove?](/blog/what-should-an-ai-system-actually-prove/) and [Controls Are Not Guardrails](/blog/controls-are-not-guardrails/).*
+*Previously: [What Should an AI System Actually Prove?](/blog/what-should-an-ai-system-actually-prove/) and [Controls Are Not Guardrails](/blog/controls-are-not-guardrails/). Next: [What Your Agent Logged vs. What the Auditor Needed](/blog/what-your-agent-logged-vs-what-the-auditor-needed/).*
 
 ---
 
