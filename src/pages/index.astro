@@ -48,8 +48,8 @@ function formatMonth(date: Date): string {
       <section class="hero">
         <div class="hero-content">
           <div class="hero-text">
-            <h1>How AI systems <em>fail</em>, how to evaluate them, and how to govern them in production.</h1>
-            <p class="hero-sub">Most AI governance advice skips the engineering. These essays close the gap between compliance intent and production evidence.</p>
+            <h1>How AI systems fail, how to evaluate them, and how to govern them in production.</h1>
+            <p class="hero-sub">These essays close the gap between compliance intent and production evidence.</p>
             <div class="hero-cta-row">
               <a href="/series" class="btn-primary">Start with the series &rarr;</a>
               <a href="/blog" class="btn-secondary">Read latest essays</a>
@@ -59,20 +59,7 @@ function formatMonth(date: Date): string {
             <img src="/favicon.svg" alt="" width="240" height="240" />
           </div>
         </div>
-        <div class="hero-meta">
-          <div class="hero-meta-item">
-            <strong>Author</strong>
-            Karthik Mahalingam
-          </div>
-          <div class="hero-meta-item">
-            <strong>Background</strong>
-            19+ years in distributed systems
-          </div>
-          <div class="hero-meta-item">
-            <strong>Focus</strong>
-            Agents &middot; Evals &middot; Safety &middot; Governance
-          </div>
-        </div>
+        <p class="hero-credit">By Karthik Mahalingam &middot; 19+ years building distributed systems at scale</p>
       </section>
 
       <!-- Topics -->
@@ -184,21 +171,16 @@ function formatMonth(date: Date): string {
     margin: 0;
   }
 
-  .hero h1 em {
-    color: var(--color-link);
-    font-style: italic;
-  }
-
   .hero-sub {
-    margin-top: 1.5rem;
-    font-size: 1.1rem;
-    color: var(--color-text-muted);
+    margin-top: 1.25rem;
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
     max-width: 560px;
-    line-height: 1.65;
+    line-height: 1.6;
   }
 
   .hero-cta-row {
-    margin-top: 2.25rem;
+    margin-top: 1.75rem;
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
@@ -242,30 +224,13 @@ function formatMonth(date: Date): string {
     background: var(--color-bg-secondary);
   }
 
-  .hero-meta {
-    margin-top: 3rem;
-    padding-top: 1.5rem;
+  .hero-credit {
+    margin-top: 2rem;
+    padding-top: 1.25rem;
     border-top: 1px solid var(--color-border-light);
-    display: flex;
-    gap: 2.5rem;
-    flex-wrap: wrap;
-  }
-
-  .hero-meta-item {
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     color: var(--color-text-muted);
-    line-height: 1.5;
-  }
-
-  .hero-meta-item strong {
-    display: block;
-    font-family: monospace;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--color-text-secondary);
-    margin-bottom: 0.2rem;
+    font-family: sans-serif;
   }
 
   /* ── Topics ── */
@@ -458,11 +423,11 @@ function formatMonth(date: Date): string {
 
   @media (max-width: 480px) {
     .hero { padding: 1.25rem 1rem 1.5rem; }
-    .hero h1 { font-size: 1.75rem; }
-    .hero-sub { font-size: 0.95rem; margin-top: 1rem; }
-    .hero-cta-row { margin-top: 1.5rem; flex-direction: column; }
+    .hero h1 { font-size: 1.75rem; line-height: 1.2; }
+    .hero-sub { font-size: 0.9rem; margin-top: 0.75rem; }
+    .hero-cta-row { margin-top: 1.25rem; }
     .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
-    .hero-meta { margin-top: 2rem; flex-direction: column; gap: 1rem; }
+    .hero-credit { margin-top: 1.25rem; padding-top: 1rem; }
     .topics { padding: 2.5rem 1rem; }
     .latest { padding: 2.5rem 1rem; }
     .topic-grid { grid-template-columns: 1fr; }
