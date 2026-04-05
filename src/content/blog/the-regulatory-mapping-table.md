@@ -39,7 +39,7 @@ Click any row to expand interpretation notes, framework crosswalks (ISO 42001, N
 <div style="margin: 2rem 0; padding: 1.5rem; border: 1px solid var(--color-border); border-radius: 8px; background: var(--color-bg-secondary, #f9f9f7);">
   <p style="margin: 0 0 1rem; font-weight: 600;">EU AI Act: High-Risk AI Operational Control Reference</p>
   <p style="margin: 0 0 1rem; color: var(--color-text-secondary); font-size: 0.9rem;">25 controls · 8 clusters · Filterable by role, article, owner, cadence, and evidence type</p>
-  <a href="/c5-eu-ai-act-operational-control-reference.html" style="display: inline-block; padding: 0.6rem 1.2rem; background: var(--color-text-primary, #1a1a18); color: var(--color-bg-primary, #fff); border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.9rem;">Open the interactive reference →</a>
+  <a href="/reference/eu-ai-act-controls/" style="display: inline-block; padding: 0.6rem 1.2rem; background: var(--color-text-primary, #1a1a18); color: var(--color-bg-primary, #fff); border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.9rem;">Open the interactive reference →</a>
 </div>
 
 ## Scope and dates
