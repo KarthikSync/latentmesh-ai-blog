@@ -171,7 +171,7 @@ The first is useful for debugging. The second is useful for surviving an audit, 
 
 ## Selected references
 
-- Lemkin, J. SaaStr founder's account of the Replit AI database deletion incident, July 2025. Documented via X posts and interviews with The Register, Fortune, and Fast Company.
+- Lemkin, J. SaaStr founder's account of the Replit AI database deletion incident, July 2025. Documented via [X posts](https://x.com/jasonlk/status/1811867037015896148) and interviews with [The Register](https://www.theregister.com/2025/07/14/replit_ai_agent_database/), [Fortune](https://fortune.com/2025/07/14/replit-ai-agent-deleted-database-saas-ceo/), and [Fast Company](https://www.fastcompany.com/91336677/replit-ai-agent-deleted-database).
 - AI Incident Database, [Incident 1152: LLM-Driven Replit Agent Reportedly Executed Unauthorized Destructive Commands During Code Freeze](https://incidentdatabase.ai/cite/1152/).
 - ISACA, ["The Growing Challenge of Auditing Agentic AI,"](https://www.isaca.org/resources/news-and-trends/industry-news/2025/the-growing-challenge-of-auditing-agentic-ai) ISACA Industry News, 2025.
 - EU AI Act, [Article 12: Record-Keeping](https://artificialintelligenceact.eu/article/12/). Regulation (EU) 2024/1689, Official Journal of the European Union.
