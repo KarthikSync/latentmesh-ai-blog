@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <style>
+      .layer-label { font-size: 15px; font-weight: 600; fill: #1a1a2e; }
+      .layer-question { font-size: 12px; fill: #4a4a6a; font-style: italic; }
+      .layer-detail { font-size: 11px; fill: #5a5a7a; }
+      .failure-label { font-size: 10px; font-weight: 600; fill: #c0392b; text-transform: uppercase; letter-spacing: 0.5px; }
+      .failure-text { font-size: 11px; fill: #7a3b3b; }
+      .section-title { font-size: 11px; font-weight: 600; fill: #2c3e50; text-transform: uppercase; letter-spacing: 1px; }
+      .arrow-label { font-size: 10px; fill: #6a6a8a; font-style: italic; }
+      .evidence-label { font-size: 12px; font-weight: 600; fill: #1a5c3a; }
+      .evidence-detail { font-size: 11px; fill: #2d7a4f; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="520" fill="#fafafa" rx="0"/>
+
+  <!-- Title -->
+  <text x="450" y="36" text-anchor="middle" font-size="18" font-weight="700" fill="#1a1a2e">Eval Architecture Stack</text>
+  <text x="450" y="56" text-anchor="middle" font-size="12" fill="#7a7a9a">Each layer answers a different question. They compose, not compete.</text>
+
+  <!-- Column headers -->
+  <text x="310" y="88" text-anchor="middle" class="section-title">Architecture</text>
+  <text x="680" y="88" text-anchor="middle" class="section-title">Failure Mode</text>
+
+  <!-- Separator line -->
+  <line x1="40" y1="96" x2="860" y2="96" stroke="#d0d0e0" stroke-width="1"/>
+
+  <!-- Layer 3: Production-native (top of stack) -->
+  <rect x="40" y="110" width="520" height="110" rx="8" fill="#e8f4f8" stroke="#7fb3c8" stroke-width="1.5"/>
+  <text x="60" y="134" class="layer-label">Layer 3: Production-Native Eval Infrastructure</text>
+  <text x="60" y="154" class="layer-question">"Is the agent still behaving the way it was when we last approved it?"</text>
+  <text x="60" y="176" class="layer-detail">Trace-level scoring on live traffic · Canary replay on schedule</text>
+  <text x="60" y="192" class="layer-detail">Distribution monitors on tool-call patterns, latency, outcomes</text>
+  <text x="60" y="208" class="layer-detail">Cadence: Continuous · Owner: Platform / SRE</text>
+
+  <!-- Failure mode box for Layer 3 -->
+  <rect x="590" y="110" width="270" height="110" rx="8" fill="#fdf2f2" stroke="#e8c4c4" stroke-width="1"/>
+  <text x="610" y="134" class="failure-label">Failure: Cost Overrun</text>
+  <text x="610" y="156" class="failure-text">Scoring every trace is expensive.</text>
+  <text x="610" y="172" class="failure-text">Without sampling, tiering, and</text>
+  <text x="610" y="188" class="failure-text">alert thresholds, the system</text>
+  <text x="610" y="204" class="failure-text">generates data no one reads.</text>
+
+  <!-- Arrow between Layer 3 and Layer 2 -->
+  <line x1="300" y1="220" x2="300" y2="245" stroke="#9a9aba" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="296,243 300,252 304,243" fill="#9a9aba"/>
+  <text x="316" y="240" class="arrow-label">Evaluators reused from CI, operating model changes</text>
+
+  <!-- Layer 2: Flexible eval frameworks -->
+  <rect x="40" y="256" width="520" height="110" rx="8" fill="#f0f0fa" stroke="#9a9ac8" stroke-width="1.5"/>
+  <text x="60" y="280" class="layer-label">Layer 2: Flexible Eval Frameworks</text>
+  <text x="60" y="300" class="layer-question">"Does this agent meet our specific behavioral requirements?"</text>
+  <text x="60" y="322" class="layer-detail">Custom evaluators with declarative specs · Versioned test sets</text>
+  <text x="60" y="338" class="layer-detail">Loader / Runner / Scorer separation · CI integration</text>
+  <text x="60" y="354" class="layer-detail">Cadence: Every deploy · Owner: Engineering team</text>
+
+  <!-- Failure mode box for Layer 2 -->
+  <rect x="590" y="256" width="270" height="110" rx="8" fill="#fdf2f2" stroke="#e8c4c4" stroke-width="1"/>
+  <text x="610" y="280" class="failure-label">Failure: Scope Gap</text>
+  <text x="610" y="302" class="failure-text">Overwhelmingly used offline only.</text>
+  <text x="610" y="318" class="failure-text">52% of orgs run offline evals,</text>
+  <text x="610" y="334" class="failure-text">only 37% run online evals. Most</text>
+  <text x="610" y="350" class="failure-text">stop at CI and never reach prod.</text>
+
+  <!-- Arrow between Layer 2 and Layer 1 -->
+  <line x1="300" y1="366" x2="300" y2="391" stroke="#9a9aba" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <polygon points="296,389 300,398 304,389" fill="#9a9aba"/>
+  <text x="316" y="386" class="arrow-label">Model passes capability screening, agent testing begins</text>
+
+  <!-- Layer 1: Benchmark harnesses -->
+  <rect x="40" y="402" width="520" height="100" rx="8" fill="#f5f5ee" stroke="#b8b89a" stroke-width="1.5"/>
+  <text x="60" y="426" class="layer-label">Layer 1: Benchmark Harnesses</text>
+  <text x="60" y="446" class="layer-question">"Does this model have the capability we need?"</text>
+  <text x="60" y="468" class="layer-detail">Fixed datasets · Standardized scoring · Model-level evaluation</text>
+  <text x="60" y="484" class="layer-detail">Cadence: Model selection / upgrade · Owner: ML team</text>
+
+  <!-- Failure mode box for Layer 1 -->
+  <rect x="590" y="402" width="270" height="100" rx="8" fill="#fdf2f2" stroke="#e8c4c4" stroke-width="1"/>
+  <text x="610" y="426" class="failure-label">Failure: False Confidence</text>
+  <text x="610" y="448" class="failure-text">92% on a curated dataset does</text>
+  <text x="610" y="464" class="failure-text">not mean operational fitness.</text>
+  <text x="610" y="480" class="failure-text">Benchmarks measure capability,</text>
+  <text x="610" y="496" class="failure-text">not production behavior.</text>
+</svg>
