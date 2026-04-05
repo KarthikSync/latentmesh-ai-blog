@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <style>
+      .title { font-size: 16px; font-weight: 600; fill: #1a1a1a; }
+      .subtitle { font-size: 11px; fill: #666; }
+      .layer-label { font-size: 13px; font-weight: 600; fill: #fff; }
+      .class-label { font-size: 12px; font-weight: 600; fill: #1a1a1a; }
+      .class-desc { font-size: 10px; fill: #555; }
+      .signal-text { font-size: 10px; fill: #333; }
+      .dot { stroke-width: 0; }
+      .connector { stroke: #ccc; stroke-width: 1; stroke-dasharray: 3,3; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="450" y="30" text-anchor="middle" class="title">Drift Detection: What Changes vs. What Catches It</text>
+  <text x="450" y="48" text-anchor="middle" class="subtitle">Each drift class requires detection at a specific layer. No single metric covers all five.</text>
+
+  <!-- Column headers: Detection Layers -->
+  <rect x="340" y="70" width="160" height="32" rx="4" fill="#2563eb"/>
+  <text x="420" y="91" text-anchor="middle" class="layer-label">Distribution</text>
+
+  <rect x="520" y="70" width="160" height="32" rx="4" fill="#7c3aed"/>
+  <text x="600" y="91" text-anchor="middle" class="layer-label">Trace</text>
+
+  <rect x="700" y="70" width="160" height="32" rx="4" fill="#059669"/>
+  <text x="780" y="91" text-anchor="middle" class="layer-label">Outcome</text>
+
+  <!-- Row 1: Input Drift -->
+  <rect x="20" y="120" width="300" height="70" rx="6" fill="#f0f4ff" stroke="#dde4f0" stroke-width="1"/>
+  <text x="32" y="142" class="class-label">Input Drift</text>
+  <text x="32" y="158" class="class-desc">User intents, formats, languages, or</text>
+  <text x="32" y="172" class="class-desc">task difficulty distribution changes</text>
+  <!-- Dots -->
+  <circle cx="420" cy="155" r="14" fill="#2563eb" opacity="0.9" class="dot"/>
+  <text x="420" y="159" text-anchor="middle" font-size="14" fill="#fff" font-weight="bold">●</text>
+  <circle cx="600" cy="155" r="6" fill="#e5e7eb" class="dot"/>
+  <circle cx="780" cy="155" r="10" fill="#059669" opacity="0.4" class="dot"/>
+
+  <!-- Row 2: Context Drift -->
+  <rect x="20" y="200" width="300" height="70" rx="6" fill="#f5f0ff" stroke="#e4ddf0" stroke-width="1"/>
+  <text x="32" y="222" class="class-label">Context Drift</text>
+  <text x="32" y="238" class="class-desc">Retrieved documents, memory state, or</text>
+  <text x="32" y="252" class="class-desc">system context quality changes</text>
+  <!-- Dots -->
+  <circle cx="420" cy="235" r="14" fill="#2563eb" opacity="0.9" class="dot"/>
+  <circle cx="600" cy="235" r="14" fill="#7c3aed" opacity="0.9" class="dot"/>
+  <circle cx="780" cy="235" r="6" fill="#e5e7eb" class="dot"/>
+
+  <!-- Row 3: Decision Drift -->
+  <rect x="20" y="280" width="300" height="70" rx="6" fill="#fdf4ff" stroke="#f0ddf0" stroke-width="1"/>
+  <text x="32" y="302" class="class-label">Decision Drift</text>
+  <text x="32" y="318" class="class-desc">Tool choices, routing decisions, or</text>
+  <text x="32" y="332" class="class-desc">planning behavior shifts</text>
+  <!-- Dots -->
+  <circle cx="420" cy="315" r="6" fill="#e5e7eb" class="dot"/>
+  <circle cx="600" cy="315" r="14" fill="#7c3aed" opacity="0.9" class="dot"/>
+  <circle cx="780" cy="315" r="10" fill="#059669" opacity="0.4" class="dot"/>
+
+  <!-- Row 4: Execution Drift -->
+  <rect x="20" y="360" width="300" height="70" rx="6" fill="#f0fdf4" stroke="#ddf0e4" stroke-width="1"/>
+  <text x="32" y="382" class="class-label">Execution Drift</text>
+  <text x="32" y="398" class="class-desc">Downstream tools or APIs change shape,</text>
+  <text x="32" y="412" class="class-desc">latency, or semantics</text>
+  <!-- Dots -->
+  <circle cx="420" cy="395" r="6" fill="#e5e7eb" class="dot"/>
+  <circle cx="600" cy="395" r="14" fill="#7c3aed" opacity="0.9" class="dot"/>
+  <circle cx="780" cy="395" r="10" fill="#059669" opacity="0.4" class="dot"/>
+
+  <!-- Row 5: Outcome Drift -->
+  <rect x="20" y="440" width="300" height="70" rx="6" fill="#f0fdf9" stroke="#ddf0ec" stroke-width="1"/>
+  <text x="32" y="462" class="class-label">Outcome Drift</text>
+  <text x="32" y="478" class="class-desc">Task success, compliance, cost, latency,</text>
+  <text x="32" y="492" class="class-desc">or escalation rates move</text>
+  <!-- Dots -->
+  <circle cx="420" cy="475" r="6" fill="#e5e7eb" class="dot"/>
+  <circle cx="600" cy="475" r="6" fill="#e5e7eb" class="dot"/>
+  <circle cx="780" cy="475" r="14" fill="#059669" opacity="0.9" class="dot"/>
+
+  <!-- Legend -->
+  <circle cx="370" cy="515" r="8" fill="#2563eb" opacity="0.9"/>
+  <text x="384" y="519" font-size="10" fill="#555">Primary detector</text>
+  <circle cx="500" cy="515" r="6" fill="#059669" opacity="0.4"/>
+  <text x="512" y="519" font-size="10" fill="#555">Confirming signal</text>
+  <circle cx="630" cy="515" r="4" fill="#e5e7eb"/>
+  <text x="640" y="519" font-size="10" fill="#555">Weak or absent</text>
+</svg>
