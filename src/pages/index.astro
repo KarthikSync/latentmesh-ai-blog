@@ -103,6 +103,51 @@ function formatMonth(date: Date): string {
         </div>
       </section>
 
+      <!-- Start Here: Flagship Essays -->
+      <section class="start-here">
+        <div class="section-header">
+          <h2>Start here</h2>
+          <a href="/series" class="view-all-link">View full series &rarr;</a>
+        </div>
+        <div class="flagship-list">
+          <a href="/blog/agent-failures-are-distributed-systems-failures/" class="flagship-item">
+            <span class="flagship-num">01</span>
+            <div>
+              <div class="flagship-title">Agent Failures Are Distributed Systems Failures</div>
+              <div class="flagship-desc">The mental models you already have for reliability apply directly to agent systems.</div>
+            </div>
+          </a>
+          <a href="/blog/the-eval-gap/" class="flagship-item">
+            <span class="flagship-num">02</span>
+            <div>
+              <div class="flagship-title">The Eval Gap</div>
+              <div class="flagship-desc">Why benchmarks pass in staging and fail in production, and what to measure instead.</div>
+            </div>
+          </a>
+          <a href="/blog/guardrails-are-not-safety/" class="flagship-item">
+            <span class="flagship-num">03</span>
+            <div>
+              <div class="flagship-title">Guardrails Are Not Safety</div>
+              <div class="flagship-desc">The difference between filtering outputs and building systems that behave correctly.</div>
+            </div>
+          </a>
+          <a href="/blog/controls-are-not-guardrails/" class="flagship-item">
+            <span class="flagship-num">07</span>
+            <div>
+              <div class="flagship-title">Controls Are Not Guardrails</div>
+              <div class="flagship-desc">How engineering controls differ from guardrails, and why compliance requires both.</div>
+            </div>
+          </a>
+          <a href="/blog/anatomy-of-an-evidence-pack/" class="flagship-item">
+            <span class="flagship-num">08</span>
+            <div>
+              <div class="flagship-title">Anatomy of an Evidence Pack</div>
+              <div class="flagship-desc">What a production-grade evidence artifact actually looks like for AI compliance.</div>
+            </div>
+          </a>
+        </div>
+      </section>
+
       <!-- Latest Essays -->
       {latestPosts.length > 0 && (
         <section class="latest">
@@ -350,6 +395,67 @@ function formatMonth(date: Date): string {
     margin: 0;
   }
 
+  /* ── Start Here ── */
+  .start-here {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+
+  .flagship-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .flagship-item {
+    display: flex;
+    align-items: baseline;
+    gap: 1.25rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--color-border-light);
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.15s;
+  }
+
+  .flagship-item:first-child {
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  .flagship-item:hover {
+    background: var(--color-bg-secondary);
+    margin: 0 -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 6px;
+  }
+
+  .flagship-num {
+    font-family: monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+    width: 1.5rem;
+  }
+
+  .flagship-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+    color: var(--color-text-primary);
+  }
+
+  .flagship-desc {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin-top: 0.25rem;
+    line-height: 1.5;
+    max-width: 600px;
+  }
+
   /* ── Latest Essays ── */
   .latest {
     max-width: 1120px;
@@ -433,6 +539,7 @@ function formatMonth(date: Date): string {
   @media (max-width: 768px) {
     .hero { padding: 1.5rem 1.25rem 1.5rem; }
     .topics { padding: 3rem 1.25rem; }
+    .start-here { padding: 3rem 1.25rem; }
     .latest { padding: 3rem 1.25rem; }
     .hero-logo { display: none; }
     .topic-grid { grid-template-columns: repeat(2, 1fr); }
@@ -449,6 +556,7 @@ function formatMonth(date: Date): string {
     .btn-primary, .btn-secondary { text-align: center; justify-content: center; }
     .hero-credit { margin-top: 1.25rem; padding-top: 1rem; }
     .topics { padding: 2.5rem 1rem; }
+    .start-here { padding: 2.5rem 1rem; }
     .latest { padding: 2.5rem 1rem; }
     .topic-grid { grid-template-columns: 1fr; }
   }
