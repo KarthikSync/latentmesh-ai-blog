@@ -38,7 +38,7 @@ function formatMonth(date: Date): string {
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} image="/og-default.png" />
+    <BaseHead title={`${SITE_TITLE} — AI Agents, Evaluation & Governance`} description={SITE_DESCRIPTION} image="/og-default.png" />
   </head>
   <body>
     <Header />
@@ -48,6 +48,7 @@ function formatMonth(date: Date): string {
       <section class="hero">
         <div class="hero-content">
           <div class="hero-text">
+            <p class="hero-brand">LatentMesh</p>
             <h1>How AI systems fail, how to evaluate them, and how to govern them in production.</h1>
             <p class="hero-sub">These essays close the gap between compliance intent and production evidence.</p>
             <div class="hero-cta-row">
@@ -59,7 +60,7 @@ function formatMonth(date: Date): string {
             <img src="/favicon.svg" alt="" width="240" height="240" />
           </div>
         </div>
-        <p class="hero-credit">By Karthik Mahalingam &middot; 19+ years building distributed systems at scale</p>
+        <p class="hero-credit">LatentMesh by Karthik Mahalingam &middot; 19+ years building distributed systems at scale</p>
       </section>
 
       <!-- Topics -->
@@ -159,6 +160,16 @@ function formatMonth(date: Date): string {
     display: block;
     width: 240px;
     height: 240px;
+  }
+
+  .hero-brand {
+    font-family: sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-link);
+    margin: 0 0 0.75rem;
   }
 
   .hero h1 {
