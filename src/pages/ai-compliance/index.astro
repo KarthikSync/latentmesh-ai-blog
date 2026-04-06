@@ -1,0 +1,356 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE } from '../../consts';
+
+const title = "AI Compliance for Production AI Systems";
+const description = "How to turn regulatory obligations, engineering controls, evaluations, and evidence into a practical compliance operating model for AI systems.";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`${title} | ${SITE_TITLE}`} description={description} image="/og-default.png" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<header class="hub-header">
+				<p class="hub-label">Topic</p>
+				<h1>AI compliance for production AI systems</h1>
+				<p class="hub-dek">How to turn obligations, controls, evaluations, and evidence into a practical operating model.</p>
+			</header>
+
+			<section class="hub-intro">
+				<p>Most AI compliance writing stops at policy. These essays start where policy ends: at the engineering layer where obligations become controls, controls get tested, tests produce evidence, and evidence survives an audit.</p>
+				<p>The framework below connects five objects into a single loop. Each essay explores one part of that loop in depth, with concrete patterns you can apply to production AI systems today.</p>
+			</section>
+
+			<section class="hub-framework">
+				<h2>The compliance loop</h2>
+				<div class="loop-steps">
+					<div class="loop-step">
+						<span class="loop-num">1</span>
+						<div>
+							<h3>Obligation</h3>
+							<p>Identify what the regulation actually requires. Not the full text — the specific duties that apply to your system's risk class and role.</p>
+						</div>
+					</div>
+					<div class="loop-step">
+						<span class="loop-num">2</span>
+						<div>
+							<h3>Control</h3>
+							<p>Design engineering controls that satisfy each obligation. Controls are not guardrails — they have owners, tests, and evidence.</p>
+						</div>
+					</div>
+					<div class="loop-step">
+						<span class="loop-num">3</span>
+						<div>
+							<h3>Evaluation</h3>
+							<p>Test each control with evals that run in production, not just staging. The eval gap is where most compliance claims fall apart.</p>
+						</div>
+					</div>
+					<div class="loop-step">
+						<span class="loop-num">4</span>
+						<div>
+							<h3>Evidence</h3>
+							<p>Produce audit-ready artifacts: traces, test runs, approvals, model cards, change logs. This is the evidence plane your system is missing.</p>
+						</div>
+					</div>
+					<div class="loop-step">
+						<span class="loop-num">5</span>
+						<div>
+							<h3>Response</h3>
+							<p>When something breaks, respond with structured incident management — not ad hoc firefighting. AI incidents require AI-specific playbooks.</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="hub-essays">
+				<h2>Key essays</h2>
+				<div class="essay-list">
+					<a href="/blog/mapping-the-eu-ai-act-to-engineering-evidence/" class="essay-card">
+						<span class="essay-num">Obligation</span>
+						<h3>Mapping the EU AI Act to engineering evidence</h3>
+						<p>How Articles 9-15, 26-27, and 72-73 translate into controls, evals, and evidence artifacts. With crosswalks to NIST AI RMF and ISO 42001.</p>
+					</a>
+					<a href="/blog/controls-are-not-guardrails/" class="essay-card">
+						<span class="essay-num">Control</span>
+						<h3>Controls are not guardrails</h3>
+						<p>Controls are engineering constructs with owners, tests, and evidence. Guardrails are runtime filters. The difference determines whether your system is auditable.</p>
+					</a>
+					<a href="/blog/the-eval-gap/" class="essay-card">
+						<span class="essay-num">Evaluation</span>
+						<h3>The eval gap</h3>
+						<p>Why staging success does not predict production reliability, and what to measure instead.</p>
+					</a>
+					<a href="/blog/building-an-eval-harness-that-survives-production/" class="essay-card">
+						<span class="essay-num">Evaluation</span>
+						<h3>Building an eval harness that survives production</h3>
+						<p>Declarative specs, loader/runner/scorer separation, and what production eval infrastructure looks like when built to last.</p>
+					</a>
+					<a href="/blog/anatomy-of-an-evidence-pack/" class="essay-card">
+						<span class="essay-num">Evidence</span>
+						<h3>Anatomy of an evidence pack</h3>
+						<p>What a real audit-ready evidence package contains: traces, test runs, approvals, model cards, change logs, and sign-offs.</p>
+					</a>
+					<a href="/blog/what-your-agent-logged-vs-what-the-auditor-needed/" class="essay-card">
+						<span class="essay-num">Evidence</span>
+						<h3>What your agent logged vs. what the auditor needed</h3>
+						<p>The gap between operational logging and audit-grade evidence, and what it costs teams when they discover the difference too late.</p>
+					</a>
+					<a href="/blog/the-incident-response-gap-in-ai-systems/" class="essay-card">
+						<span class="essay-num">Response</span>
+						<h3>The incident response gap in AI systems</h3>
+						<p>Why traditional incident response does not work for AI systems, and what changes when the system that failed is probabilistic and continuously drifting.</p>
+					</a>
+					<a href="/blog/from-obligation-to-evidence-in-90-minutes/" class="essay-card">
+						<span class="essay-num">Walkthrough</span>
+						<h3>From obligation to evidence in 90 minutes</h3>
+						<p>A practical walkthrough of the full compliance loop applied to a single use case, from identifying the obligation to producing the evidence artifact.</p>
+					</a>
+				</div>
+			</section>
+
+			<section class="hub-reference">
+				<h2>Reference</h2>
+				<div class="essay-list">
+					<a href="/reference/eu-ai-act-controls/" class="essay-card">
+						<span class="essay-num">Reference</span>
+						<h3>EU AI Act controls reference</h3>
+						<p>The full obligation-to-control mapping table. Click any row for interpretation notes, framework crosswalks, and source links.</p>
+					</a>
+					<a href="/blog/the-regulatory-mapping-table/" class="essay-card">
+						<span class="essay-num">Reference</span>
+						<h3>The regulatory mapping table</h3>
+						<p>The reference artifact from the EU AI Act essay turned into a usable table engineering teams can hand to legal.</p>
+					</a>
+				</div>
+			</section>
+
+			<section class="hub-cta">
+				<p>New to LatentMesh? The <a href="/reading-list">reading list</a> covers the full ten-essay series and all companion articles in order.</p>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: 100%;
+		max-width: 760px;
+		margin: 0 auto;
+		padding: 0 1.25rem 3.5rem;
+	}
+
+	/* ── Header ── */
+	.hub-header {
+		padding: 3rem 0 2rem;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.hub-label {
+		font-size: 0.8rem;
+		font-weight: 700;
+		color: var(--color-link);
+		margin: 0 0 0.5rem;
+		font-family: sans-serif;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+
+	.hub-header h1 {
+		font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+		font-weight: 800;
+		margin: 0 0 0.75rem;
+		color: var(--color-text-primary);
+		letter-spacing: -0.02em;
+		line-height: 1.15;
+	}
+
+	.hub-dek {
+		font-size: 1.05rem;
+		color: var(--color-text-secondary);
+		margin: 0;
+		line-height: 1.65;
+	}
+
+	/* ── Intro ── */
+	.hub-intro {
+		padding: 2rem 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.hub-intro p {
+		font-size: 1rem;
+		line-height: 1.75;
+		color: var(--color-text-body);
+		margin: 0 0 1rem;
+	}
+
+	.hub-intro p:last-child {
+		margin-bottom: 0;
+	}
+
+	/* ── Framework ── */
+	.hub-framework {
+		padding: 2.5rem 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.hub-framework h2 {
+		font-size: 1.25rem;
+		font-weight: 700;
+		margin: 0 0 1.5rem;
+		color: var(--color-text-primary);
+		font-family: sans-serif;
+	}
+
+	.loop-steps {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.loop-step {
+		display: flex;
+		gap: 1.25rem;
+		align-items: flex-start;
+		padding: 1rem 1.25rem;
+		background: var(--color-bg-secondary);
+		border-radius: 8px;
+	}
+
+	.loop-num {
+		font-family: monospace;
+		font-size: 0.8rem;
+		font-weight: 700;
+		color: var(--color-link);
+		flex-shrink: 0;
+		width: 1.5rem;
+		padding-top: 0.1rem;
+	}
+
+	.loop-step h3 {
+		font-size: 0.95rem;
+		font-weight: 700;
+		margin: 0 0 0.3rem;
+		color: var(--color-text-primary);
+		font-family: sans-serif;
+	}
+
+	.loop-step p {
+		font-size: 0.85rem;
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+
+	/* ── Essays ── */
+	.hub-essays, .hub-reference {
+		padding: 2.5rem 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.hub-essays h2, .hub-reference h2 {
+		font-size: 1.25rem;
+		font-weight: 700;
+		margin: 0 0 1.25rem;
+		color: var(--color-text-primary);
+		font-family: sans-serif;
+	}
+
+	.essay-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.essay-card {
+		display: block;
+		padding: 1.25rem 1.5rem;
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
+		text-decoration: none;
+		color: inherit;
+		transition: border-color 0.2s;
+	}
+
+	.essay-card:hover {
+		border-color: var(--color-card-hover);
+	}
+
+	.essay-card:hover h3 {
+		color: var(--color-brand);
+	}
+
+	.essay-num {
+		display: inline-block;
+		font-size: 0.65rem;
+		font-weight: 600;
+		color: var(--color-text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		font-family: monospace;
+		margin-bottom: 0.35rem;
+	}
+
+	.essay-card h3 {
+		font-size: 1.05rem;
+		font-weight: 700;
+		margin: 0 0 0.35rem;
+		color: var(--color-text-primary);
+		font-family: sans-serif;
+		line-height: 1.3;
+		transition: color 0.2s;
+	}
+
+	.essay-card p {
+		font-size: 0.85rem;
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+
+	/* ── CTA ── */
+	.hub-cta {
+		padding: 2rem 0 0;
+	}
+
+	.hub-cta p {
+		font-size: 0.95rem;
+		color: var(--color-text-secondary);
+		line-height: 1.6;
+	}
+
+	.hub-cta a {
+		color: var(--color-link);
+		text-decoration: none;
+	}
+
+	.hub-cta a:hover {
+		text-decoration: underline;
+	}
+
+	@media (max-width: 480px) {
+		main {
+			padding: 0 1rem 3rem;
+		}
+
+		.hub-header {
+			padding: 2rem 0 1.5rem;
+		}
+
+		.loop-step {
+			flex-direction: column;
+			gap: 0.5rem;
+		}
+
+		.essay-card {
+			padding: 1rem 1.25rem;
+		}
+	}
+</style>
