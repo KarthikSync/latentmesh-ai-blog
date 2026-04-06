@@ -2,7 +2,7 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
-import { SITE_AUTHOR } from '../consts';
+import { SITE_AUTHOR, SITE_TITLE, SITE_URL } from '../consts';
 
 interface Props {
 	title: string;
@@ -15,6 +15,14 @@ interface Props {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const { title, description, image, type = 'website', pubDate } = Astro.props;
+
+const websiteSchema = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	"name": SITE_TITLE,
+	"alternateName": "LatentMesh AI",
+	"url": SITE_URL,
+};
 
 // Handle both absolute URLs (e.g., TailGraph) and relative paths
 const imageUrl = image
@@ -60,6 +68,9 @@ const imageUrl = image
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={imageUrl} />
+
+<!-- Structured Data: WebSite -->
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
 <!-- Theme detection (inline to prevent flash) -->
 <script is:inline>

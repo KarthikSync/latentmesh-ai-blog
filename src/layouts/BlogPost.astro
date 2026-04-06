@@ -5,6 +5,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { getCollection } from 'astro:content';
+import { SITE_AUTHOR, SITE_TITLE, SITE_URL } from '../consts';
 
 type Props = CollectionEntry<'blog'>['data'] & { slug: string; readingTime?: number; tags?: string[] };
 
@@ -29,11 +30,36 @@ const seriesIndex = seriesEssays.findIndex((e) => e.slug === slug);
 const isInSeries = seriesIndex !== -1;
 const prevEssay = isInSeries && seriesIndex > 0 ? seriesEssays[seriesIndex - 1] : null;
 const nextEssay = isInSeries && seriesIndex < seriesEssays.length - 1 ? seriesEssays[seriesIndex + 1] : null;
+
+const blogPostingSchema = {
+	"@context": "https://schema.org",
+	"@type": "BlogPosting",
+	"headline": title,
+	"description": description,
+	"url": pageUrl,
+	"datePublished": pubDate.toISOString(),
+	...(updatedDate && { "dateModified": updatedDate.toISOString() }),
+	"author": {
+		"@type": "Person",
+		"name": SITE_AUTHOR,
+	},
+	"publisher": {
+		"@type": "Organization",
+		"name": SITE_TITLE,
+		"url": SITE_URL,
+	},
+	...(heroImage && { "image": new URL(heroImage, Astro.site).toString() }),
+	"mainEntityOfPage": {
+		"@type": "WebPage",
+		"@id": pageUrl,
+	},
+};
 ---
 
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} image="/og-default.png" type="article" pubDate={pubDate} />
+		<script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
 	</head>
 
 	<body>
