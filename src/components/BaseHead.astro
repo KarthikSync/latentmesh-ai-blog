@@ -16,14 +16,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const { title, description, image, type = 'website', pubDate } = Astro.props;
 
-const websiteSchema = {
-	"@context": "https://schema.org",
-	"@type": "WebSite",
-	"name": SITE_TITLE,
-	"alternateName": "LatentMesh AI",
-	"url": SITE_URL + "/",
-};
-
 // Handle both absolute URLs (e.g., TailGraph) and relative paths
 const imageUrl = image
 	? image.startsWith('http') ? image : new URL(image, Astro.url).toString()
@@ -69,9 +61,6 @@ const imageUrl = image
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={imageUrl} />
 <meta name="twitter:image:alt" content="LatentMesh" />
-
-<!-- Structured Data: WebSite -->
-<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
 <!-- Theme detection (inline to prevent flash) -->
 <script is:inline>
