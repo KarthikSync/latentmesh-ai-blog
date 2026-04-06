@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://latentmesh.ai/sitemap-index.xml
