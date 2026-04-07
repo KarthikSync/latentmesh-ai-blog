@@ -69,6 +69,9 @@ function formatMonth(date: Date): string {
             <img src="/images/right-panel.png" alt="Evidence loop: Obligation, Control, Eval, Evidence — with coverage and verification status" width="380" height="420" />
           </div>
         </div>
+        <div class="proof-card">
+          <img src="/images/latentmesh-proof-card-only.png" alt="From obligation to proof: Obligation, Control, Eval, Evidence" />
+        </div>
         <p class="hero-credit">LatentMesh by Karthik Mahalingam &middot; 19+ years building distributed systems at scale</p>
       </section>
 
@@ -216,6 +219,18 @@ function formatMonth(date: Date): string {
     width: 340px;
     height: auto;
     border-radius: 12px;
+  }
+
+  .proof-card {
+    display: none;
+  }
+
+  .proof-card img {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 10px;
   }
 
   .hero-brand {
@@ -555,6 +570,10 @@ function formatMonth(date: Date): string {
   @media (max-width: 480px) {
     .hero { padding: 1.25rem 1rem 1.5rem; }
     .hero-panel { display: none; }
+    .proof-card {
+      display: block;
+      margin-top: 1.5rem;
+    }
     .hero h1 { font-size: 1.75rem; line-height: 1.2; }
     .hero-sub { font-size: 0.9rem; margin-top: 0.75rem; }
     .hero-cta-row { margin-top: 1.25rem; }
