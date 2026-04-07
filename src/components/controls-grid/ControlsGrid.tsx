@@ -3,7 +3,6 @@ import { CLUSTERS, CONTROLS } from "../../data/eu-ai-act-controls";
 import type { Control } from "../../data/eu-ai-act-controls";
 import { ControlsTable } from "./ControlsTable";
 import { exportControlsToCSV } from "./csvExport";
-import "./controls-grid.css";
 
 const UNIQUE_OWNERS = [...new Set(CONTROLS.map((c) => c.owner))];
 const UNIQUE_CADENCES = [...new Set(CONTROLS.map((c) => c.cadence))];
