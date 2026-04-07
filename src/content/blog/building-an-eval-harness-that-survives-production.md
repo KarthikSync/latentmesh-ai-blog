@@ -3,6 +3,10 @@ title: "Building an Eval Harness That Survives Production"
 description: "Most eval harnesses die the same way. Five structural decisions separate the ones that survive production from the ones that quietly rot."
 pubDate: "Apr 05 2026 10:00"
 tags: ["evals", "practical", "agents"]
+summary: "Most eval harnesses die the same way. Someone writes scripts during a proof-of-concept, they work well enough to ship v1, then they quietly rot. Production kills them because the test environment is cleaner than the runtime, the interfaces drift, and the thing being evaluated is no longer just model output but full system behavior. Five structural decisions separate the harnesses that survive: ground evals in declarative contracts with a rationale field, not scripts. Separate orchestration (running the agent) from judgment (scoring the trace) so you can rescore without re-running. Version everything including the rubric, tool schemas, and policy doc hashes. Make results scannable without a dashboard by pushing regression summaries to where the team already looks. Run two tiers: structural invariants on every commit, behavioral and policy evals nightly."
+summaryProblem: "Eval harnesses rot in production because they test outputs against stable interfaces that no longer exist."
+summaryCoreIdea: "Declarative specs, separated runner and scorer, and versioned run metadata make evals maintainable."
+summaryTakeaway: "Five structural decisions: contracts over scripts, separated layers, versioned everything, scannable summaries, two-tiered execution."
 ---
 
 Most eval harnesses die the same way. Someone writes a handful of scripts during a proof-of-concept, they work well enough to ship v1, and then they quietly rot as the team moves on. Six months later nobody trusts the evals, nobody maintains them, and the team is back to vibes-based quality assessment.

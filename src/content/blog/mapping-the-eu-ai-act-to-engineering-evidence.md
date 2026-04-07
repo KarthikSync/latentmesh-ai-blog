@@ -3,6 +3,10 @@ title: "Mapping the EU AI Act to Engineering Evidence"
 description: "The regulation tells you what to prove. It does not tell you how to build the proof. This essay maps every major obligation from the EU AI Act to a specific control, eval, and evidence artifact."
 pubDate: "Apr 04 2026 18:00"
 tags: ["compliance", "safety", "evidence", "agents"]
+summary: "Most teams read the EU AI Act like a policy document. For engineering organizations, it is closer to a lifecycle proof obligation. Every meaningful requirement under Articles 9 through 73 maps to four things: an obligation the law requires, a control your system performs repeatedly, an eval that tests whether the control works, and an artifact you retain as proof. If you cannot point to all four, you do not have an operational compliance program. You have intent. This essay walks through provider obligations (risk management, data governance, technical documentation, logging, transparency, human oversight, accuracy and robustness), deployer obligations, and post-market monitoring. It includes a quick-reference mapping table, five evidence infrastructure rails, and a crosswalk with NIST AI RMF and ISO 42001."
+summaryProblem: "The regulation specifies what to prove but not how to build the proof."
+summaryCoreIdea: "Each obligation under Articles 9 through 73 needs a control, an eval, and a retained artifact to be operational."
+summaryTakeaway: "A mapping table from every major EU AI Act obligation to a practical control, eval, and evidence artifact."
 ---
 
 *The regulation tells you what to prove. It does not tell you how to build the proof.*

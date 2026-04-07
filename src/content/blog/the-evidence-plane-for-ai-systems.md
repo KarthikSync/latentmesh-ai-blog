@@ -3,6 +3,10 @@ title: "The Evidence Plane for AI Systems"
 description: "The missing layer between what your system must prove and how your organization proves it. A framework synthesis connecting obligations, controls, evaluations, evidence artifacts, and the response loop."
 pubDate: "Apr 05 2026 20:00"
 tags: ["reliability", "compliance", "evidence", "practical"]
+summary: "Most teams building AI systems have the pieces: policy documents, prompts, eval harnesses, monitoring dashboards, maybe governance reviews. What they do not have is the layer that connects these pieces into a single operating model. A team can describe its controls but cannot show which obligations those controls satisfy. Evals run, but nobody can point to the release decision those evals supported. The evidence plane is the structured layer that connects five first-class objects: obligations, controls, evaluations, evidence artifacts, and the response loop. It turns 'we think this system is safe' into something inspectable. Once those links exist, questions that are currently unanswerable become routine: which controls map to which obligation, which evals failed on the release candidate, which incidents traced back to control design failures."
+summaryProblem: "Teams have controls, evals, and logs but no structure connecting them to obligations or proof."
+summaryCoreIdea: "Without preserved relationships between these objects, audits and incident reviews become manual reconstruction."
+summaryTakeaway: "A five-object framework linking obligations, controls, evals, evidence artifacts, and response loops."
 ---
 
 *The missing layer between what your system must prove and how your organization proves it.*

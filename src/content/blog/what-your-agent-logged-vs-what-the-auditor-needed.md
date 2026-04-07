@@ -3,6 +3,10 @@ title: "What Your Agent Logged vs. What the Auditor Needed"
 description: "The trace says what happened. The auditor asks why, under what authority, and what changed. Most agent deployments log enough to debug a success but not enough to investigate a failure."
 pubDate: "Apr 05 2026 14:00"
 tags: ["compliance", "practical", "evidence"]
+summary: "A Replit agent deleted a production database, then told the user rollback was impossible. That was false. But no structured trace existed of the agent's reasoning chain, authorization scope, or database state before and after. The only investigative tool was asking the AI itself. Most agent traces capture timestamps, tool calls, parameters, and results. Auditors need five things those traces do not record: the system version that produced the output, the full assembled context the model saw, which policy or control was evaluated and what it found, who was accountable for the action, and what state changed. Three changes close most of the gap: persist the assembled context at inference time, make controls emit structured evaluation records instead of pass/fail booleans, and capture the accountability chain including authorization scope. The essay includes a concrete before-and-after trace comparison."
+summaryProblem: "Agent traces log enough to debug a success but not enough to investigate a failure."
+summaryCoreIdea: "Auditors need system version, full context, control evaluations, accountability chain, and state changes."
+summaryTakeaway: "Three logging changes that close the gap between operational telemetry and audit-ready evidence."
 ---
 
 *The trace says what happened. The auditor asks why, under what authority, and what changed.*

@@ -3,6 +3,10 @@ title: "The Eval Gap: Why Your Agent Works in Staging and Breaks in Production"
 description: "Your benchmarks are passing. Your agent is failing. Most evals measure isolated performance under controlled conditions while production failure comes from distribution shift, tool-chain errors, and changing reality."
 pubDate: "Apr 04 2026 09:00"
 tags: ["evals", "reliability", "safety"]
+summary: "Benchmarks pass in staging while agents fail in production. The gap is not missing tests. It is that most evals measure isolated performance under controlled conditions, while production failure comes from distribution shift, compound tool-chain errors, and configuration drift. Klarna's AI chatbot handled 2.3 million conversations with strong volume metrics, then the company started adding human support back into the loop. Standard evals test whether the final answer matched expectations. They do not verify intermediate steps or catch the case where an agent gets the right answer for the wrong reasons. This essay argues that agent evaluation is monitoring, not testing, and describes a layered pipeline: shadow mode, intermediate-step verification, weekly case rotation from production failures, and confidence-based routing."
+summaryProblem: "Evals pass in staging because they test synthetic inputs against frozen assumptions."
+summaryCoreIdea: "Production failures come from distribution shift, compound tool-chain errors, and prompt configuration drift."
+summaryTakeaway: "A layered eval pipeline using shadow mode, intermediate-step verification, and weekly case rotation."
 ---
 
 *Your benchmarks are passing. Your agent is failing. These are not contradictory statements.*

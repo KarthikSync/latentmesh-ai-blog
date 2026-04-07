@@ -3,6 +3,10 @@ title: "What Should an AI System Actually Prove?"
 description: "You diagnosed the problem five different ways. Now build the answer. The proof loop: obligation, control, evaluation, evidence, response."
 pubDate: "Apr 04 2026 13:00"
 tags: ["compliance", "safety", "evals"]
+summary: "A Big Four consultancy delivered a AU$440,000 government report containing fabricated citations and a fictional court judgment. The firm had AI principles and sells responsible AI training. What it did not have was a system that could prove, at the moment a reviewer asked, that a specific output had been checked, verified, and approved by someone accountable. McKinsey's 2026 survey found the average responsible AI maturity score was 2.3 out of 4. Only 14% of Fortune 500 executives say they are fully ready for AI deployment. The gap between having a committee and having operational readiness is the whole problem. The response is a single loop: obligation, control, evaluation, evidence, response. Not a policy document. A system that runs in production and survives the moment someone asks you to show your work."
+summaryProblem: "Organizations have governance artifacts but cannot produce evidence that controls were active."
+summaryCoreIdea: "Regulators and auditors ask 'show me the evidence right now,' not 'show me your policy.'"
+summaryTakeaway: "The obligation, control, evaluation, evidence, response loop as a single operating model."
 ---
 
 *You diagnosed the problem five different ways. Now build the answer.*

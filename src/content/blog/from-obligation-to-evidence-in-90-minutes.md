@@ -3,6 +3,10 @@ title: "From Obligation to Evidence in 90 Minutes"
 description: "Pick one requirement. Map it to a control. Write the eval. Generate the artifact. Assign the owner. A hands-on walkthrough of the full compliance loop using EU AI Act Article 14."
 pubDate: "Apr 05 2026 12:00"
 tags: ["compliance", "practical", "evidence"]
+summary: "Polish endoscopy centers introduced AI-assisted polyp detection. Clinician performance on non-AI procedures subsequently dropped by 6 percentage points, a pattern consistent with automation bias and deskilling. Article 14 of the EU AI Act exists because legislators saw this coming. It requires that humans can oversee high-risk AI systems effectively in practice. Most teams treat this as a checkbox. This essay walks through one clause, Article 14(4)(d), the right to override, end to end in 90 minutes. Extract the obligation as a testable statement. Define control CTRL-014-D: mandatory human review with logged override. Write three evals: availability, enforcement, and logging completeness. Bundle five evidence artifacts: control spec, eval results, override activity log, training record, and named owner. One complete loop. Repeatable for the next obligation."
+summaryProblem: "Teams treat human oversight as a checkbox instead of an operational control with evidence."
+summaryCoreIdea: "One clause of Article 14 walked through end to end: obligation, control, eval, artifact, owner."
+summaryTakeaway: "A repeatable 90-minute process for turning any regulatory requirement into a complete evidence chain."
 ---
 
 *Pick one requirement. Map it to a control. Write the eval. Generate the artifact. Assign the owner. That is the whole loop.*

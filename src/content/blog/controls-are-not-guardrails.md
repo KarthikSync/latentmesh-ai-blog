@@ -3,6 +3,10 @@ title: "Controls Are Not Guardrails"
 description: "A guardrail catches the output. A control proves the system works. The difference is the evidence layer — obligation, mechanism, eval, evidence, owner."
 pubDate: "Apr 04 2026 14:00"
 tags: ["compliance", "safety", "agents"]
+summary: "A guardrail is a runtime filter that checks for toxicity, PII, or known injection patterns. A control is a mechanism mapped to a specific obligation, validated by a specific test, and backed by stored evidence that the test ran and passed. Most teams have guardrails. Few can answer basic questions about them: what is the false negative rate, when was it last tested, who owns it. The Salesforce ForcedLeak and Slack AI vulnerabilities both occurred in systems with intact guardrails and no controls. The transition is not a rewrite. It is a layer you add: name the obligation, identify the mechanism, build an eval, store the results, assign an owner. Obligation to mechanism to eval to evidence to owner. Each link traceable, each link testable, each link producing a record."
+summaryProblem: "A guardrail filters output but has no mapped obligation, tested eval, or stored evidence."
+summaryCoreIdea: "Without the evidence layer, you cannot show an auditor that the guardrail works or ever worked."
+summaryTakeaway: "The control chain: obligation to mechanism to eval to evidence to named owner."
 ---
 
 *A guardrail catches the output. A control proves the system works.*

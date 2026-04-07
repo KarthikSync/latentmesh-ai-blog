@@ -3,6 +3,10 @@ title: "The Incident Response Gap in AI Systems"
 description: "You built the controls. You still cannot contain the failure. Most organizations have started building AI controls. Far fewer have built AI incident response."
 pubDate: "Apr 04 2026 20:00"
 tags: ["safety", "compliance", "agents", "reliability"]
+summary: "Most organizations have started building AI controls. Far fewer have built AI incident response. McDonald's AI hiring platform McHire had a test account with the password '123456' sitting untouched for six years, exposing up to 64 million job applications. The failure was not just weak security hygiene. It was an operational blind spot: unclear ownership, weak review discipline, and no evidence that anyone was continuously validating whether the system remained safe. A guardrail can block an output. It cannot run an investigation. McKinsey's 2026 survey found incident frequency roughly steady at 8%, but confidence in organizational response has declined. This essay defines six capabilities that separate real AI incident response from the illusion of preparedness: detection, classification, containment, evidence preservation, investigation, and remediation that feeds back into the system."
+summaryProblem: "Most teams have built AI controls but not AI incident response."
+summaryCoreIdea: "Prevention answers how to reduce failures; incident response answers what to do when reduction fails."
+summaryTakeaway: "Six capabilities that separate real AI incident response from the illusion of preparedness."
 ---
 
 *You built the controls. You still cannot contain the failure.*

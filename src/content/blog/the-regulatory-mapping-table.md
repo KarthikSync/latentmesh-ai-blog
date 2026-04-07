@@ -3,6 +3,10 @@ title: "The Regulatory Mapping Table"
 description: "An interactive reference that turns EU AI Act high-risk obligations into operating controls, verification methods, evidence artifacts, owners, and review cadence. Filter by role, article, cluster, or cadence to map obligations into your operating responsibilities."
 pubDate: "Apr 05 2026 16:00"
 tags: ["compliance", "practical", "evidence"]
+summary: "Twenty-five operating controls derived from Articles 9 through 15, 26 through 27, and 72 through 73 of the EU AI Act, organized into eight clusters: risk management, data governance, technical documentation, logging and traceability, transparency, human oversight, accuracy and robustness, and post-market monitoring. Each row answers five questions: what control do I need, how do I verify it holds, what evidence does that produce, who owns it, and when must it be reviewed. The interactive table filters by role (provider or deployer), article, cluster, owner, or cadence. This version covers Annex III high-risk systems. Annex III obligations apply from 2 August 2026. The Digital Omnibus proposal could adjust parts of the timeline but should be treated as draft until adopted."
+summaryProblem: "Teams cannot translate EU AI Act articles into operating responsibilities with owners and cadence."
+summaryCoreIdea: "Twenty-five controls across eight clusters, each mapped to a verification method, evidence artifact, and owner."
+summaryTakeaway: "A filterable reference table that turns regulatory text into operating procedures by role and review cadence."
 ---
 
 *The regulation tells you what to prove. The mapping table tells you how to operate the proof.*

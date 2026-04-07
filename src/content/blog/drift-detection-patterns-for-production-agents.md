@@ -3,6 +3,10 @@ title: "Drift Detection Patterns for Production Agents"
 description: "Your agent is still answering. That does not mean it is still behaving the same way. Five drift classes, three detection layers, and the patterns that catch regression before your customers do."
 pubDate: "Apr 05 2026 14:00"
 tags: ["reliability", "practical", "evals"]
+summary: "In August 2025, Anthropic's Claude showed degraded responses caused by three overlapping bugs: a routing error, a TPU misconfiguration, and a compiler bug. Standard benchmarks caught none of them. Resolution took six weeks. Drift in agents is not one thing. Five classes require different detection: input drift (harder work arriving), context drift (retrieval quality decay), decision drift (tool selection shifting), execution drift (downstream APIs changing), and outcome drift (lagging business metrics). You need detectors at three levels: distribution detectors watching statistical shape over time, trace detectors asserting control integrity on individual runs, and outcome detectors confirming that structural signals are real. Five patterns matter: replay a frozen canary set daily, score production traces with control assertions, monitor structural signals sliced by version and segment, target human review where uncertainty is rising, and pre-bind every alert to a response playbook."
+summaryProblem: "Agents drift silently across five layers, and aggregate metrics hide the degradation."
+summaryCoreIdea: "Distribution, trace, and outcome detectors catch different drift classes at different speeds."
+summaryTakeaway: "Five detection patterns with pre-bound response playbooks that turn alerts into containment actions."
 ---
 
 *Your agent is still answering. That does not mean it is still behaving the same way.*

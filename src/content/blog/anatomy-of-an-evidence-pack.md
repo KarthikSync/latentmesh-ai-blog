@@ -3,6 +3,10 @@ title: "Anatomy of an Evidence Pack"
 description: "Your system passed the eval. Can you prove it? An evidence pack is a structured, continuously generated collection of artifacts — traces, eval results, approvals, config snapshots, and incident records — that proves your AI system did what you said it would do."
 pubDate: "Apr 04 2026 16:00"
 tags: ["compliance", "evidence", "agents"]
+summary: "OpenAI split a monolithic service into microservices and missed a single Kafka environment variable. For three months, enterprise customers had gaps in their audit logs. Some fields, including who performed each action, could not be recovered. OpenAI's advice to affected customers: use your own internal logs as a secondary source. The vendor told its enterprise customers to maintain their own compliance evidence. An evidence pack is not a folder assembled before an audit. It is five categories of artifacts generated continuously: traces showing what the system did, eval results showing it met its specification, approval records showing who authorized changes, configuration snapshots showing what was running, and incident records showing what went wrong. Each artifact links to the others. Integrity requires append-only storage and independent timestamps."
+summaryProblem: "OpenAI lost three months of enterprise audit logs from a single missing environment variable."
+summaryCoreIdea: "Vendor logs are not your compliance evidence, and reconstructing evidence after the fact costs months."
+summaryTakeaway: "Five artifact categories with integrity requirements that make documentation into evidence."
 ---
 
 *Your system passed the eval. Can you prove it?*

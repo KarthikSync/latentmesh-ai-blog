@@ -3,6 +3,10 @@ title: "Choosing Your Eval Architecture"
 description: "The question is not which eval tool. The question is what kind of eval infrastructure your system actually needs. Three architectures, three failure modes, and how they compose into an evidence pipeline."
 pubDate: "Apr 05 2026 18:00"
 tags: ["evals", "practical", "agents"]
+summary: "Most teams ask which eval tool to use. The prior question is architectural: what shape of eval system does your agent need? The eval market collapses into three categories. Benchmark harnesses measure capability against fixed datasets but produce false confidence about production fitness. Flexible eval frameworks like Inspect AI let you write custom evaluators for your specific contracts but stop at CI. Production-native infrastructure scores live traces continuously but costs more than most teams budget for. Princeton researchers found that over eighteen months of model releases, accuracy improved steadily while reliability barely moved. The three architectures are not alternatives. They are layers. Start with offline contracts for your five highest-risk behaviors. Extend them to production scoring. The eval architecture is not just a quality system. It is your evidence pipeline."
+summaryProblem: "Teams pick one eval tool when the real question is which layers of eval infrastructure the system needs."
+summaryCoreIdea: "Benchmark harnesses, flexible frameworks, and production-native scoring answer different questions and break differently."
+summaryTakeaway: "A composable eval stack where offline contracts extend into production scoring and generate evidence artifacts."
 ---
 
 *The question is not which eval tool. The question is what kind of eval infrastructure your system actually needs.*

@@ -3,6 +3,10 @@ title: "Guardrails Are Not Safety"
 description: "Boundary guardrails are the AI equivalent of locking the front door while leaving the windows open. Real safety requires observability, containment, least privilege, and structured human review."
 pubDate: "Apr 04 2026 10:00"
 tags: ["safety", "agents", "compliance"]
+summary: "Boundary guardrails sit at the input and output edges of the model. The most consequential failures happen in between. Salesforce's Agentforce had content security policies, scope restrictions, and runtime filters. A five-dollar expired domain and hidden instructions in a web form bypassed all of them. Slack AI's retrieval pipeline let an attacker in a public channel exfiltrate data from private channels without triggering any boundary check. These are not exotic attacks. They are the predictable result of putting safety controls only at the edges of a system that reasons, retrieves, and acts across a wide surface area. Real safety requires observability across the full reasoning chain, circuit breakers on anomalous behavior, least privilege scoped per interaction, and human review as architecture rather than afterthought."
+summaryProblem: "Boundary guardrails check inputs and outputs but see nothing in between."
+summaryCoreIdea: "The Salesforce ForcedLeak and Slack AI attacks both bypassed intact guardrails through retrieval and tool layers."
+summaryTakeaway: "A defense-in-depth model covering observability, circuit breakers, least privilege, and structured human review."
 ---
 
 *The AI equivalent of locking the front door while leaving the windows open.*

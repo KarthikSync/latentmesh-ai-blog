@@ -3,6 +3,10 @@ title: "Drift Is the Default"
 description: "Your agent worked yesterday. That is not a promise about today. Model updates, prompt changes, and shifting inputs cause silent behavioral regression that traditional monitoring doesn't catch."
 pubDate: "Apr 04 2026 12:00"
 tags: ["reliability", "evals", "safety"]
+summary: "Stanford and UC Berkeley researchers ran the same prompts against GPT-4 at regular intervals in 2023. Accuracy on one benchmark dropped from 84% to 51%. Code generation that produced directly executable code fell from 52% to 10%. The model still worked. It just answered differently. OpenAI's April 2025 sycophancy rollback showed how a training signal change can shift model personality without any code change. Drift has three forms: provider-side model updates you cannot control, prompt and config changes your team manages poorly, and environmental shift where the world changes around a frozen system. Traditional monitoring asks whether the system is up. Drift detection asks whether it is still doing what you intended. Most organizations only have tooling for the first question."
+summaryProblem: "Model updates, prompt changes, and shifting inputs cause silent behavioral regression."
+summaryCoreIdea: "Traditional monitoring asks 'is the system up?' not 'is the system still doing what we intended?'"
+summaryTakeaway: "Three drift categories with detection and mitigation practices for each."
 ---
 
 *Your agent worked yesterday. That is not a promise about today.*

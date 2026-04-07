@@ -3,6 +3,10 @@ title: "Who Owns the Agent's Mistake?"
 description: "The legal answer is converging fast. Courts are rejecting the 'AI did it' defense. The question is whether your organization has the infrastructure to assign accountability when an agent fails."
 pubDate: "Apr 04 2026 11:00"
 tags: ["compliance", "agents", "safety"]
+summary: "Air Canada argued its chatbot was a separate entity responsible for its own actions. The tribunal rejected that. Workday faces a potential class spanning hundreds of millions of rejected applicants. California's AB 316 bars defendants from arguing that AI autonomously caused the harm. The legal direction is clear: the deploying organization is responsible. But most teams cannot answer who approved the agent's tool access, who last reviewed the system prompt, or what version of the retrieval index was live when a failure occurred. Agent accountability requires the same decomposition as distributed systems incident response: named ownership across model, prompt, retrieval, and tool layers, with structured logging at every decision point and incident processes that trace the full reasoning chain."
+summaryProblem: "Courts are rejecting the 'AI did it' defense, but most teams cannot assign accountability."
+summaryCoreIdea: "Without ownership across model, prompt, retrieval, and tool layers, incident investigation has no starting point."
+summaryTakeaway: "A decomposition of agent ownership by layer, with traceability requirements for each."
 ---
 
 *The legal answer is converging fast. You just haven't built the infrastructure to act on it.*

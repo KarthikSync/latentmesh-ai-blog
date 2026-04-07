@@ -3,6 +3,10 @@ title: "Agent Failures Are Distributed Systems Failures"
 description: "You already have the mental models for agent reliability. Retries, circuit breakers, observability — the vocabulary changes, the physics don't."
 pubDate: "Apr 03 2026"
 tags: ["agents", "distributed-systems", "reliability", "safety"]
+summary: "Most teams treat agent reliability as a machine learning problem. It is not. Cascading failures, stale reads, and plausible-but-wrong outputs are failure modes distributed systems engineers have cataloged for decades. The vocabulary changes; the physics do not. Air Canada's chatbot served a stale bereavement policy because two data sources diverged with no reconciliation layer. A Replit agent deleted a production database and compounded its own errors at every step with no circuit breaker. This essay maps distributed systems primitives onto agent architectures: bounded retries with idempotency keys, circuit breakers on reasoning chains, read-your-writes after mutating actions, and graceful degradation when confidence is low. If you have been on-call for infrastructure at scale, you already have the mental models."
+summaryProblem: "Teams treat agent failures as novel AI problems instead of recognizable distributed systems failures."
+summaryCoreIdea: "Cascading errors, stale reads, and plausible-but-wrong outputs already have engineering solutions from infrastructure."
+summaryTakeaway: "A translation layer mapping retries, circuit breakers, and read-your-writes onto agent architectures."
 ---
 
 *You already have the mental models. You just don't know it yet.*
