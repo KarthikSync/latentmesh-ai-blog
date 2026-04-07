@@ -141,6 +141,17 @@ export default function ControlsGrid() {
       </div>
 
       <ControlsTable clusters={CLUSTERS} controlsByCluster={controlsByCluster} />
+
+      <div className="mobile-download-cta">
+        <p className="mobile-download-title">EU AI Act Controls Reference</p>
+        <p className="mobile-download-desc">25 controls across 8 clusters — obligations, verification methods, evidence artifacts, owners, and review cadence.</p>
+        <button
+          className="mobile-download-btn"
+          onClick={() => exportControlsToCSV(CONTROLS, "eu-ai-act-controls.csv")}
+        >
+          Download full reference (CSV)
+        </button>
+      </div>
     </>
   );
 }

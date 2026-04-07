@@ -14,6 +14,7 @@
 
 /* ── Cluster sections ── */
 .ref-page .cluster-section { margin-bottom: 1.25rem; border: 1px solid var(--border-light); border-radius: 6px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow); }
+.ref-page .cluster-body { overflow-x: auto; }
 .ref-page .cluster-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0.8rem 1.25rem; background: var(--cluster-bg); border: none; border-bottom: 1px solid var(--border-light); cursor: pointer; font-family: inherit; text-align: left; color: inherit; }
 .ref-page .cluster-toggle:hover { opacity: 0.85; }
 .ref-page .cluster-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
@@ -26,7 +27,7 @@
 .ref-page .cluster-section.collapsed .cluster-body { display: none; }
 
 /* ── Table ── */
-.ref-page .ctrl-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.ref-page .ctrl-table { width: 100%; border-collapse: collapse; table-layout: fixed; min-width: 900px; }
 .ref-page .ctrl-table th { font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-tertiary); padding: 0.5rem 0.6rem; text-align: left; background: var(--surface); border-bottom: 1px solid var(--border-light); }
 .ref-page .ctrl-table th:first-child { padding-left: 1.25rem; }
 .ref-page .col-obl { width: 17%; }
@@ -65,6 +66,9 @@
 .ref-page .detail-item a { color: var(--accent-light); text-decoration: underline; text-underline-offset: 2px; }
 .ref-page .eur-lex-link { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; }
 
+/* ── Mobile download CTA (hidden on desktop) ── */
+.ref-page .mobile-download-cta { display: none; }
+
 /* ── Responsive ── */
 @media (max-width: 1100px) {
   .ref-page .ctrl-table th.col-eval,
@@ -78,18 +82,42 @@
 @media (max-width: 700px) {
   .ref-page .filters-bar,
   .ref-page .main,
-  .ref-page .count-bar { padding-left: 1.25rem; padding-right: 1.25rem; }
-  .ref-page .ctrl-table { table-layout: auto; }
-  .ref-page .ctrl-table thead { position: static; }
-  .ref-page .ctrl-table th { display: none; }
-  .ref-page tr.data-row { display: block; padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border-light); }
-  .ref-page tr.data-row td { display: block; padding: 0.15rem 0; word-break: break-word; }
-  .ref-page tr.data-row td::before { content: attr(data-label); display: block; font-size: 0.66rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-tertiary); }
-  .ref-page tr.data-row td:nth-child(4),
-  .ref-page tr.data-row td:nth-child(5),
-  .ref-page tr.data-row td:nth-child(8) { display: block; }
-  .ref-page tr.detail-row.open { display: block; }
-  .ref-page tr.detail-row.open td { word-break: break-word; }
-  .ref-page .filters-bar { flex-direction: column; align-items: flex-start; }
-  .ref-page .cluster-section { overflow-x: hidden; }
+  .ref-page .count-bar { display: none; }
+  .ref-page .mobile-download-cta {
+    display: block;
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 3rem;
+    text-align: center;
+  }
+  .ref-page .mobile-download-title {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 0.5rem;
+  }
+  .ref-page .mobile-download-desc {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0 0 1.25rem;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .ref-page .mobile-download-btn {
+    display: inline-block;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #fff;
+    background: var(--accent, #2563eb);
+    border: none;
+    border-radius: 6px;
+    padding: 0.7rem 1.5rem;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .ref-page .mobile-download-btn:hover { opacity: 0.85; }
 }
