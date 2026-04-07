@@ -65,8 +65,8 @@ function formatMonth(date: Date): string {
               <a href="/blog" class="btn-secondary">Read latest essays</a>
             </div>
           </div>
-          <div class="hero-logo">
-            <img src="/favicon.svg" alt="" width="240" height="240" />
+          <div class="hero-panel">
+            <img src="/images/right-panel.png" alt="Evidence loop: Obligation, Control, Eval, Evidence — with coverage and verification status" width="380" height="420" />
           </div>
         </div>
         <p class="hero-credit">LatentMesh by Karthik Mahalingam &middot; 19+ years building distributed systems at scale</p>
@@ -205,15 +205,17 @@ function formatMonth(date: Date): string {
     min-width: 0;
   }
 
-  .hero-logo {
+  .hero-panel {
     flex-shrink: 0;
-    opacity: 0.5;
+    position: relative;
+    filter: drop-shadow(0 4px 24px rgba(59, 93, 140, 0.08));
   }
 
-  .hero-logo img {
+  .hero-panel img {
     display: block;
-    width: 240px;
-    height: 240px;
+    width: 340px;
+    height: auto;
+    border-radius: 12px;
   }
 
   .hero-brand {
@@ -541,7 +543,9 @@ function formatMonth(date: Date): string {
     .topics { padding: 3rem 1.25rem; }
     .start-here { padding: 3rem 1.25rem; }
     .latest { padding: 3rem 1.25rem; }
-    .hero-logo { display: none; }
+    .hero-content { flex-direction: column; gap: 2rem; }
+    .hero-panel { align-self: center; }
+    .hero-panel img { width: 280px; }
     .topic-grid { grid-template-columns: repeat(2, 1fr); }
     .essay-item { grid-template-columns: 1fr; gap: 0.5rem; }
     .essay-meta-right { text-align: left; display: flex; gap: 0.75rem; }
@@ -550,6 +554,7 @@ function formatMonth(date: Date): string {
 
   @media (max-width: 480px) {
     .hero { padding: 1.25rem 1rem 1.5rem; }
+    .hero-panel { display: none; }
     .hero h1 { font-size: 1.75rem; line-height: 1.2; }
     .hero-sub { font-size: 0.9rem; margin-top: 0.75rem; }
     .hero-cta-row { margin-top: 1.25rem; }
