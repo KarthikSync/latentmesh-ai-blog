@@ -9,10 +9,6 @@ summaryCoreIdea: "The Salesforce ForcedLeak and Slack AI attacks both bypassed i
 summaryTakeaway: "A defense-in-depth model covering observability, circuit breakers, least privilege, and structured human review."
 ---
 
-*The AI equivalent of locking the front door while leaving the windows open.*
-
----
-
 In September 2025, researchers at Noma Security spent five dollars to buy an expired domain. That domain happened to be on Salesforce's content security policy whitelist. They submitted a fake sales lead through a standard Web-to-Lead form, hiding malicious instructions in the description field. When an internal employee asked Agentforce to review the lead, the agent followed the hidden instructions, queried the CRM for sensitive customer records, and sent them to the attacker-controlled domain. No alarms fired. No guardrail caught it.
 
 Salesforce had guardrails. Input validation, content security policies, trusted URL lists. The attack didn't come through the front door. It came through a form field the agent treated as trusted data, via a domain the security policy treated as safe, exploiting the model's inability to tell a legitimate business request from a weaponized one. The guardrails were intact. The system was compromised.

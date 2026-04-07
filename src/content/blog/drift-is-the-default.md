@@ -9,10 +9,6 @@ summaryCoreIdea: "Traditional monitoring asks 'is the system up?' not 'is the sy
 summaryTakeaway: "Three drift categories with detection and mitigation practices for each."
 ---
 
-*Your agent worked yesterday. That is not a promise about today.*
-
----
-
 In July 2023, researchers at Stanford and UC Berkeley published a paper with a dry title and an alarming finding. Lingjiao Chen, Matei Zaharia, and James Zou had been running the same prompts against GPT-4 at regular intervals. Between March and June 2023, the researchers found that GPT-4's performance shifted sharply on several tasks. In the paper's prime-vs-composite benchmark, accuracy dropped from 84% to 51%. Code generation took a similar hit: the share of GPT-4 responses that produced directly executable code fell from 52% to 10%.
 
 The cause wasn't some catastrophic failure. OpenAI had updated the model, and one of the side effects was that GPT-4's ability to follow user instructions, including chain-of-thought prompts, declined. The model still worked. It still answered questions. It just answered them differently, and in many cases, worse. The researchers' conclusion was blunt: the behavior of the "same" LLM service can change substantially in a relatively short amount of time.

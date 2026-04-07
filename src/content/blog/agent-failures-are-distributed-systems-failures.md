@@ -9,10 +9,6 @@ summaryCoreIdea: "Cascading errors, stale reads, and plausible-but-wrong outputs
 summaryTakeaway: "A translation layer mapping retries, circuit breakers, and read-your-writes onto agent architectures."
 ---
 
-*You already have the mental models. You just don't know it yet.*
-
----
-
 In 2022, Air Canada's chatbot told a grieving customer he could buy full-price tickets and claim a bereavement discount later, within 90 days. He did. Then the airline told him no, that's not the policy, and refused the refund. The chatbot had been working from an old version of the bereavement policy. A different page on the same website had the current one. Two parts of the same system, two versions of the truth, no reconciliation layer. The failure wasn't in the model. It was in the seams.
 
 If you've built or operated large-scale infrastructure, this should feel familiar. An upstream service returns stale data. A downstream consumer trusts it. The blast radius compounds before anyone notices. We used to call this "eventual consistency" and "cache invalidation." Now we call it "agent misbehavior."

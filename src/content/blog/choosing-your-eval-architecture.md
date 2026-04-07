@@ -9,9 +9,6 @@ summaryCoreIdea: "Benchmark harnesses, flexible frameworks, and production-nativ
 summaryTakeaway: "A composable eval stack where offline contracts extend into production scoring and generate evidence artifacts."
 ---
 
-*The question is not which eval tool. The question is what kind of eval infrastructure your system actually needs.*
-
----
 
 *This essay extends ideas from [The Eval Gap](/blog/the-eval-gap/) and [Building an Eval Harness That Survives Production](/blog/building-an-eval-harness-that-survives-production/) in the Reliable Agent Systems series.*
 

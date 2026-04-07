@@ -9,9 +9,6 @@ summaryCoreIdea: "Twenty-five controls across eight clusters, each mapped to a v
 summaryTakeaway: "A filterable reference table that turns regulatory text into operating procedures by role and review cadence."
 ---
 
-*The regulation tells you what to prove. The mapping table tells you how to operate the proof.*
-
----
 
 *This is a companion to [Mapping the EU AI Act to Engineering Evidence](/blog/mapping-the-eu-ai-act-to-engineering-evidence/) in the Reliable Agent Systems series.*
 

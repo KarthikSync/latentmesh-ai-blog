@@ -9,9 +9,6 @@ summaryCoreIdea: "Prevention answers how to reduce failures; incident response a
 summaryTakeaway: "Six capabilities that separate real AI incident response from the illusion of preparedness."
 ---
 
-*You built the controls. You still cannot contain the failure.*
-
----
 
 An AI system causes harm in production. Maybe it leaks data through an agent tool call, takes an unsafe action on a customer account, or follows hostile instructions hidden in retrieved content. The first question is not whether the model was aligned. The first question is simpler: who owns the incident right now, what evidence do you have, and how do you stop it from happening again?
 

@@ -9,9 +9,6 @@ summaryCoreIdea: "Without preserved relationships between these objects, audits 
 summaryTakeaway: "A five-object framework linking obligations, controls, evals, evidence artifacts, and response loops."
 ---
 
-*The missing layer between what your system must prove and how your organization proves it.*
-
----
 
 *This essay is the framework synthesis of the [Reliable Agent Systems](/series/) series.*
 

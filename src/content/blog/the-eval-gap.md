@@ -9,10 +9,6 @@ summaryCoreIdea: "Production failures come from distribution shift, compound too
 summaryTakeaway: "A layered eval pipeline using shadow mode, intermediate-step verification, and weekly case rotation."
 ---
 
-*Your benchmarks are passing. Your agent is failing. These are not contradictory statements.*
-
----
-
 In early 2024, Klarna announced that its AI chatbot could do the work of 700 customer service agents. The numbers backed it up. The system handled two-thirds of all customer inquiries, about 2.3 million conversations. Resolution times improved. Costs fell. The CEO told Bloomberg that AI could already perform the jobs humans do. Every investor memo and tech newsletter cited Klarna as proof that AI-powered customer service was a solved problem.
 
 By mid-2025, the public narrative had shifted. Klarna began adding human support capacity back into the loop. Whether the problem was the model, the workflow design, or the complexity of real customer interactions, the lesson was the same: volume metrics can look excellent while failure accumulates in the hardest cases.

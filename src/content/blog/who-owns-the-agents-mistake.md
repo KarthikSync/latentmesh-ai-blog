@@ -9,10 +9,6 @@ summaryCoreIdea: "Without ownership across model, prompt, retrieval, and tool la
 summaryTakeaway: "A decomposition of agent ownership by layer, with traceability requirements for each."
 ---
 
-*The legal answer is converging fast. You just haven't built the infrastructure to act on it.*
-
----
-
 In November 2022, Jake Moffatt needed to book a last-minute flight to Toronto after a death in his family. He went to Air Canada's website and asked the chatbot about bereavement fares. The chatbot told him he could buy a full-price ticket now and apply for the bereavement discount within 90 days. He did. The airline refused the refund. A different page on the same website had the correct policy: bereavement fares don't apply after travel is completed.
 
 Air Canada's defense was remarkable. The airline argued that its chatbot was, in effect, a separate legal entity responsible for its own actions. The British Columbia Civil Resolution Tribunal didn't buy it. The chatbot is part of Air Canada's website. Air Canada is responsible for all the information on its website. The airline owed Moffatt a duty of care and breached it by failing to ensure its chatbot gave accurate information. Damages: C$650.88 plus interest and fees.

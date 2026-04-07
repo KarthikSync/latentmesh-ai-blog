@@ -9,10 +9,6 @@ summaryCoreIdea: "Without the evidence layer, you cannot show an auditor that th
 summaryTakeaway: "The control chain: obligation to mechanism to eval to evidence to named owner."
 ---
 
-*A guardrail catches the output. A control proves the system works.*
-
----
-
 In July 2025, researchers at Noma Security submitted a customer inquiry through Salesforce's standard Web-to-Lead form. The form has a description field that accepts up to 42,000 characters. They used that space to hide a set of instructions for Agentforce, Salesforce's autonomous AI agent platform. The instructions told the agent to gather CRM data and send it to an external server. When an employee later asked Agentforce to review the submission, the agent did exactly what the hidden instructions said. It pulled customer emails, lead details, and internal records, then transmitted them to an attacker-controlled domain. The domain had cost five dollars to register. Salesforce's own Content Security Policy had whitelisted it years earlier and never removed it after the registration lapsed.
 
 Noma reported the vulnerability on July 28, 2025, scoring it at 9.4 out of 10. Salesforce implemented Trusted URL enforcement for Agentforce and Einstein AI on September 8. Noma disclosed publicly on September 25. But the interesting part of ForcedLeak is not the patch. It is what was missing before the patch.

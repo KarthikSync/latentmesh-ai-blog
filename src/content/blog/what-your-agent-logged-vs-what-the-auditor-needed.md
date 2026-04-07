@@ -9,9 +9,6 @@ summaryCoreIdea: "Auditors need system version, full context, control evaluation
 summaryTakeaway: "Three logging changes that close the gap between operational telemetry and audit-ready evidence."
 ---
 
-*The trace says what happened. The auditor asks why, under what authority, and what changed.*
-
----
 
 *This is a companion essay to [Anatomy of an Evidence Pack](/blog/anatomy-of-an-evidence-pack/) in the Reliable Agent Systems series.*
 

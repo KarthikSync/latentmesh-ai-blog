@@ -9,9 +9,6 @@ summaryCoreIdea: "Distribution, trace, and outcome detectors catch different dri
 summaryTakeaway: "Five detection patterns with pre-bound response playbooks that turn alerts into containment actions."
 ---
 
-*Your agent is still answering. That does not mean it is still behaving the same way.*
-
----
 
 *This is a companion essay to [Drift Is the Default](/blog/drift-is-the-default/) in the Reliable Agent Systems series.*
 

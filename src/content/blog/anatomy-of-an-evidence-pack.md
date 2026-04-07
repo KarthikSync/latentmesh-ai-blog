@@ -9,10 +9,6 @@ summaryCoreIdea: "Vendor logs are not your compliance evidence, and reconstructi
 summaryTakeaway: "Five artifact categories with integrity requirements that make documentation into evidence."
 ---
 
-*Your system passed the eval. Can you prove it?*
-
----
-
 In November 2025, OpenAI split a monolithic internal service into smaller microservices. During the migration, an engineer missed a single environment variable, a Kafka configuration that told one of the new services where to publish audit log events. The service started handling API requests. It stopped recording them. For three months, enterprise customers using OpenAI's API had gaps in their audit logs, and nobody at OpenAI noticed. The company's own monitoring had a separate, unrelated issue that prevented it from catching the drop in log volume. A customer finally reported the problem in February 2026. When OpenAI tried to backfill the missing data, they discovered that some fields, including the identity of who performed each action, could not be recovered. The underlying data simply was not stored anywhere else.
 
 OpenAI's postmortem was straightforward about what happened: the logs were gone, some of them permanently. Their advice to affected customers was equally direct. Use your own internal identity and change-management logs as a secondary source for investigations spanning this period.

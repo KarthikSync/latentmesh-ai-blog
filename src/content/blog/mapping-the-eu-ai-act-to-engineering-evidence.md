@@ -9,9 +9,6 @@ summaryCoreIdea: "Each obligation under Articles 9 through 73 needs a control, a
 summaryTakeaway: "A mapping table from every major EU AI Act obligation to a practical control, eval, and evidence artifact."
 ---
 
-*The regulation tells you what to prove. It does not tell you how to build the proof.*
-
----
 
 In July 2025, researchers at Noma Security submitted a customer inquiry through Salesforce's standard Web-to-Lead form. The form has a description field that accepts up to 42,000 characters. They used that space to hide a set of instructions for Agentforce, Salesforce's autonomous AI agent platform. The instructions told the agent to gather CRM data and send it to an external server. When an employee later asked Agentforce to review the submission, the agent did exactly what the hidden instructions said. It pulled customer emails, lead details, and internal records, then transmitted them to an attacker-controlled domain. The domain had cost five dollars to register. Salesforce's own Content Security Policy had whitelisted it years earlier and never removed it after the registration lapsed.
 

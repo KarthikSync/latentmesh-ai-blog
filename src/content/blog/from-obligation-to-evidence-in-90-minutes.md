@@ -9,9 +9,6 @@ summaryCoreIdea: "One clause of Article 14 walked through end to end: obligation
 summaryTakeaway: "A repeatable 90-minute process for turning any regulatory requirement into a complete evidence chain."
 ---
 
-*Pick one requirement. Map it to a control. Write the eval. Generate the artifact. Assign the owner. That is the whole loop.*
-
----
 
 *This is a companion essay to [What Should an AI System Actually Prove?](/blog/what-should-an-ai-system-actually-prove/) and [Controls Are Not Guardrails](/blog/controls-are-not-guardrails/) in the Reliable Agent Systems series.*
 
