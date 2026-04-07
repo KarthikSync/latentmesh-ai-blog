@@ -9,19 +9,14 @@ export function ControlDetailRow({ control }: Props) {
   const [open, setOpen] = useState(false);
   const detailId = `d${control.id.replace("r", "")}`;
 
+  const toggle = () => setOpen(!open);
+
   return (
     <>
-      <tr className="data-row">
+      <tr className="data-row" onClick={toggle} style={{ cursor: "pointer" }}>
         <td data-label="Obligation">
-          <button
-            className="expand-btn"
-            aria-expanded={open}
-            aria-controls={detailId}
-            onClick={() => setOpen(!open)}
-          >
-            <span className="obl-name">{control.obligation}</span>
-            <span className="art-ref">{control.articleRef}</span>
-          </button>
+          <span className="obl-name">{control.obligation}</span>
+          <span className="art-ref">{control.articleRef}</span>
         </td>
         <td data-label="Role">
           <span className={`role-tag ${control.role.toLowerCase()}`}>

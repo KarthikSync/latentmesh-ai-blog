@@ -10,7 +10,7 @@
 .ref-page .export-btn:hover { border-color: var(--accent); color: var(--text); }
 
 .ref-page .count-bar { max-width: 1360px; margin: 0 auto; padding: 0 2rem 0.75rem; font-size: 0.78rem; color: var(--text-tertiary); font-family: 'IBM Plex Mono', monospace; }
-.ref-page .main { max-width: 1360px; margin: 0 auto; padding: 0 2rem 3rem; }
+.ref-page .main { max-width: 1360px; margin: 0 auto; padding: 0 2rem 3rem; overflow-x: auto; }
 
 /* ── Cluster sections ── */
 .ref-page .cluster-section { margin-bottom: 1.25rem; border: 1px solid var(--border-light); border-radius: 6px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow); }
@@ -79,14 +79,17 @@
   .ref-page .filters-bar,
   .ref-page .main,
   .ref-page .count-bar { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .ref-page .ctrl-table { table-layout: auto; }
   .ref-page .ctrl-table thead { position: static; }
   .ref-page .ctrl-table th { display: none; }
   .ref-page tr.data-row { display: block; padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border-light); }
-  .ref-page tr.data-row td { display: block; padding: 0.15rem 0; }
+  .ref-page tr.data-row td { display: block; padding: 0.15rem 0; word-break: break-word; }
   .ref-page tr.data-row td::before { content: attr(data-label); display: block; font-size: 0.66rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-tertiary); }
   .ref-page tr.data-row td:nth-child(4),
   .ref-page tr.data-row td:nth-child(5),
   .ref-page tr.data-row td:nth-child(8) { display: block; }
   .ref-page tr.detail-row.open { display: block; }
+  .ref-page tr.detail-row.open td { word-break: break-word; }
   .ref-page .filters-bar { flex-direction: column; align-items: flex-start; }
+  .ref-page .cluster-section { overflow-x: hidden; }
 }
