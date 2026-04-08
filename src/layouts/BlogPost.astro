@@ -5,6 +5,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import SummaryCard from '../components/SummaryCard.astro';
+import EmailSignup from '../components/EmailSignup.astro';
 import { getCollection } from 'astro:content';
 import { SITE_AUTHOR, SITE_TITLE, SITE_URL } from '../consts';
 
@@ -196,11 +197,12 @@ const breadcrumbSchema = {
 							</section>
 						)}
 
-						<!-- Email capture -->
-						<div class="email-capture">
-							<p class="email-capture-label">Follow on LinkedIn for new essays — email signup coming soon.</p>
-							<a href="https://www.linkedin.com/in/karthiksync" target="_blank" rel="noopener noreferrer" class="email-capture-cta">Follow on LinkedIn</a>
-						</div>
+						<!-- Email signup -->
+						<EmailSignup
+							variant="card"
+							heading="Enjoyed this essay?"
+							body="For engineers, CISOs, and governance teams building real AI systems. One practical note a week on evals, controls, and regulatory readiness."
+						/>
 
 						<!-- Reader feedback -->
 						<div class="reader-feedback" id="reader-feedback">

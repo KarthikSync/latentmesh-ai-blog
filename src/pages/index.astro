@@ -2,6 +2,7 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import EmailSignup from "../components/EmailSignup.astro";
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SITE_AUTHOR, LINKEDIN_URL, GITHUB_URL } from "../consts";
 import { getCollection } from "astro:content";
 import { getReadingTime } from "../utils/reading-time";
@@ -174,6 +175,12 @@ function formatMonth(date: Date): string {
         </div>
       </section>
 
+      <EmailSignup
+        variant="section"
+        heading="Stay in the loop"
+        body="A weekly note on building reliable AI systems: governance, evals, controls, and compliance."
+      />
+
       <!-- Latest Essays -->
       {latestPosts.length > 0 && (
         <section class="latest">
@@ -200,6 +207,12 @@ function formatMonth(date: Date): string {
           </div>
         </section>
       )}
+
+      <EmailSignup
+        variant="section"
+        heading="Stay in the loop"
+        body="A weekly note on building reliable AI systems: governance, evals, controls, and compliance."
+      />
 
     </main>
 
