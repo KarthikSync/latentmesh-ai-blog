@@ -2,7 +2,7 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL, LINKEDIN_URL } from "../consts";
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SITE_AUTHOR, LINKEDIN_URL, GITHUB_URL } from "../consts";
 import { getCollection } from "astro:content";
 import { getReadingTime } from "../utils/reading-time";
 
@@ -12,6 +12,16 @@ const websiteSchema = {
   "name": "LatentMesh",
   "alternateName": "LatentMesh AI",
   "url": SITE_URL + "/",
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "LatentMesh",
+  "url": SITE_URL + "/",
+  "description": SITE_DESCRIPTION,
+  "founder": { "@type": "Person", "name": SITE_AUTHOR, "url": SITE_URL + "/about/" },
+  "sameAs": [LINKEDIN_URL, GITHUB_URL],
 };
 
 const allPosts = (await getCollection("blog")).sort(
@@ -48,6 +58,7 @@ function formatMonth(date: Date): string {
   <head>
     <BaseHead title={`${SITE_TITLE} | AI compliance, evaluation, and governance`} description={SITE_DESCRIPTION} image="/og-default.png" />
     <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
   </head>
   <body>
     <Header />
