@@ -51,4 +51,11 @@ export function exportControlsToCSV(
   a.download = filename;
   a.click();
   URL.revokeObjectURL(url);
+
+  if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
+    (window as any).gtag("event", "csv_download", {
+      file_name: filename,
+      row_count: controls.length,
+    });
+  }
 }

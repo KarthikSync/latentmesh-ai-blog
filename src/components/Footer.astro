@@ -11,8 +11,8 @@ import { GITHUB_URL, LINKEDIN_URL } from "../consts";
     <div class="footer-links">
       <a href="/reading-list">Reading List</a>
       <a href="/about">About</a>
-      <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer">GitHub</a>
-      <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" onclick="gtag('event','outbound_click',{destination:'github',location:'footer'})">GitHub</a>
+      <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" onclick="gtag('event','outbound_click',{destination:'linkedin',location:'footer'})">LinkedIn</a>
     </div>
   </div>
   <div class="footer-disclaimer">

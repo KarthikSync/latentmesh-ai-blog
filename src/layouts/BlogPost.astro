@@ -168,13 +168,13 @@ const blogPostingSchema = {
 								<h2>Continue reading</h2>
 								<div class="prev-next">
 									{prevEssay && (
-										<a href={`/blog/${prevEssay.slug}/`} class="prev-next-link prev">
+										<a href={`/blog/${prevEssay.slug}/`} class="prev-next-link prev" onclick={`gtag('event','series_nav',{direction:'previous',from:'${slug}',to:'${prevEssay.slug}'})`}>
 											<span class="prev-next-label">&larr; Previous</span>
 											<span class="prev-next-title">{prevEssay.title}</span>
 										</a>
 									)}
 									{nextEssay && (
-										<a href={`/blog/${nextEssay.slug}/`} class="prev-next-link next">
+										<a href={`/blog/${nextEssay.slug}/`} class="prev-next-link next" onclick={`gtag('event','series_nav',{direction:'next',from:'${slug}',to:'${nextEssay.slug}'})`}>
 											<span class="prev-next-label">Next &rarr;</span>
 											<span class="prev-next-title">{nextEssay.title}</span>
 										</a>

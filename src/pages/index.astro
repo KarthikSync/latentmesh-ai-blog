@@ -61,8 +61,8 @@ function formatMonth(date: Date): string {
             <h1>Practical engineering for AI compliance, AI evaluation, and governance.</h1>
             <p class="hero-sub">Essays and frameworks on AI regulatory compliance, agent failures, controls, and production evidence.</p>
             <div class="hero-cta-row">
-              <a href="/reading-list" class="btn-primary">Start with the reading list &rarr;</a>
-              <a href="/blog" class="btn-secondary">Latest essays</a>
+              <a href="/reading-list" class="btn-primary" onclick="gtag('event','cta_click',{cta_name:'reading_list',location:'homepage_hero'})">Start with the reading list &rarr;</a>
+              <a href="/blog" class="btn-secondary" onclick="gtag('event','cta_click',{cta_name:'latest_essays',location:'homepage_hero'})">Latest essays</a>
             </div>
           </div>
           <div class="hero-panel">
@@ -94,22 +94,22 @@ function formatMonth(date: Date): string {
             <h2>What I write about</h2>
           </div>
           <div class="topic-grid">
-            <a href="/topics/agents/" class="topic-cell">
+            <a href="/topics/agents/" class="topic-cell" onclick="gtag('event','topic_click',{topic:'agents'})">
               <div class="topic-icon t-agents">&ofcir;</div>
               <h3>Agent failures</h3>
               <p>How agent systems break, drift, and misbehave once they leave the demo environment.</p>
             </a>
-            <a href="/topics/evals/" class="topic-cell">
+            <a href="/topics/evals/" class="topic-cell" onclick="gtag('event','topic_click',{topic:'evals'})">
               <div class="topic-icon t-evals">&target;</div>
               <h3>Evaluation</h3>
               <p>Practical evals for regression, reliability, and operational trust in production.</p>
             </a>
-            <a href="/topics/safety/" class="topic-cell">
+            <a href="/topics/safety/" class="topic-cell" onclick="gtag('event','topic_click',{topic:'safety'})">
               <div class="topic-icon t-safety">&osol;</div>
               <h3>Safety</h3>
               <p>Guardrails, control surfaces, observability, containment, and human review loops.</p>
             </a>
-            <a href="/ai-compliance/" class="topic-cell">
+            <a href="/ai-compliance/" class="topic-cell" onclick="gtag('event','topic_click',{topic:'ai_compliance'})">
               <div class="topic-icon t-gov">&equiv;</div>
               <h3>AI compliance</h3>
               <p>How regulatory obligations become engineering controls, evaluations, and audit-ready evidence.</p>
@@ -125,35 +125,35 @@ function formatMonth(date: Date): string {
           <a href="/series" class="view-all-link">View full series &rarr;</a>
         </div>
         <div class="flagship-list">
-          <a href="/blog/agent-failures-are-distributed-systems-failures/" class="flagship-item">
+          <a href="/blog/agent-failures-are-distributed-systems-failures/" class="flagship-item" onclick="gtag('event','essay_click',{essay:'agent-failures',section:'start_here'})">
             <span class="flagship-num">01</span>
             <div>
               <div class="flagship-title">Agent Failures Are Distributed Systems Failures</div>
               <div class="flagship-desc">The mental models you already have for reliability apply directly to agent systems.</div>
             </div>
           </a>
-          <a href="/blog/the-eval-gap/" class="flagship-item">
+          <a href="/blog/the-eval-gap/" class="flagship-item" onclick="gtag('event','essay_click',{essay:'eval-gap',section:'start_here'})">
             <span class="flagship-num">02</span>
             <div>
               <div class="flagship-title">The Eval Gap</div>
               <div class="flagship-desc">Why benchmarks pass in staging and fail in production, and what to measure instead.</div>
             </div>
           </a>
-          <a href="/blog/guardrails-are-not-safety/" class="flagship-item">
+          <a href="/blog/guardrails-are-not-safety/" class="flagship-item" onclick="gtag('event','essay_click',{essay:'guardrails-not-safety',section:'start_here'})">
             <span class="flagship-num">03</span>
             <div>
               <div class="flagship-title">Guardrails Are Not Safety</div>
               <div class="flagship-desc">The difference between filtering outputs and building systems that behave correctly.</div>
             </div>
           </a>
-          <a href="/blog/controls-are-not-guardrails/" class="flagship-item">
+          <a href="/blog/controls-are-not-guardrails/" class="flagship-item" onclick="gtag('event','essay_click',{essay:'controls-not-guardrails',section:'start_here'})">
             <span class="flagship-num">07</span>
             <div>
               <div class="flagship-title">Controls Are Not Guardrails</div>
               <div class="flagship-desc">How engineering controls differ from guardrails, and why compliance requires both.</div>
             </div>
           </a>
-          <a href="/blog/anatomy-of-an-evidence-pack/" class="flagship-item">
+          <a href="/blog/anatomy-of-an-evidence-pack/" class="flagship-item" onclick="gtag('event','essay_click',{essay:'evidence-pack',section:'start_here'})">
             <span class="flagship-num">08</span>
             <div>
               <div class="flagship-title">Anatomy of an Evidence Pack</div>
