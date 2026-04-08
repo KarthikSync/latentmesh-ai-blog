@@ -1,7 +1,10 @@
 import type { APIRoute } from "astro";
 
 export const POST: APIRoute = async ({ request, locals }) => {
-  const headers = { "Content-Type": "application/json" };
+  const headers = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+  };
 
   try {
     const body = await request.json();
@@ -14,10 +17,20 @@ export const POST: APIRoute = async ({ request, locals }) => {
       );
     }
 
-    const apiKey = (locals as any).runtime?.env?.["Buttondown-APIKey"];
+    // Try multiple access patterns for Cloudflare env
+    const runtime = (locals as any).runtime;
+    const env = runtime?.env;
+    const apiKey =
+      env?.["Buttondown-APIKey"] ??
+      env?.BUTTONDOWN_APIKEY ??
+      env?.["Buttondown_APIKey"];
+
     if (!apiKey) {
       return new Response(
-        JSON.stringify({ error: "Service unavailable." }),
+        JSON.stringify({
+          error: "Service unavailable.",
+          debug: `env keys: ${env ? Object.keys(env).join(", ") : "no env"}`,
+        }),
         { status: 500, headers }
       );
     }
@@ -48,12 +61,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
 
     return new Response(
-      JSON.stringify({ error: "Subscription failed." }),
+      JSON.stringify({ error: "Subscription failed.", detail: data }),
       { status: res.status, headers }
     );
-  } catch {
+  } catch (err) {
     return new Response(
-      JSON.stringify({ error: "Something went wrong." }),
+      JSON.stringify({ error: "Something went wrong.", detail: String(err) }),
       { status: 500, headers }
     );
   }
