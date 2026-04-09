@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request }) => {
   const headers = {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
@@ -17,19 +17,19 @@ export const POST: APIRoute = async ({ request, locals }) => {
       );
     }
 
-    // Try multiple access patterns for Cloudflare env
-    const runtime = (locals as any).runtime;
-    const env = runtime?.env;
+    // Dynamic import — only available at Cloudflare runtime
+    const { env: cfEnv } = await import("cloudflare:workers" as any);
+
     const apiKey =
-      env?.["Buttondown-APIKey"] ??
-      env?.BUTTONDOWN_APIKEY ??
-      env?.["Buttondown_APIKey"];
+      (cfEnv as any)["Buttondown-APIKey"] ??
+      (cfEnv as any).BUTTONDOWN_APIKEY ??
+      (cfEnv as any).Buttondown_APIKey;
 
     if (!apiKey) {
       return new Response(
         JSON.stringify({
           error: "Service unavailable.",
-          debug: `env keys: ${env ? Object.keys(env).join(", ") : "no env"}`,
+          debug: `cf env keys: ${Object.keys(cfEnv || {}).join(", ")}`,
         }),
         { status: 500, headers }
       );
