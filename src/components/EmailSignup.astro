@@ -55,24 +55,30 @@ const isSection = variant === "section";
       status.className = 'email-signup__status';
 
       try {
-        const res = await fetch('/api/subscribe', {
+        const res = await fetch('https://api.buttondown.email/v1/subscribers', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token 6c9d6d38-0940-40a0-aeaa-af3f7784b8db',
+          },
           body: JSON.stringify({ email_address: email }),
         });
 
-        const data = await res.json();
-
-        if (res.status === 201 || data.status === 'subscribed') {
+        if (res.status === 201) {
           f.style.display = 'none';
           status.textContent = "You're in. First note arrives next week.";
           status.className = 'email-signup__status email-signup__status--success';
-        } else if (data.status === 'already_subscribed') {
-          f.style.display = 'none';
-          status.textContent = "You're already subscribed.";
-          status.className = 'email-signup__status email-signup__status--success';
+        } else if (res.status === 400) {
+          const data = await res.json();
+          if (JSON.stringify(data).includes('already')) {
+            f.style.display = 'none';
+            status.textContent = "You're already subscribed.";
+            status.className = 'email-signup__status email-signup__status--success';
+          } else {
+            throw new Error('Invalid email');
+          }
         } else {
-          throw new Error(data.error || 'Subscription failed');
+          throw new Error('Subscription failed');
         }
 
         const privacy = f.parentElement?.querySelector('.email-signup__privacy') as HTMLElement;
