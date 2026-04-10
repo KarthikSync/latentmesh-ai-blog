@@ -1,171 +1,368 @@
-// PDF export — programmatic, client-side. Mirrors the Blob/anchor/gtag
-// pattern used by src/components/controls-grid/csvExport.ts.
+// PDF export — programmatic, client-side. Branded layout with LatentMesh
+// logo header, accent bars, and hyperlinked footer. Mirrors the Blob /
+// download pattern from src/components/controls-grid/csvExport.ts for
+// analytics tracking.
 
 import { jsPDF } from "jspdf";
 import { CLASSIFIER_SCHEMA, SCHEMA_VERSION } from "../../data/eu-ai-act-classifier/schema";
 import {
   CONFIDENCE_COPY,
+  DISCLAIMER,
   RESULT_SUMMARIES,
 } from "../../data/eu-ai-act-classifier/copy";
 import type { Result } from "../../data/eu-ai-act-classifier/types";
 
-const PAGE_WIDTH = 595.28; // A4 points
+// ── Layout constants (A4 in points) ──────────────────────────────
+const PAGE_WIDTH = 595.28;
+const PAGE_HEIGHT = 841.89;
 const MARGIN_X = 48;
+const HEADER_TOP = 40;
+const HEADER_HEIGHT = 66;
+const CONTENT_TOP = HEADER_TOP + HEADER_HEIGHT + 14;
+const FOOTER_HEIGHT = 88;
+const CONTENT_BOTTOM = PAGE_HEIGHT - FOOTER_HEIGHT;
 const CONTENT_WIDTH = PAGE_WIDTH - MARGIN_X * 2;
 
-export function downloadResultPdf(result: Result): void {
-  const doc = new jsPDF({ unit: "pt", format: "a4" });
-  let y = 56;
+// Brand colour matches --color-brand in src/styles/global.css (#1e3a8a)
+const BRAND_R = 30;
+const BRAND_G = 58;
+const BRAND_B = 138;
 
-  const writeLine = (text: string, size = 10, bold = false) => {
-    if (y > 780) {
-      doc.addPage();
-      y = 56;
+const TOOL_URL = "https://latentmesh.ai/tools/eu-ai-compliance-checker/";
+const LOGO_URL = "/images/latentmesh-tight-lockup.png";
+
+// ── Logo loader (cached, fail-safe) ──────────────────────────────
+interface LogoData {
+  dataUrl: string;
+  width: number;
+  height: number;
+}
+
+let logoCache: LogoData | null | undefined = undefined;
+
+async function loadLogo(): Promise<LogoData | null> {
+  if (logoCache !== undefined) return logoCache;
+  try {
+    const res = await fetch(LOGO_URL);
+    if (!res.ok) {
+      logoCache = null;
+      return null;
     }
+    const blob = await res.blob();
+    const dataUrl = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+    const dims = await new Promise<{ width: number; height: number }>((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve({ width: img.naturalWidth, height: img.naturalHeight });
+      img.onerror = reject;
+      img.src = dataUrl;
+    });
+    logoCache = { dataUrl, ...dims };
+    return logoCache;
+  } catch {
+    logoCache = null;
+    return null;
+  }
+}
+
+// ── Header (drawn on every page) ─────────────────────────────────
+function drawHeader(doc: jsPDF, logo: LogoData | null): void {
+  // Left: logo, sized to fit 110x40pt box preserving aspect ratio.
+  if (logo) {
+    const targetWidth = 110;
+    const maxHeight = 40;
+    const aspect = logo.height / logo.width;
+    let w = targetWidth;
+    let h = targetWidth * aspect;
+    if (h > maxHeight) {
+      h = maxHeight;
+      w = maxHeight / aspect;
+    }
+    doc.addImage(logo.dataUrl, "PNG", MARGIN_X, HEADER_TOP, w, h);
+  } else {
+    // Fallback wordmark if the logo fetch failed
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(16);
+    doc.setTextColor(BRAND_R, BRAND_G, BRAND_B);
+    doc.text("LatentMesh", MARGIN_X, HEADER_TOP + 22);
+  }
+
+  // Right: title + subtitle
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(13);
+  doc.setTextColor(15, 23, 42);
+  doc.text("EU AI Compliance Checker", PAGE_WIDTH - MARGIN_X, HEADER_TOP + 14, { align: "right" });
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9.5);
+  doc.setTextColor(100, 116, 139);
+  doc.text("Preliminary Risk Assessment", PAGE_WIDTH - MARGIN_X, HEADER_TOP + 29, { align: "right" });
+
+  // Brand accent bar spans the content width
+  const barY = HEADER_TOP + 46;
+  doc.setFillColor(BRAND_R, BRAND_G, BRAND_B);
+  doc.rect(MARGIN_X, barY, CONTENT_WIDTH, 2, "F");
+
+  // Meta line: schema version, generation date, domain
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(8);
+  doc.setTextColor(120, 130, 145);
+  doc.text(
+    `Schema v${SCHEMA_VERSION}  ·  Generated ${new Date().toISOString().slice(0, 10)}  ·  latentmesh.ai`,
+    MARGIN_X,
+    barY + 12
+  );
+
+  // Reset text colour for body
+  doc.setTextColor(0, 0, 0);
+}
+
+// ── Footer (drawn on every page) ─────────────────────────────────
+function drawFooter(doc: jsPDF, pageNum: number, pageCount: number): void {
+  const footerStart = PAGE_HEIGHT - FOOTER_HEIGHT + 8;
+
+  // Accent bar
+  doc.setFillColor(BRAND_R, BRAND_G, BRAND_B);
+  doc.rect(MARGIN_X, footerStart, CONTENT_WIDTH, 1.5, "F");
+
+  // Disclaimer (full two-sentence version from copy.ts)
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(8);
+  doc.setTextColor(75, 85, 99);
+  const disclaimerLines = doc.splitTextToSize(DISCLAIMER, CONTENT_WIDTH);
+  doc.text(disclaimerLines, MARGIN_X, footerStart + 14);
+
+  // Bottom row: hyperlinked attribution (left) + page count (right)
+  const bottomY = PAGE_HEIGHT - 22;
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(7.5);
+  doc.setTextColor(BRAND_R, BRAND_G, BRAND_B);
+  const attribution = "Generated by LatentMesh EU AI Compliance Checker — start another assessment";
+  doc.textWithLink(attribution, MARGIN_X, bottomY, { url: TOOL_URL });
+
+  doc.setTextColor(120, 130, 145);
+  doc.text(
+    `Schema v${SCHEMA_VERSION}  ·  Page ${pageNum} of ${pageCount}`,
+    PAGE_WIDTH - MARGIN_X,
+    bottomY,
+    { align: "right" }
+  );
+
+  doc.setTextColor(0, 0, 0);
+}
+
+// ── Body writers ──────────────────────────────────────────────────
+
+type Rgb = [number, number, number];
+
+const COLOR_TEXT: Rgb = [30, 41, 59];
+const COLOR_TEXT_STRONG: Rgb = [15, 23, 42];
+const COLOR_TEXT_MUTED: Rgb = [71, 85, 105];
+const COLOR_TEXT_SUBTLE: Rgb = [100, 116, 139];
+const COLOR_HEADING: Rgb = [71, 85, 105];
+const COLOR_POSITIVE: Rgb = [22, 101, 52];
+const COLOR_NEGATIVE: Rgb = [153, 27, 27];
+
+// ── Main export ───────────────────────────────────────────────────
+export async function downloadResultPdf(result: Result): Promise<void> {
+  const logo = await loadLogo();
+  const doc = new jsPDF({ unit: "pt", format: "a4" });
+
+  let y = CONTENT_TOP;
+
+  drawHeader(doc, logo);
+
+  const newPage = () => {
+    doc.addPage();
+    drawHeader(doc, logo);
+    y = CONTENT_TOP;
+  };
+
+  const ensureSpace = (reserved: number) => {
+    if (y > CONTENT_BOTTOM - reserved) newPage();
+  };
+
+  const writeLine = (text: string, size = 10, bold = false, color: Rgb = COLOR_TEXT) => {
+    ensureSpace(size * 2);
     doc.setFont("helvetica", bold ? "bold" : "normal");
     doc.setFontSize(size);
+    doc.setTextColor(color[0], color[1], color[2]);
     const lines = doc.splitTextToSize(text, CONTENT_WIDTH);
     doc.text(lines, MARGIN_X, y);
-    y += lines.length * (size + 3);
+    y += lines.length * (size * 1.35);
   };
 
-  const section = (title: string) => {
-    y += 8;
-    writeLine(title.toUpperCase(), 9, true);
-    doc.setDrawColor(180);
-    doc.line(MARGIN_X, y - 2, PAGE_WIDTH - MARGIN_X, y - 2);
-    y += 4;
+  const writeBullet = (text: string, size = 9.5) => {
+    ensureSpace(size * 2);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(size);
+    doc.setTextColor(55, 65, 81);
+    const wrapped = doc.splitTextToSize(text, CONTENT_WIDTH - 14);
+    doc.text("•", MARGIN_X, y);
+    doc.text(wrapped, MARGIN_X + 12, y);
+    y += wrapped.length * (size * 1.35) + 3;
   };
 
-  // ── Header ──
-  writeLine("EU AI Compliance Checker", 16, true);
-  writeLine("Preliminary Risk Assessment", 11);
-  writeLine(`Schema v${SCHEMA_VERSION} · Generated ${new Date().toISOString().slice(0, 10)}`, 9);
-  y += 8;
+  const sectionHeader = (title: string) => {
+    y += 14;
+    ensureSpace(30);
+    // Small brand-coloured anchor bar to the left of the heading
+    doc.setFillColor(BRAND_R, BRAND_G, BRAND_B);
+    doc.rect(MARGIN_X, y - 8, 3, 11, "F");
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.setTextColor(COLOR_HEADING[0], COLOR_HEADING[1], COLOR_HEADING[2]);
+    doc.text(title.toUpperCase(), MARGIN_X + 9, y);
+    y += 18;
+  };
 
   // ── Classification ──
-  section("Classification");
-  writeLine(CLASSIFIER_SCHEMA.displayLabels[result.system_result], 14, true);
-  writeLine(RESULT_SUMMARIES[result.system_result], 10);
+  sectionHeader("Classification");
+  writeLine(CLASSIFIER_SCHEMA.displayLabels[result.system_result], 15, true, COLOR_TEXT_STRONG);
+  y += 2;
+  writeLine(RESULT_SUMMARIES[result.system_result], 10, false, COLOR_TEXT_MUTED);
 
   // ── Open-source exclusion banner ──
   if (result.scope_status === "excluded_under_art_2_12") {
-    section("Open-source exclusion (Art. 2(12))");
+    sectionHeader("Open-source exclusion (Art. 2(12))");
     writeLine(
       "This system is excluded from the scope of the EU AI Act under Article 2(12) because it is released under a free and open-source licence, does not fall into a high-risk or prohibited category, and does not trigger any Article 50 transparency obligations.",
-      10
+      10,
+      false,
+      COLOR_TEXT_MUTED
     );
   }
 
   // ── Deployer exemption ──
   if (result.deployer_obligation_exempt) {
-    section("Deployer obligation exemption (Art. 2(10))");
+    sectionHeader("Deployer obligation exemption (Art. 2(10))");
     writeLine(
       "Because you are using this system for personal, non-professional purposes, you are exempt from deployer obligations. Provider obligations still apply to whoever built the system.",
-      10
+      10,
+      false,
+      COLOR_TEXT_MUTED
     );
   }
 
   // ── Triggering reasons ──
   if (result.system_reasons.length > 0) {
-    section("Why this classification");
+    sectionHeader("Why this classification");
     for (const r of result.system_reasons) {
-      writeLine(`• ${r.label} [${r.legal_ref}]`, 10, true);
-      writeLine(`  ${r.plain_explanation}`, 9);
+      writeLine(`${r.label}  [${r.legal_ref}]`, 10, true, COLOR_TEXT);
+      writeLine(r.plain_explanation, 9, false, COLOR_TEXT_SUBTLE);
+      y += 4;
     }
   }
 
   // ── Art. 6(3) exception ──
   if (result.article_6_3_exception.checked) {
-    section("Article 6(3) exception");
+    sectionHeader("Article 6(3) exception");
     if (result.article_6_3_exception.applies) {
-      writeLine("Exception may apply.", 10, true);
+      writeLine("Exception may apply.", 11, true, COLOR_POSITIVE);
       writeLine(
         "Provider obligations: document this assessment under Art. 6(4) and register the system in the EU database under Article 49(2). Make documentation available to national competent authorities on request. There is no proactive notification duty.",
-        9
+        9.5,
+        false,
+        COLOR_TEXT_MUTED
       );
     } else {
-      writeLine("Exception does not apply.", 10, true);
-      writeLine(result.article_6_3_exception.reason ?? "", 9);
+      writeLine("Exception does not apply.", 11, true, COLOR_NEGATIVE);
+      writeLine(result.article_6_3_exception.reason ?? "", 9.5, false, COLOR_TEXT_MUTED);
     }
   }
 
   // ── GPAI ──
   if (result.model_result !== "none") {
-    section("GPAI model track");
-    writeLine(CLASSIFIER_SCHEMA.displayLabels[result.model_result], 11, true);
+    sectionHeader("GPAI model track");
+    writeLine(CLASSIFIER_SCHEMA.displayLabels[result.model_result], 12, true, COLOR_TEXT_STRONG);
     const holderText =
       result.gpai_obligation_holder === "self"
         ? "Obligations held by: you (as provider)"
         : result.gpai_obligation_holder === "upstream_provider"
           ? "Obligations held by: upstream provider (not you)"
           : `Obligations held by: ${result.gpai_obligation_holder}`;
-    writeLine(holderText, 10);
+    writeLine(holderText, 10, false, COLOR_TEXT_MUTED);
     if (result.gpai_open_source_exception) {
       writeLine(
         "Art. 53(2) open-source exception applies — reduced transparency obligations (copyright obligations still apply).",
-        9
+        9,
+        false,
+        COLOR_TEXT_SUBTLE
       );
     }
   }
 
   // ── Art. 50 ──
   if (result.article_50_transparency_triggers.length > 0) {
-    section("Article 50 transparency obligations");
+    sectionHeader("Article 50 transparency obligations");
     for (const t of result.article_50_transparency_triggers) {
-      writeLine(`• ${t.obligation} [${t.article}]`, 9);
+      writeBullet(`${t.obligation} [${t.article}]`);
     }
   }
 
   // ── Timing ──
-  section("Compliance deadline");
+  sectionHeader("Compliance deadline");
   writeLine(
     `Primary deadline: ${result.timing.compliance_deadline}${result.timing.rules_enforceable_now ? " (enforceable now)" : ""}`,
-    10
+    11,
+    true,
+    COLOR_TEXT_STRONG
   );
   if (result.timing.public_authority_deadline) {
-    writeLine(`Public authority legacy deadline: ${result.timing.public_authority_deadline}`, 9);
+    writeLine(
+      `Public authority legacy deadline: ${result.timing.public_authority_deadline}`,
+      9,
+      false,
+      COLOR_TEXT_SUBTLE
+    );
   }
   if (result.timing.gpai_legacy_deadline) {
-    writeLine(`GPAI legacy deadline: ${result.timing.gpai_legacy_deadline}`, 9);
+    writeLine(
+      `GPAI legacy deadline: ${result.timing.gpai_legacy_deadline}`,
+      9,
+      false,
+      COLOR_TEXT_SUBTLE
+    );
   }
 
   // ── What this means for you ──
   if (result.post_classification_notes.length > 0) {
-    section("What this means for you");
+    sectionHeader("What this means for you");
     for (const note of result.post_classification_notes) {
-      writeLine(`• ${note}`, 9);
+      writeBullet(note);
     }
   }
 
   // ── Confidence ──
-  section("Confidence");
+  sectionHeader("Confidence");
   const confidence = CONFIDENCE_COPY[result.confidence];
-  writeLine(confidence.label, 10, true);
-  writeLine(confidence.explanation, 9);
+  writeLine(confidence.label, 11, true, COLOR_TEXT_STRONG);
+  writeLine(confidence.explanation, 9.5, false, COLOR_TEXT_MUTED);
   if (result.unsure_fields.length > 0) {
-    writeLine(`Questions answered "unsure": ${result.unsure_fields.join(", ")}`, 9);
+    writeLine(
+      `Questions answered "unsure": ${result.unsure_fields.join(", ")}`,
+      9,
+      false,
+      COLOR_TEXT_SUBTLE
+    );
   }
 
-  // ── Footer on every page ──
+  // ── Draw footers on every page after all content is laid out ──
   const pageCount = doc.getNumberOfPages();
   for (let i = 1; i <= pageCount; i++) {
     doc.setPage(i);
-    doc.setFont("helvetica", "italic");
-    doc.setFontSize(8);
-    doc.setTextColor(120);
-    doc.text(
-      `Not legal advice. Schema v${SCHEMA_VERSION}. latentmesh.ai/tools/eu-ai-compliance-checker/`,
-      MARGIN_X,
-      820
-    );
-    doc.text(`Page ${i} of ${pageCount}`, PAGE_WIDTH - MARGIN_X, 820, { align: "right" });
-    doc.setTextColor(0);
+    drawFooter(doc, i, pageCount);
   }
 
   const filename = `eu-ai-compliance-checker-${new Date().toISOString().slice(0, 10)}.pdf`;
   doc.save(filename);
 
+  // Analytics
   if (typeof window !== "undefined" && typeof (window as any).gtag === "function") {
     (window as any).gtag("event", "pdf_downloaded", {
       system_result: result.system_result,

@@ -217,7 +217,9 @@ export default function Classifier() {
           <EarlyExitScreen
             result={result}
             onRestart={handleRestart}
-            onDownloadPdf={() => downloadResultPdf(result)}
+            onDownloadPdf={() => {
+              void downloadResultPdf(result);
+            }}
           />
         </div>
       );
@@ -239,7 +241,9 @@ export default function Classifier() {
         <ResultScreen
           result={result}
           onRestart={handleRestart}
-          onDownloadPdf={() => downloadResultPdf(result)}
+          onDownloadPdf={() => {
+            void downloadResultPdf(result);
+          }}
         />
       </div>
     );
