@@ -1,22 +1,24 @@
 // Step 2 — Prohibited practices (Art. 5)
-// Eight practices, some with nested exception sub-questions.
-// Exceptions are represented as ProhibitedExceptionDef arrays, aggregated by the engine.
+// Beginner-facing copy: "PROHIBITED PRACTICES" — 8 cards with a short label,
+// a plain-language description, and a consistent "Does this apply to your
+// system?" question. Field ids and legal references are unchanged. Nested
+// exceptions are kept and rewritten in the same concise voice.
 
 import type { StepDef } from "../types";
 
 export const STEP_2: StepDef = {
   id: "step2",
-  title: "Could this system involve a banned AI practice?",
+  title: "Could this system involve a prohibited AI practice?",
   shortLabel: "Prohibited",
   intro:
-    "Eight practices are outright prohibited under Article 5. Some have narrow exceptions. These prohibitions have been enforceable since 2 February 2025.",
-  questions: [], // all driven via prohibitedPractices below
+    "Some AI practices are prohibited under Article 5. If your system falls into one of them, it cannot be placed on the EU market or used in the EU.",
+  questions: [],
   prohibitedPractices: [
     {
       id: "prohibited_manipulation",
       name: "Manipulative or deceptive AI",
       summary:
-        "AI that uses subliminal or deceptive techniques to distort someone's behaviour and cause harm.",
+        "AI that uses subliminal, manipulative, or deceptive techniques to distort behaviour in a way that causes or is likely to cause significant harm.",
       exampleYes:
         "A shopping app that uses subliminal visual cues to push compulsive purchases that harm users financially.",
       exampleNo:
@@ -28,8 +30,9 @@ export const STEP_2: StepDef = {
       id: "prohibited_vulnerability_exploitation",
       name: "Exploiting vulnerabilities",
       summary:
-        "AI that targets someone's age, disability, or economic hardship to manipulate their behaviour.",
-      exampleYes: "An AI toy that encourages dangerous behaviour in children.",
+        "AI that exploits a person's age, disability, or social or economic situation in a way that distorts behaviour and causes or is likely to cause significant harm.",
+      exampleYes:
+        "An AI toy that encourages dangerous behaviour in children.",
       exampleNo:
         "An accessibility tool that adapts interfaces for users with disabilities.",
       exceptions: [],
@@ -39,8 +42,9 @@ export const STEP_2: StepDef = {
       id: "prohibited_social_scoring",
       name: "Social scoring",
       summary:
-        "AI that rates people based on their social behaviour and penalises them in unrelated areas of life.",
-      exampleYes: "A system that denies housing based on social media activity.",
+        "AI that evaluates or classifies people over time based on social behaviour or personal traits, leading to unjustified or disproportionate detrimental treatment.",
+      exampleYes:
+        "A system that denies housing based on social media activity.",
       exampleNo:
         "A credit scoring system based on financial data (this may be high-risk, but not prohibited).",
       exceptions: [],
@@ -48,9 +52,9 @@ export const STEP_2: StepDef = {
     },
     {
       id: "prohibited_criminal_prediction",
-      name: "Criminal prediction from profiling",
+      name: "Criminal risk prediction based only on profiling",
       summary:
-        "AI that predicts someone will commit a crime based only on who they are, not what they've done.",
+        "AI that predicts a person's risk of committing a crime based only on profiling or personal traits, without objective and verifiable facts directly linked to criminal activity.",
       exampleYes:
         "A system that scores individuals for likelihood of criminality from demographic profiling.",
       exampleNo:
@@ -59,9 +63,9 @@ export const STEP_2: StepDef = {
         {
           id: "prohibited_criminal_prediction_exception",
           question:
-            "Is the risk assessment based on objective, verifiable facts directly linked to criminal activity?",
+            "Is the risk assessment based on objective and verifiable facts directly linked to criminal activity?",
           helper:
-            "This is the only carve-out for criminal risk prediction. If the assessment rests on concrete facts about what the person has actually done — not on profiling or personality traits — the prohibition may not apply.",
+            "If the assessment rests on concrete facts about what a person has actually done, rather than on profiling or personal traits, the prohibition may not apply.",
           legal: { article: "Art. 5(1)(d)" },
         },
       ],
@@ -69,9 +73,9 @@ export const STEP_2: StepDef = {
     },
     {
       id: "prohibited_facial_scraping",
-      name: "Untargeted facial scraping",
+      name: "Untargeted facial image scraping",
       summary:
-        "AI that builds facial recognition databases by mass-scraping photos from the internet or CCTV.",
+        "AI that creates or expands facial recognition databases by scraping facial images from the internet or CCTV footage without targeting specific individuals.",
       exampleYes:
         "A face database assembled by crawling social media images at scale.",
       exampleNo:
@@ -81,18 +85,20 @@ export const STEP_2: StepDef = {
     },
     {
       id: "prohibited_emotion_workplace_education",
-      name: "Emotion recognition at work or school",
-      summary: "AI that reads people's emotions in workplaces or educational settings.",
+      name: "Emotion recognition in work or education",
+      summary:
+        "AI that infers emotions in workplaces or educational settings, except in limited medical or safety cases.",
       exampleYes:
         "A classroom camera system that flags students as 'disengaged' based on facial expressions.",
       exampleNo:
-        "An opt-in wellness tool used outside of employment or educational settings.",
+        "An opt-in wellness tool used outside of employment or education.",
       exceptions: [
         {
           id: "prohibited_emotion_medical_safety_exception",
-          question: "Is the emotion inference performed solely for medical or safety reasons?",
+          question:
+            "Is the emotion inference used solely for medical or safety reasons?",
           helper:
-            "The carve-out covers detecting a driver falling asleep, monitoring patient distress in clinical care, and similar medical or safety contexts.",
+            "Narrow medical or safety uses (for example, detecting a driver falling asleep or monitoring patient distress in clinical care) are permitted.",
           legal: { article: "Art. 5(1)(f)" },
         },
       ],
@@ -102,7 +108,7 @@ export const STEP_2: StepDef = {
       id: "prohibited_biometric_categorisation",
       name: "Biometric categorisation of protected traits",
       summary:
-        "AI that categorises people individually based on their biometric data to infer sensitive attributes: race, political opinions, trade union membership, religious beliefs, sex life, or sexual orientation.",
+        "AI that categorises people using biometric data to infer sensitive traits such as race, political views, religion, sexual orientation, or similar protected characteristics.",
       exampleYes:
         "A system that infers political views from photographs of attendees at public events.",
       exampleNo:
@@ -111,9 +117,9 @@ export const STEP_2: StepDef = {
         {
           id: "prohibited_biometric_exception",
           question:
-            "Is the categorisation limited to labelling or filtering lawfully acquired biometric datasets, or to law enforcement categorisation under legal safeguards?",
+            "Is the categorisation limited to labelling or filtering lawfully acquired biometric datasets, or to specific law enforcement uses under legal safeguards?",
           helper:
-            "These narrow exceptions cover dataset curation and specific law enforcement uses, not commercial profiling.",
+            "These narrow exceptions cover dataset curation and defined law enforcement uses, not commercial profiling.",
           legal: { article: "Art. 5(1)(g)" },
         },
       ],
@@ -121,12 +127,13 @@ export const STEP_2: StepDef = {
     },
     {
       id: "prohibited_rbi_law_enforcement",
-      name: "Real-time biometric identification by police in public spaces",
+      name: "Real-time remote biometric identification by police in public spaces",
       summary:
-        "Live facial recognition in publicly accessible spaces for law enforcement purposes.",
-      exampleYes: "A police deployment of real-time face recognition in a public square.",
+        "Use of real-time remote biometric identification in publicly accessible spaces for law enforcement, except in narrow statutory exceptions.",
+      exampleYes:
+        "A police deployment of real-time face recognition in a public square.",
       exampleNo:
-        "Post-event forensic identification from CCTV footage after a specific crime (this may be high-risk, but not prohibited under this article).",
+        "Post-event forensic identification from CCTV footage after a specific crime.",
       exceptions: [
         {
           id: "rbi_exception_victim_search",

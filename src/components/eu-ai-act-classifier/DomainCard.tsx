@@ -27,7 +27,7 @@ export function DomainCard({ domain, selected, onToggle }: Props) {
       <p className="cl-domain-description">{domain.description}</p>
       {domain.triggers.length > 0 && (
         <div className="cl-domain-triggers">
-          <span className="cl-domain-triggers-label">You're probably here if:</span>
+          <span className="cl-domain-triggers-label">Examples:</span>
           <ul>
             {domain.triggers.map((t) => (
               <li key={t}>{t}</li>

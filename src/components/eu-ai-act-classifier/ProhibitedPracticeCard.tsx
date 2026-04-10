@@ -108,7 +108,7 @@ export function ProhibitedPracticeCard({
         onClick={() => setLegalExpanded((v) => !v)}
         aria-expanded={legalExpanded || showLegalRefs}
       >
-        {legalExpanded || showLegalRefs ? "Hide legal reference" : "Show legal reference"}
+        {legalExpanded || showLegalRefs ? "Hide legal basis" : "Show legal basis"}
       </button>
       {(legalExpanded || showLegalRefs) && (
         <div className="cl-question-legal">

@@ -387,7 +387,7 @@ export default function Classifier() {
           onClick={handleBack}
           disabled={currentStep === "step0"}
         >
-          ← Back
+          Back
         </button>
         <div className="cl-step-nav-right">
           <button
