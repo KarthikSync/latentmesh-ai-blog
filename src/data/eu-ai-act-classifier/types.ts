@@ -82,6 +82,14 @@ export interface QuestionDef {
   showIf?: (a: AnswerSet) => boolean;
   crossRefWarning?: { targetStep: StepId; message: string };
   isExceptionChild?: string;
+  // Optional per-question overrides for yes/no/unsure answer labels.
+  // Only used by yes_no and yes_no_unsure question types. If unset,
+  // the card falls back to "Yes" / "No" / "I'm not sure".
+  answerLabels?: {
+    yes?: string;
+    no?: string;
+    unsure?: string;
+  };
 }
 
 // ── Step 2 — prohibited practices ─────────────────────────────────────────

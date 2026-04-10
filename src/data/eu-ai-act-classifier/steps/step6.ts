@@ -1,15 +1,16 @@
 // Step 6 — Article 50 transparency obligations
-// ALWAYS runs in parallel, regardless of prior classification (v1.1 correction).
-// Populates article_50_transparency_triggers[] even for high-risk systems.
+// Beginner-facing copy: "TRANSPARENCY" — 5 main cards plus 2 conditional
+// sub-questions. Always runs in parallel to the rest of the flow (v1.1
+// correction) so that even high-risk systems capture their Art. 50 triggers.
 
 import type { StepDef } from "../types";
 
 export const STEP_6: StepDef = {
   id: "step6",
-  title: "Does your system need to tell people it's AI?",
+  title: "Does this system trigger transparency duties?",
   shortLabel: "Transparency",
   intro:
-    "Article 50 imposes transparency obligations that apply regardless of risk classification. Even high-risk systems have Art. 50 duties on top of their Chapter III obligations.",
+    "Some transparency obligations apply regardless of risk classification. We'll check those now.",
   questions: [
     {
       id: "interacts_directly_with_people",
@@ -17,9 +18,10 @@ export const STEP_6: StepDef = {
       order: 0,
       type: "yes_no",
       prompt:
-        "Does the system interact directly with people (e.g., a chatbot, voice assistant, or avatar) where it may not be obvious they are talking to AI?",
-      why:
-        "People have a right to know when they're interacting with AI. If it's obvious — for example, a clearly labelled 'AI assistant' button — this may not apply.",
+        "Do people interact with this system without it being obvious that it is AI?",
+      helper:
+        "This includes chatbots, voice assistants, avatars, or similar interfaces where users may think they are interacting with a human.",
+      why: "If yes, users must be informed they are interacting with AI.",
       legal: { article: "Art. 50(1)" },
     },
     {
@@ -28,9 +30,11 @@ export const STEP_6: StepDef = {
       order: 1,
       type: "yes_no",
       prompt:
-        "Does the system generate or manipulate synthetic audio, image, video, or text content?",
+        "Does the system generate or alter synthetic text, images, audio, or video?",
+      helper:
+        "This checks whether disclosure or machine-readable marking duties may apply.",
       why:
-        "Providers must ensure AI-generated content is marked in a machine-readable format and detectable as artificial.",
+        "If yes, AI-generated content must be marked as artificial in a machine-readable format.",
       legal: { article: "Art. 50(2)" },
     },
     {
@@ -39,9 +43,10 @@ export const STEP_6: StepDef = {
       order: 2,
       type: "yes_no",
       prompt:
-        "Is the system's content manipulation limited to standard editing (e.g., brightness, contrast, cropping) that does not substantially alter the content?",
-      why:
-        "Standard editing that does not change meaning or appearance in a misleading way is excluded from the transparency requirement.",
+        "Is the system limited to standard editing that does not substantially alter the content?",
+      helper:
+        "Standard editing includes adjustments like brightness, contrast, or cropping that do not change the meaning of the content.",
+      why: "If yes, the synthetic content disclosure requirement does not apply.",
       legal: { article: "Art. 50(2)" },
       showIf: (a) => a.generates_synthetic_content === "yes",
       isExceptionChild: "generates_synthetic_content",
@@ -53,8 +58,10 @@ export const STEP_6: StepDef = {
       type: "yes_no",
       prompt:
         "Does the system perform emotion recognition or biometric categorisation on people?",
+      helper:
+        "If yes, people generally need to be informed that this is happening.",
       why:
-        "Deployers must inform people when emotion recognition or biometric categorisation is being applied to them, even outside high-risk contexts.",
+        "Deployers must inform people when emotion recognition or biometric categorisation is applied to them, even outside high-risk contexts.",
       legal: { article: "Art. 50(3)" },
     },
     {
@@ -63,9 +70,11 @@ export const STEP_6: StepDef = {
       order: 4,
       type: "yes_no",
       prompt:
-        "Does the system generate or manipulate content that constitutes a 'deep fake' — content resembling real persons, objects, places, or events that would falsely appear authentic?",
+        "Does the system generate or alter content that could be mistaken for real or authentic content?",
+      helper:
+        "This includes deepfakes or similar synthetic media that resembles real people, objects, places, or events.",
       why:
-        "Deployers must disclose that deep fake content has been artificially generated or manipulated.",
+        "If yes, deployers must disclose that the content has been artificially generated or manipulated.",
       legal: { article: "Art. 50(4)" },
     },
     {
@@ -74,9 +83,11 @@ export const STEP_6: StepDef = {
       order: 5,
       type: "yes_no",
       prompt:
-        "Does the system generate text that is published for the purpose of informing the public on matters of public interest?",
+        "Does the system generate text for publication on matters of public interest?",
+      helper:
+        "This may trigger disclosure duties, unless a human editor reviews the content and takes responsibility for it.",
       why:
-        "AI-generated public-interest text must be labelled as artificially generated, unless it has undergone human editorial review and a natural or legal person holds editorial responsibility.",
+        "AI-generated public-interest text must be labelled as artificially generated, unless a human editor holds editorial responsibility.",
       legal: { article: "Art. 50(4)" },
     },
     {
@@ -85,9 +96,10 @@ export const STEP_6: StepDef = {
       order: 6,
       type: "yes_no",
       prompt:
-        "Has the AI-generated text undergone human editorial review, and does a natural or legal person hold editorial responsibility for the publication?",
-      why:
-        "If an editor (individual or organisation) reviews the text and takes editorial responsibility, the labelling requirement does not apply.",
+        "Has a human editor reviewed this text and taken editorial responsibility for it?",
+      helper:
+        "A natural or legal person must take editorial responsibility for the publication.",
+      why: "If yes, the labelling requirement does not apply.",
       legal: { article: "Art. 50(4)" },
       showIf: (a) => a.ai_generated_public_interest_text === "yes",
       isExceptionChild: "ai_generated_public_interest_text",

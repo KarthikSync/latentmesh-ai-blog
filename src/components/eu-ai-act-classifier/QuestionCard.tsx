@@ -29,11 +29,14 @@ export function QuestionCard({
   const isAnswered = value !== undefined && value !== null && value !== "";
 
   const renderYesNoOptions = (includeUnsure: boolean) => {
+    const labels = question.answerLabels ?? {};
     const options = [
-      { value: "yes", label: "Yes" },
-      { value: "no", label: "No" },
+      { value: "yes", label: labels.yes ?? "Yes" },
+      { value: "no", label: labels.no ?? "No" },
     ];
-    if (includeUnsure) options.push({ value: "unsure", label: "I'm not sure" });
+    if (includeUnsure) {
+      options.push({ value: "unsure", label: labels.unsure ?? "I'm not sure" });
+    }
 
     return (
       <div className="cl-question-options" role="radiogroup">
@@ -90,9 +93,7 @@ export function QuestionCard({
         onClick={handleToggleLegal}
         aria-expanded={expandedLegal || showLegalRefs}
       >
-        {expandedLegal || showLegalRefs
-          ? "Hide legal reference"
-          : "Show legal reference"}
+        {expandedLegal || showLegalRefs ? "Hide legal basis" : "Show legal basis"}
       </button>
       {(expandedLegal || showLegalRefs) && (
         <div className="cl-question-legal">

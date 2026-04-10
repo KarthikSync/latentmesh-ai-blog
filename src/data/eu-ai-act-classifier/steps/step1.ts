@@ -1,15 +1,17 @@
 // Step 1 — Scope gate (Art. 2)
-// Seven exclusion fields. Note: personal_nonprofessional is a deployer-only exemption
-// (v1.1 correction), not a scope exit. free_open_source is a flag evaluated post-Step-6.
+// Beginner-facing copy: "SCOPE" — 7 exclusion cards, each with a short
+// consequence. personal_nonprofessional is a deployer-only flag (v1.1
+// correction) and free_open_source is evaluated post-Step-6 (v1.3 rule);
+// both still continue the assessment even when ticked.
 
 import type { StepDef } from "../types";
 
 export const STEP_1: StepDef = {
   id: "step1",
-  title: "Does the EU AI Act apply to you?",
+  title: "Does the EU AI Act apply to this system?",
   shortLabel: "Scope",
   intro:
-    "Even if you have an AI system, several exclusions can take you out of scope. We'll check them one at a time.",
+    "Some AI systems are outside the scope of the Act. We'll check those exclusions first.",
   questions: [
     {
       id: "eu_nexus",
@@ -17,11 +19,10 @@ export const STEP_1: StepDef = {
       order: 0,
       type: "yes_no",
       prompt:
-        "Will this AI system be placed on the market, put into service, or have its outputs used within the EU or EEA?",
+        "Will this AI system be placed on the market, put into service, or have its outputs used in the EU?",
+      helper: "If not, the EU AI Act does not apply.",
       why:
         "The Act applies to providers placing systems on the EU market, deployers within the EU, and third-country actors whose system outputs are used in the EU.",
-      helper:
-        "This includes: selling or licensing the system to EU customers, deploying it for EU-based users, or even running it outside the EU if the outputs affect people in the EU.",
       legal: { article: "Art. 2(1)" },
     },
     {
@@ -31,9 +32,9 @@ export const STEP_1: StepDef = {
       type: "yes_no",
       prompt:
         "Is this system developed or used exclusively for military, defence, or national security purposes?",
-      why: "These are fully excluded from the Act.",
-      helper:
-        "The keyword is 'exclusively.' If the system has any civilian application, this exclusion does not apply.",
+      helper: "If yes, the EU AI Act does not apply.",
+      why:
+        "Exclusively military, defence, or national security uses are fully excluded from the Act.",
       legal: { article: "Art. 2(3)" },
     },
     {
@@ -43,9 +44,9 @@ export const STEP_1: StepDef = {
       type: "yes_no",
       prompt:
         "Is this system used exclusively by a public authority in a third country under an international cooperation agreement with the EU for law enforcement or judicial cooperation?",
-      why: "Certain third-country government uses are excluded.",
-      helper:
-        "This is a narrow exclusion for non-EU governments operating under specific treaties with the EU for law enforcement or judicial cooperation.",
+      helper: "If yes, the EU AI Act does not apply.",
+      why:
+        "A narrow exclusion for non-EU governments operating under specific treaties with the EU.",
       legal: { article: "Art. 2(4)" },
     },
     {
@@ -54,10 +55,10 @@ export const STEP_1: StepDef = {
       order: 3,
       type: "yes_no",
       prompt:
-        "Is this system used solely for scientific research and development, and will never be placed on the market or put into service?",
-      why: "Pure research AI that never reaches production or end-users is excluded.",
-      helper:
-        "If the system might eventually be placed on the market or put into service, this exclusion does not apply. 'Research only' means it stays in the lab.",
+        "Is this system used solely for scientific research and development, and not placed on the market or put into service?",
+      helper: "If yes, the EU AI Act does not apply.",
+      why:
+        "Pure research that will never reach production or end users is excluded.",
       legal: { article: "Art. 2(6)" },
     },
     {
@@ -66,11 +67,10 @@ export const STEP_1: StepDef = {
       order: 4,
       type: "yes_no",
       prompt:
-        "Is this system being used only for testing, development, or pre-market activities, and will not be exposed to real people outside the development team?",
+        "Is this system used only for testing, development, or pre-market evaluation, and not for real-world use outside the development team?",
+      helper: "If yes, the EU AI Act does not apply.",
       why:
-        "Pre-market testing and development activities are excluded, provided the system is not affecting real people.",
-      helper:
-        "Testing within a controlled environment with no impact on real people is excluded. Once you run a pilot with real users, this exclusion no longer applies.",
+        "Controlled pre-market testing that does not affect real people is excluded until the system is deployed for actual users.",
       legal: { article: "Art. 2(8)" },
     },
     {
@@ -79,11 +79,11 @@ export const STEP_1: StepDef = {
       order: 5,
       type: "yes_no",
       prompt:
-        "Are you a private individual using this AI system purely for personal, non-professional activity (e.g., a hobby project with no commercial use)?",
-      why:
-        "Article 2(10) exempts the deployer obligations of natural persons using AI for purely personal, non-professional activity. It does NOT take the system itself out of scope. If you are the provider (the company that built or markets the system), this exclusion does not apply to you even if your end-users are consumers.",
+        "Is this AI used only for personal, non-professional activity, such as a hobby project with no commercial use?",
       helper:
-        "If you're a hobbyist running AI for personal projects with no commercial or professional use, you're exempt from deployer obligations — but provider obligations on whoever built the system still apply.",
+        "If yes, deployer obligations do not apply to you as a private individual. Provider obligations still apply to whoever built the system.",
+      why:
+        "Article 2(10) exempts natural persons using AI for purely personal, non-professional activity from deployer obligations. It does not remove the system itself from scope.",
       legal: { article: "Art. 2(10)" },
     },
     {
@@ -92,11 +92,11 @@ export const STEP_1: StepDef = {
       order: 6,
       type: "yes_no",
       prompt:
-        "Is this AI system released under a free and open-source licence that allows users to access, use, modify, and redistribute it?",
-      why:
-        "Open-source AI systems are generally excluded from the Act UNLESS they are high-risk (Annex I or III), prohibited (Art. 5), or have transparency obligations (Art. 50). This exclusion is checked again after classification.",
+        "Is this AI released under a free and open-source licence that allows users to access, use, modify, and redistribute it?",
       helper:
-        "Important: simply having a public repository does not automatically qualify. Recital 103 clarifies that systems where the AI component is monetised through support services, platform access, or commercial licensing may not meet the exclusion. The exclusion also does not apply where personal data is used for purposes beyond improving security, compatibility, or interoperability. Note: for GPAI models specifically, a separate and stricter openness test applies in Step 7.",
+        "This helps determine whether open-source exceptions may apply in later steps. Monetised systems or those that require paid support may not qualify.",
+      why:
+        "Open-source AI can benefit from a conditional exclusion under Art. 2(12), but only after classification shows it is not high-risk, prohibited, or subject to transparency duties.",
       legal: { article: "Art. 2(12)", recital: "Recital 103" },
     },
   ],

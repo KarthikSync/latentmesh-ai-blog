@@ -1,14 +1,15 @@
 // Step 8 — Timing overlay (Arts. 111, 113)
-// Classification doesn't change, but the compliance deadline does.
+// Beginner-facing copy: "TIMELINE" — 4 questions rewritten in the tighter
+// voice. Classification does not change, but the applicable deadline may.
 
 import type { StepDef, TimingMilestone } from "../types";
 
 export const STEP_8: StepDef = {
   id: "step8",
-  title: "When do these rules apply to you?",
+  title: "When do these rules apply?",
   shortLabel: "Timeline",
   intro:
-    "Different parts of the Act became enforceable at different times. Your classification doesn't change, but the applicable deadline does.",
+    "Your classification does not change, but the compliance deadline may. We'll check the relevant timeline.",
   questions: [
     {
       id: "placed_on_market_before_2026_08_02",
@@ -17,8 +18,10 @@ export const STEP_8: StepDef = {
       type: "yes_no",
       prompt:
         "Was this AI system already placed on the market or put into service before 2 August 2026?",
+      helper:
+        "In plain terms, was it already live, deployed, or commercially available before that date?",
       why:
-        "Systems already on the market before this date are treated as 'legacy' and follow a different compliance timeline.",
+        "If yes, this system is treated as 'legacy' and follows a different compliance timeline.",
       legal: { article: "Art. 111(1)" },
     },
     {
@@ -26,12 +29,11 @@ export const STEP_8: StepDef = {
       step: "step8",
       order: 1,
       type: "yes_no",
-      prompt:
-        "Has the system undergone a significant change in design after the relevant application date?",
-      why:
-        "If yes, the system is treated as newly placed on the market, and full Chapter III obligations apply from the date of the change.",
+      prompt: "Has the system undergone a significant design change since then?",
       helper:
-        "A 'significant change' means a change that affects the system's compliance with Chapter III requirements, or a modification to its assessed intended purpose.",
+        "A significant change is one that affects compliance with Chapter III requirements, or modifies the system's assessed intended purpose.",
+      why:
+        "If yes, the system is treated as newly placed on the market, and full obligations apply from the date of change.",
       legal: { article: "Art. 111(1)" },
       showIf: (a) => a.placed_on_market_before_2026_08_02 === "yes",
     },
@@ -40,10 +42,11 @@ export const STEP_8: StepDef = {
       step: "step8",
       order: 2,
       type: "yes_no",
-      prompt:
-        "Will this high-risk system be used by a public authority (government, municipality, public institution)?",
+      prompt: "Will this high-risk system be used by a public authority?",
+      helper:
+        "For some legacy high-risk systems used by public authorities, a later deadline may apply.",
       why:
-        "Public authority legacy systems have an extended deadline of 2 August 2030 under Art. 111(2).",
+        "If yes, and the system is legacy with no significant change, the compliance deadline may be extended to 2 August 2030.",
       legal: { article: "Art. 111(2)" },
     },
     {
@@ -53,8 +56,10 @@ export const STEP_8: StepDef = {
       type: "yes_no",
       prompt:
         "Was this GPAI model already placed on the market before 2 August 2025?",
+      helper:
+        "GPAI model obligations have been enforceable since 2 August 2025. Legacy models have a separate compliance timeline.",
       why:
-        "Providers of legacy GPAI models have until 2 August 2027 to comply with Articles 53 and 55.",
+        "If yes, the provider has until 2 August 2027 to comply with Articles 53 and 55.",
       legal: { article: "Art. 111(3)" },
       showIf: (a) =>
         a.assessment_target === "model_only" || a.assessment_target === "both",

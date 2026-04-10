@@ -1,15 +1,17 @@
 // Step 3 — Annex I product safety (Art. 6(1))
-// Three sequential conditions that must ALL be true for high_risk_annex_i.
-// Compliance deadline: 2 August 2027.
+// Beginner-facing copy: "PRODUCT" — three sequential questions. The main
+// question is a plain-English rewrite; Q2 (product-safety law picker) and
+// Q3 (third-party conformity) are rewritten in the same tight voice with
+// short consequence text.
 
 import type { StepDef } from "../types";
 
 export const STEP_3: StepDef = {
   id: "step3",
-  title: "Is your AI system part of a regulated product?",
+  title: "Is this AI system part of a regulated product?",
   shortLabel: "Product",
   intro:
-    "AI that is a safety component of, or is itself, a product covered by specific EU product-safety legislation is automatically high-risk if it must undergo third-party conformity assessment.",
+    "AI that is itself a regulated product, or a safety component of one, may be high-risk under a separate route.",
   questions: [
     {
       id: "is_safety_component_or_product",
@@ -17,11 +19,11 @@ export const STEP_3: StepDef = {
       order: 0,
       type: "yes_no",
       prompt:
-        "Is your AI system a safety component of a physical product, or is it the product itself?",
+        "Is this AI system itself a regulated product, or a safety component of one?",
+      helper:
+        "Examples include AI used in medical devices, vehicles, machinery, aviation, or other products covered by EU product-safety law.",
       why:
         "The Act treats AI embedded in regulated products differently from standalone AI software.",
-      helper:
-        "Examples: an AI system that controls braking in a vehicle, an AI diagnostic module in a medical device, or an AI component in industrial machinery.",
       legal: { article: "Art. 6(1)(a)" },
     },
     {
@@ -29,11 +31,11 @@ export const STEP_3: StepDef = {
       step: "step3",
       order: 1,
       type: "single_select",
-      prompt: "Select the EU product-safety law that covers your product",
-      why:
-        "These are the specific EU harmonised laws listed in Annex I. If your product type appears in this list, the answer is Yes.",
+      prompt: "Which EU product-safety law covers this product?",
       helper:
-        "If you're unsure whether your product falls under one of these laws, your product compliance or legal team will know. Most consumer products sold in the EU carry a CE marking, which indicates they've been assessed under one of these frameworks.",
+        "If your product carries a CE marking, it is likely covered by one of these laws. Your product compliance team will know. If none applies, choose 'None / I don't know'.",
+      why:
+        "Annex I lists the specific EU harmonised laws that can trigger high-risk classification when combined with third-party conformity assessment.",
       legal: { article: "Art. 6(1)(a), Annex I" },
       showIf: (a) => a.is_safety_component_or_product === "yes",
       options: [
@@ -63,11 +65,11 @@ export const STEP_3: StepDef = {
       order: 2,
       type: "yes_no_unsure",
       prompt:
-        "Under that product-safety law, is your product required to undergo a third-party conformity assessment (by a 'notified body') before being placed on the market?",
-      why:
-        "Not all regulated products need third-party assessment. Only those that do trigger high-risk under the AI Act.",
+        "Does that product-safety law require your product to be assessed by a third-party notified body before being placed on the market?",
       helper:
-        "Some products can self-certify. Your product compliance team will know which path applies.",
+        "Not all regulated products need third-party assessment — some can self-certify. If you are unsure, check with your product compliance team.",
+      why:
+        "If yes, this system is treated as high-risk under Annex I. Only products that undergo third-party conformity assessment trigger high-risk under this route.",
       legal: { article: "Art. 6(1)(b)" },
       showIf: (a) =>
         a.is_safety_component_or_product === "yes" &&
