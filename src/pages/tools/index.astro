@@ -1,0 +1,226 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { SITE_URL } from "../../consts";
+
+const title = "Tools";
+const description =
+  "Interactive tools from LatentMesh for AI governance, compliance, and evaluation. Guided flows with plain-English explanations and downloadable reports.";
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL + "/" },
+    { "@type": "ListItem", position: 2, name: "Tools" },
+  ],
+};
+
+const collectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "LatentMesh Tools",
+  description,
+  url: SITE_URL + "/tools/",
+};
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+  </head>
+  <body>
+    <Header />
+    <main class="tools-page">
+      <div class="tools-header">
+        <h1>Tools</h1>
+        <p class="tools-subtitle">
+          Interactive tools for AI governance and compliance. Guided flows,
+          plain-English explanations, and downloadable reports — no account
+          required, no data stored.
+        </p>
+      </div>
+
+      <section class="tools-list">
+        <a href="/tools/eu-ai-compliance-checker/" class="tool-card">
+          <div class="tool-card-header">
+            <h2>EU AI Compliance Checker</h2>
+            <span class="tool-card-tag">Regulation 2024/1689</span>
+          </div>
+          <p class="tool-card-description">
+            A guided preliminary risk classifier for the EU AI Act. Walk through
+            a ten-step decision flow covering scope, prohibited practices, Annex I
+            product safety, Annex III use cases, Article 6(3) exceptions, Article 50
+            transparency duties, GPAI model classification, and the compliance
+            timeline.
+          </p>
+          <ul class="tool-card-features">
+            <li>Schema-driven and aligned with v1.4 of the risk schema</li>
+            <li>Classification result with triggering reasons and article references</li>
+            <li>Downloadable branded PDF report with the full assessment</li>
+            <li>Session-only state — nothing is stored server-side</li>
+          </ul>
+          <span class="tool-card-cta">Start assessment →</span>
+        </a>
+      </section>
+
+      <p class="tools-footnote">
+        More tools are in development. Each one will follow the same principles:
+        guided flows, plain-English explanations, and a downloadable record of
+        the assessment.
+      </p>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .tools-page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+    width: auto;
+  }
+
+  .tools-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .tools-header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.75rem;
+    color: var(--color-text-primary);
+  }
+
+  .tools-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    max-width: 640px;
+    margin: 0;
+  }
+
+  .tools-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .tool-card {
+    display: block;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 1.75rem 1.9rem;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+  }
+
+  .tool-card:hover {
+    border-color: var(--color-link);
+    box-shadow: 0 4px 14px rgba(30, 58, 138, 0.08);
+    transform: translateY(-1px);
+  }
+
+  .tool-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 0.9rem;
+    flex-wrap: wrap;
+  }
+
+  .tool-card h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--color-text-primary);
+  }
+
+  .tool-card-tag {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.55rem;
+    background: var(--color-bg-secondary);
+    border-radius: 999px;
+  }
+
+  .tool-card-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0 0 1rem;
+  }
+
+  .tool-card-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.25rem;
+  }
+
+  .tool-card-features li {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    padding: 0.3rem 0 0.3rem 1.15rem;
+    position: relative;
+  }
+
+  .tool-card-features li::before {
+    content: "•";
+    position: absolute;
+    left: 0.25rem;
+    color: var(--color-link);
+    font-weight: 700;
+  }
+
+  .tool-card-cta {
+    display: inline-block;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--color-link);
+  }
+
+  .tools-footnote {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--color-text-muted);
+    font-style: italic;
+    max-width: 640px;
+    margin: 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 640px) {
+    .tools-page {
+      padding: 1.75rem 1rem 3rem;
+    }
+
+    .tools-header h1 {
+      font-size: 1.65rem;
+    }
+
+    .tools-subtitle {
+      font-size: 0.98rem;
+    }
+
+    .tool-card {
+      padding: 1.35rem 1.25rem;
+    }
+
+    .tool-card h2 {
+      font-size: 1.2rem;
+    }
+  }
+</style>
