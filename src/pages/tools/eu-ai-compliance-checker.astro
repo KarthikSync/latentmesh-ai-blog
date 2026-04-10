@@ -1,0 +1,56 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import Classifier from "../../components/eu-ai-act-classifier/Classifier";
+import "../../components/eu-ai-act-classifier/classifier.css";
+import { SITE_URL } from "../../consts";
+
+const title = "EU AI Compliance Checker";
+const description =
+  "Interactive preliminary risk classifier for the EU AI Act (Regulation 2024/1689). Answer a guided set of questions and get a classification result with the applicable obligations and compliance deadline.";
+
+const softwareAppSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "EU AI Compliance Checker",
+  description,
+  url: SITE_URL + "/tools/eu-ai-compliance-checker/",
+  applicationCategory: "ComplianceApplication",
+  operatingSystem: "Web",
+  offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL + "/" },
+    { "@type": "ListItem", position: 2, name: "Tools", item: SITE_URL + "/tools/" },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "EU AI Compliance Checker",
+    },
+  ],
+};
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+    <script type="application/ld+json" set:html={JSON.stringify(softwareAppSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <Header />
+    <main class="classifier-page">
+      <Classifier client:load />
+    </main>
+    <Footer />
+  </body>
+</html>
