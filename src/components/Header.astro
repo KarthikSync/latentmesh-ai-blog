@@ -5,11 +5,10 @@ import { SITE_TITLE, GITHUB_URL } from "../consts";
 <header>
   <nav>
     <a href="/" class="site-title" aria-label={SITE_TITLE}>
-      <img src="/images/latentmesh-tight-lockup.png" alt="LatentMesh" class="logo-desktop" />
-      <img src="/images/latentmesh-icon-only.png" alt="LatentMesh" class="logo-mobile" />
+      <img src="/images/latentmesh-tight-lockup.png" alt="LatentMesh" class="site-logo" />
     </a>
     <div class="nav-links">
-      <a href="/tools/eu-ai-compliance-checker/">Compliance Checker</a>
+      <a href="/tools/">Tools</a>
       <a href="/reading-list">Reading List</a>
       <a href="/about">About</a>
       <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" class="hide-mobile">GitHub</a>
@@ -50,21 +49,14 @@ import { SITE_TITLE, GITHUB_URL } from "../consts";
     text-decoration: none;
     display: flex;
     align-items: center;
-    flex-shrink: 1;
+    flex-shrink: 0;
     min-width: 0;
   }
 
-  .logo-desktop {
+  .site-logo {
     height: 48px;
     width: auto;
     display: block;
-  }
-
-  .logo-mobile {
-    display: none;
-    height: 32px;
-    width: 32px;
-    object-fit: contain;
   }
 
   .nav-links {
@@ -109,23 +101,39 @@ import { SITE_TITLE, GITHUB_URL } from "../consts";
     header {
       padding: 0.75rem 1rem;
     }
-  }
 
-  @media (max-width: 480px) {
-    .logo-desktop {
-      display: none;
-    }
-
-    .logo-mobile {
-      display: block;
+    .site-logo {
+      height: 36px;
     }
 
     .nav-links {
-      gap: 1rem;
+      gap: 0.9rem;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+    }
+
+    .theme-toggle {
+      display: none;
     }
 
     .hide-mobile {
       display: none;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .site-logo {
+      height: 32px;
+    }
+
+    .nav-links {
+      gap: 0.7rem;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
     }
   }
 </style>
