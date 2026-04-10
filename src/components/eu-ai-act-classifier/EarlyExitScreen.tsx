@@ -5,6 +5,7 @@ import type { Result, SystemResult } from "../../data/eu-ai-act-classifier/types
 interface Props {
   result: Result;
   onRestart: () => void;
+  onDownloadPdf: () => void;
 }
 
 const ICON_CLASSES: Record<string, string> = {
@@ -19,7 +20,7 @@ const ICON_GLYPH: Record<string, string> = {
   prohibited: "⊘",
 };
 
-export function EarlyExitScreen({ result, onRestart }: Props) {
+export function EarlyExitScreen({ result, onRestart, onDownloadPdf }: Props) {
   const systemResult = result.system_result as SystemResult;
   const label = CLASSIFIER_SCHEMA.displayLabels[systemResult];
   const summary = RESULT_SUMMARIES[systemResult];
@@ -55,7 +56,10 @@ export function EarlyExitScreen({ result, onRestart }: Props) {
       </p>
 
       <div className="cl-early-exit-actions">
-        <button type="button" className="cl-btn-primary" onClick={onRestart}>
+        <button type="button" className="cl-btn-primary" onClick={onDownloadPdf}>
+          Download PDF report
+        </button>
+        <button type="button" className="cl-btn-secondary" onClick={onRestart}>
           Start over
         </button>
       </div>

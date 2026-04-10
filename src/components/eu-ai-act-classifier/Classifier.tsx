@@ -20,8 +20,15 @@ import { ProhibitedPracticeCard } from "./ProhibitedPracticeCard";
 import { DomainCard } from "./DomainCard";
 import { ResultScreen } from "./ResultScreen";
 import { downloadResultPdf } from "./pdfExport";
+import { DevBar } from "./DevBar";
+import {
+  getSeedParam,
+  isDevMode,
+  type ClassifierView,
+} from "../../lib/eu-ai-act-classifier/devDrafts";
+import { findSeed } from "../../data/eu-ai-act-classifier/seeds";
 
-type View = "landing" | "step" | "result";
+type View = ClassifierView;
 
 const EARLY_EXIT_RESULTS = new Set(["not_ai_system", "out_of_scope", "prohibited"]);
 
@@ -32,12 +39,27 @@ function track(event: string, data: Record<string, unknown>): void {
   }
 }
 
+// Look up an initial seed from ?seed=<id> on page load. Runs once at
+// module-eval time inside the component's lazy initializer.
+function getInitialStateFromSeed():
+  | { view: View; currentStep: StepId; answers: AnswerSet }
+  | null {
+  const seedId = getSeedParam();
+  if (!seedId) return null;
+  const seed = findSeed(seedId);
+  if (!seed) return null;
+  return { view: "step", currentStep: "step0", answers: { ...seed.answers } };
+}
+
 export default function Classifier() {
-  const [view, setView] = useState<View>("landing");
-  const [currentStep, setCurrentStep] = useState<StepId>("step0");
-  const [answers, setAnswers] = useState<AnswerSet>({});
+  const seeded = useMemo(() => getInitialStateFromSeed(), []);
+  const devMode = useMemo(() => isDevMode(), []);
+
+  const [view, setView] = useState<View>(seeded?.view ?? "landing");
+  const [currentStep, setCurrentStep] = useState<StepId>(seeded?.currentStep ?? "step0");
+  const [answers, setAnswers] = useState<AnswerSet>(seeded?.answers ?? {});
   const [showLegalRefs, setShowLegalRefs] = useState(false);
-  const [startedAt, setStartedAt] = useState<number | null>(null);
+  const [startedAt, setStartedAt] = useState<number | null>(seeded ? Date.now() : null);
 
   const reachable = useMemo(() => reachableSteps(answers), [answers]);
 
@@ -152,12 +174,34 @@ export default function Classifier() {
     setStartedAt(null);
   };
 
+  // Dev-only: load a saved draft or a seed scenario into the component state
+  const handleDevLoad = (
+    newAnswers: AnswerSet,
+    newStep: StepId,
+    newView: View
+  ) => {
+    setAnswers(newAnswers);
+    setCurrentStep(newStep);
+    setView(newView);
+    if (newView !== "landing" && !startedAt) setStartedAt(Date.now());
+  };
+
   // Compute result lazily when we enter the result view
   const result = useMemo(() => (view === "result" ? classify(answers) : null), [view, answers]);
+
+  const devBar = devMode ? (
+    <DevBar
+      answers={answers}
+      currentStep={currentStep}
+      view={view}
+      onLoad={handleDevLoad}
+    />
+  ) : null;
 
   if (view === "landing") {
     return (
       <div className="classifier-container">
+        {devBar}
         <LandingScreen onStart={handleStart} />
       </div>
     );
@@ -169,7 +213,12 @@ export default function Classifier() {
       track("early_exit", { step_id: currentStep, result: result.system_result });
       return (
         <div className="classifier-container">
-          <EarlyExitScreen result={result} onRestart={handleRestart} />
+          {devBar}
+          <EarlyExitScreen
+            result={result}
+            onRestart={handleRestart}
+            onDownloadPdf={() => downloadResultPdf(result)}
+          />
         </div>
       );
     }
@@ -186,6 +235,7 @@ export default function Classifier() {
 
     return (
       <div className="classifier-container">
+        {devBar}
         <ResultScreen
           result={result}
           onRestart={handleRestart}
@@ -197,11 +247,12 @@ export default function Classifier() {
 
   // view === "step"
   if (!stepDef) {
-    return <div className="classifier-container">Unknown step.</div>;
+    return <div className="classifier-container">{devBar}Unknown step.</div>;
   }
 
   return (
     <div className="classifier-container">
+      {devBar}
       <ProgressIndicator reachable={reachable} current={currentStep} />
 
       <h1>
