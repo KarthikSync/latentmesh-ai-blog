@@ -28,6 +28,10 @@
   --cl-risk-neutral-bg: #f1f5f9;
 
   font-family: "IBM Plex Sans", -apple-system, sans-serif;
+  /* Override the global main { width: 720px } rule so the classifier fills
+     its parent on narrow viewports instead of overflowing and being clipped
+     by body { overflow-x: hidden }. */
+  width: auto;
   max-width: 860px;
   margin: 0 auto;
   padding: 2rem 1.5rem 4rem;
