@@ -169,7 +169,11 @@ export default function Classifier() {
       track("early_exit", { step_id: currentStep, result: result.system_result });
       return (
         <div className="classifier-container">
-          <EarlyExitScreen result={result} onRestart={handleRestart} />
+          <EarlyExitScreen
+            result={result}
+            onRestart={handleRestart}
+            onDownloadPdf={() => downloadResultPdf(result)}
+          />
         </div>
       );
     }
