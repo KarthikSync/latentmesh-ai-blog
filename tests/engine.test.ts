@@ -97,6 +97,8 @@ describe("classify — terminal states", () => {
       profiles_natural_persons: "yes",
     });
     expect(r.system_result).toBe("high_risk_annex_iii");
+    expect(r.matched_annex_iii_categories).toContain("employment");
+    expect(r.matched_annex_iii_categories).not.toContain("biometrics");
     expect(r.article_6_3_exception.applies).toBe(false);
     expect(r.article_6_3_exception.reason).toContain("profiling");
   });

@@ -214,6 +214,7 @@ export interface Timing {
 export interface Result {
   system_result: SystemResult;
   system_reasons: SystemReason[];
+  matched_annex_iii_categories: string[];
   article_6_3_exception: Article6_3Exception;
   article_50_transparency_triggers: Article50Trigger[];
   model_result: ModelResult;
