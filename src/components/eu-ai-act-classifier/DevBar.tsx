@@ -14,10 +14,12 @@ interface Props {
   answers: AnswerSet;
   currentStep: StepId;
   view: ClassifierView;
-  onLoad: (answers: AnswerSet, currentStep: StepId, view: ClassifierView) => void;
+  role: string | null;
+  substantiallyModified: boolean | null;
+  onLoad: (answers: AnswerSet, currentStep: StepId, view: ClassifierView, role?: string | null, substantiallyModified?: boolean | null) => void;
 }
 
-export function DevBar({ answers, currentStep, view, onLoad }: Props) {
+export function DevBar({ answers, currentStep, view, role, substantiallyModified, onLoad }: Props) {
   const [drafts, setDrafts] = useState<Draft[]>(() => listDrafts());
   const [label, setLabel] = useState("");
   const [expanded, setExpanded] = useState(true);
@@ -25,13 +27,13 @@ export function DevBar({ answers, currentStep, view, onLoad }: Props) {
   const refresh = () => setDrafts(listDrafts());
 
   const handleSave = () => {
-    saveDraft(label, answers, currentStep, view);
+    saveDraft(label, answers, currentStep, view, role, substantiallyModified);
     setLabel("");
     refresh();
   };
 
   const handleLoad = (draft: Draft) => {
-    onLoad(draft.answers, draft.currentStep, draft.view);
+    onLoad(draft.answers, draft.currentStep, draft.view, draft.role, draft.substantiallyModified);
   };
 
   const handleDelete = (id: string) => {
@@ -50,7 +52,7 @@ export function DevBar({ answers, currentStep, view, onLoad }: Props) {
     if (!seedId) return;
     const seed = SEEDS.find((s) => s.id === seedId);
     if (!seed) return;
-    onLoad(seed.answers, "step0", "step");
+    onLoad(seed.answers, "step0", "step", seed.role ?? null, seed.substantiallyModified ?? null);
   };
 
   return (

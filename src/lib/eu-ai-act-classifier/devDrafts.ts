@@ -16,6 +16,9 @@ export interface Draft {
   answers: AnswerSet;
   currentStep: StepId;
   view: ClassifierView;
+  // Post-classification state for the obligation list
+  role?: string | null;
+  substantiallyModified?: boolean | null;
 }
 
 // ── SSR-safe storage access ──────────────────────────────────────
@@ -96,7 +99,9 @@ export function saveDraft(
   label: string,
   answers: AnswerSet,
   currentStep: StepId,
-  view: ClassifierView
+  view: ClassifierView,
+  role?: string | null,
+  substantiallyModified?: boolean | null
 ): Draft {
   const id = `draft-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
   const draft: Draft = {
@@ -106,6 +111,8 @@ export function saveDraft(
     answers,
     currentStep,
     view,
+    role: role ?? null,
+    substantiallyModified: substantiallyModified ?? null,
   };
   const drafts = readDrafts();
   drafts.push(draft);

@@ -42,6 +42,7 @@ interface Draft {
   post_classification_notes: string[];
   unsure_fields: string[];
   annex_iii_match: boolean;
+  matched_annex_iii_categories: string[];
 }
 
 function emptyDraft(): Draft {
@@ -74,6 +75,7 @@ function emptyDraft(): Draft {
     post_classification_notes: [],
     unsure_fields: [],
     annex_iii_match: false,
+    matched_annex_iii_categories: [],
   };
 }
 
@@ -247,6 +249,9 @@ function runStep4(answers: AnswerSet, draft: Draft): void {
       if (excludedSubUseCases.has(suc.id)) continue;
 
       draft.annex_iii_match = true;
+      if (!draft.matched_annex_iii_categories.includes(domain.id)) {
+        draft.matched_annex_iii_categories.push(domain.id);
+      }
       draft.system_reasons.push({
         code: `annex_iii_${suc.id}`,
         label: suc.label,
@@ -507,6 +512,7 @@ export function classify(answers: AnswerSet): Result {
   const partialResult: Result = {
     system_result,
     system_reasons: draft.system_reasons,
+    matched_annex_iii_categories: draft.matched_annex_iii_categories,
     article_6_3_exception: draft.article_6_3_exception,
     article_50_transparency_triggers: draft.article_50_transparency_triggers,
     model_result: draft.model_result,

@@ -10,6 +10,11 @@ export interface Seed {
   description: string;
   expectedSystemResult: string;
   answers: AnswerSet;
+  // Post-classification state for the obligation list (optional — if set,
+  // the result screen pre-fills these so the obligation list renders
+  // immediately without manual clicks).
+  role?: string; // "Provider" | "Deployer" | "Both"
+  substantiallyModified?: boolean;
 }
 
 // Baseline: "in scope, nothing triggered, no GPAI" — individual seeds only
@@ -48,6 +53,8 @@ export const SEEDS: Seed[] = [
     description:
       "Annex III employment sub-use-case + profiling blocker → high_risk_annex_iii, deadline 2026-08-02.",
     expectedSystemResult: "high_risk_annex_iii",
+    role: "Provider",
+    substantiallyModified: false,
     answers: {
       ...baseline,
       selected_domains: ["employment"],
@@ -61,6 +68,8 @@ export const SEEDS: Seed[] = [
     description:
       "Annex III path, no profiling, no significant risk, narrow procedural task → exception applies, result stays limited_risk or minimal.",
     expectedSystemResult: "minimal_risk",
+    role: "Provider",
+    substantiallyModified: false,
     answers: {
       ...baseline,
       selected_domains: ["employment"],

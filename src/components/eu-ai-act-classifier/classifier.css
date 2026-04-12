@@ -650,6 +650,102 @@
 .cl-result-actions { display: flex; gap: 0.75rem; margin-top: 2rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
 .cl-disclaimer { font-size: 0.8rem; color: var(--cl-text-muted); font-style: italic; line-height: 1.5; padding-top: 1rem; border-top: 1px solid var(--cl-border); }
 
+/* ── Role question ─────────────────────────────────────────────── */
+.cl-role-question { margin-bottom: 1.75rem; padding: 1.25rem 0; border-top: 1px solid var(--cl-border); }
+.cl-role-title { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--cl-text-muted); margin: 0 0 0.5rem; }
+.cl-role-prompt { font-size: 0.95rem; color: var(--cl-text); margin: 0 0 1rem; line-height: 1.5; }
+.cl-role-cards { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.cl-role-cards-small { gap: 0.5rem; }
+.cl-role-card {
+  flex: 1 1 140px;
+  font-family: inherit;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--cl-border);
+  border-radius: 6px;
+  background: var(--cl-bg);
+  color: var(--cl-text);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.cl-role-card:hover { border-color: var(--cl-accent); }
+.cl-role-card:focus-visible { outline: 2px solid var(--cl-focus); outline-offset: 2px; }
+.cl-role-card.cl-selected { background: var(--cl-accent); color: #ffffff; border-color: var(--cl-accent); }
+.cl-role-card-sm { flex: 0 1 auto; min-width: 80px; text-align: center; padding: 0.55rem 1rem; }
+.cl-role-card-label { display: block; font-weight: 600; font-size: 0.92rem; margin-bottom: 0.2rem; }
+.cl-role-card-desc { display: block; font-size: 0.78rem; color: var(--cl-text-muted); line-height: 1.45; }
+.cl-role-card.cl-selected .cl-role-card-desc { color: rgba(255, 255, 255, 0.8); }
+.cl-modification-followup { margin-top: 1.25rem; padding: 1rem 1.15rem; background: var(--cl-surface); border-radius: 6px; border-left: 3px solid var(--cl-risk-transparency); }
+.cl-modification-prompt { font-size: 0.92rem; font-weight: 500; color: var(--cl-text); margin: 0 0 0.4rem; line-height: 1.5; }
+.cl-modification-helper { font-size: 0.82rem; color: var(--cl-text-muted); margin: 0 0 0.75rem; line-height: 1.55; }
+.cl-modification-note { margin-top: 0.75rem; padding: 0.65rem 0.85rem; background: var(--cl-risk-high-bg); border-left: 3px solid var(--cl-risk-high); border-radius: 4px; font-size: 0.85rem; color: var(--cl-text); line-height: 1.5; }
+
+/* ── Obligation list ───────────────────────────────────────────── */
+.cl-obligation-list { margin-top: 0.5rem; }
+.cl-obl-empty { font-size: 0.92rem; color: var(--cl-text-secondary); padding: 1.25rem 0; line-height: 1.6; }
+.cl-obl-system-msg { font-size: 0.9rem; color: var(--cl-text-secondary); padding: 0.75rem 0; line-height: 1.5; }
+.cl-obl-ambiguity-note { padding: 0.85rem 1rem; background: var(--cl-risk-transparency-bg); border-left: 3px solid var(--cl-risk-transparency); border-radius: 4px; font-size: 0.85rem; color: var(--cl-text); line-height: 1.5; margin-bottom: 1.25rem; }
+.cl-obl-legacy-note { padding: 0.7rem 1rem; background: var(--cl-surface); border-radius: 4px; font-size: 0.85rem; color: var(--cl-text-secondary); line-height: 1.5; margin-bottom: 1rem; }
+
+/* ── Coverage banner (Block 1) ─────────────────────────────────── */
+.cl-coverage-banner { background: var(--cl-surface); border-radius: 6px; padding: 0.9rem 1.1rem; margin-bottom: 1.5rem; }
+.cl-coverage-line { font-size: 0.82rem; color: var(--cl-text-secondary); margin: 0 0 0.4rem; line-height: 1.55; }
+.cl-coverage-footer { font-size: 0.78rem; color: var(--cl-text-muted); margin: 0.5rem 0 0; font-style: italic; }
+
+/* ── Obligation blocks ─────────────────────────────────────────── */
+.cl-obl-block { margin-bottom: 1.75rem; }
+.cl-obl-block-title { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--cl-text-muted); margin: 0 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--cl-border); }
+.cl-obl-priority-block .cl-obl-block-title { color: var(--cl-risk-high); }
+
+/* ── Obligation card ───────────────────────────────────────────── */
+.cl-obl-card { background: var(--cl-bg); border: 1px solid var(--cl-border); border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 0.75rem; }
+.cl-obl-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; flex-wrap: wrap; gap: 0.5rem; }
+.cl-obl-priority { font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; padding: 0.2rem 0.5rem; border-radius: 3px; }
+.cl-obl-priority-high { background: var(--cl-risk-high-bg); color: var(--cl-risk-high); }
+.cl-obl-priority-medium { background: var(--cl-risk-transparency-bg); color: var(--cl-risk-transparency); }
+.cl-obl-priority-standard { background: var(--cl-risk-neutral-bg); color: var(--cl-risk-neutral); }
+.cl-obl-date { font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; color: var(--cl-text-muted); }
+.cl-obl-enforceable { display: inline-block; margin-left: 0.4rem; padding: 0.15rem 0.4rem; background: var(--cl-risk-high-bg); color: var(--cl-risk-high); border-radius: 3px; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
+.cl-obl-requirement { font-size: 0.92rem; color: var(--cl-text); line-height: 1.6; margin: 0 0 0.6rem; }
+.cl-obl-meta { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.cl-obl-source { font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; color: var(--cl-text-muted); }
+.cl-obl-source a { color: var(--cl-link); text-decoration: underline; text-underline-offset: 2px; }
+.cl-obl-actor { font-size: 0.78rem; color: var(--cl-text-secondary); padding: 0.15rem 0.45rem; background: var(--cl-surface); border-radius: 3px; }
+.cl-obl-oss-note { font-size: 0.82rem; color: var(--cl-text-secondary); background: var(--cl-risk-minimal-bg); padding: 0.6rem 0.8rem; border-radius: 4px; margin: 0.5rem 0; line-height: 1.5; }
+.cl-obl-expandables { margin-top: 0.5rem; }
+.cl-obl-expand-btn { font-family: inherit; font-size: 0.78rem; color: var(--cl-text-muted); background: none; border: none; cursor: pointer; padding: 0.25rem 0; display: block; text-align: left; }
+.cl-obl-expand-btn:hover { color: var(--cl-text-secondary); }
+.cl-obl-expand-content { font-size: 0.82rem; color: var(--cl-text-secondary); line-height: 1.55; padding: 0.4rem 0 0.5rem 1rem; margin: 0; }
+
+/* ── Category sections (Block 3) ───────────────────────────────── */
+.cl-obl-category { border: 1px solid var(--cl-border); border-radius: 6px; margin-bottom: 0.6rem; overflow: hidden; }
+.cl-obl-category-toggle { display: flex; align-items: center; width: 100%; padding: 0.7rem 1rem; background: var(--cl-surface); border: none; border-bottom: 1px solid var(--cl-border); cursor: pointer; font-family: inherit; text-align: left; color: inherit; gap: 0.5rem; }
+.cl-obl-category-toggle:hover { opacity: 0.85; }
+.cl-obl-category-toggle:focus-visible { outline: 2px solid var(--cl-focus); outline-offset: -2px; }
+.cl-obl-category-label { font-size: 0.88rem; font-weight: 600; color: var(--cl-text); flex: 1; }
+.cl-obl-category-count { font-size: 0.75rem; color: var(--cl-text-muted); }
+.cl-obl-category-chevron { font-size: 0.7rem; color: var(--cl-text-muted); }
+.cl-obl-category-body { padding: 0.75rem 0.85rem; }
+
+/* ── Block 4 (Model obligations) ───────────────────────────────── */
+.cl-obl-model-block { border-top: 2px solid var(--cl-accent); padding-top: 1rem; }
+.cl-obl-upstream-note { display: flex; gap: 0.6rem; align-items: flex-start; padding: 0.85rem 1rem; background: var(--cl-surface); border-radius: 6px; margin-bottom: 1rem; font-size: 0.85rem; color: var(--cl-text-secondary); line-height: 1.55; }
+.cl-obl-upstream-icon { font-size: 1.1rem; flex-shrink: 0; color: var(--cl-accent); }
+.cl-obl-oss-banner { font-size: 0.85rem; color: var(--cl-text-secondary); background: var(--cl-risk-minimal-bg); padding: 0.65rem 0.85rem; border-radius: 4px; margin-bottom: 0.75rem; line-height: 1.5; }
+
+/* ── Exception duties block ────────────────────────────────────── */
+.cl-obl-exception-block { border-top: 2px dashed var(--cl-risk-transparency); padding-top: 1rem; }
+.cl-obl-exception-intro { font-size: 0.85rem; color: var(--cl-text-secondary); margin: 0 0 0.75rem; line-height: 1.55; }
+
+/* ── Responsive for obligation components ──────────────────────── */
+@media (max-width: 640px) {
+  .cl-role-cards { flex-direction: column; }
+  .cl-role-card { flex: none; }
+  .cl-role-cards-small { flex-direction: row; }
+  .cl-obl-card { padding: 0.85rem 1rem; }
+  .cl-obl-card-header { flex-direction: column; align-items: flex-start; }
+}
+
 /* ── Responsive ─────────────────────────────────────────────────── */
 @media (max-width: 640px) {
   .classifier-page { padding: 1.25rem 1rem 3rem; }

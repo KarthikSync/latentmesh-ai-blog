@@ -6,11 +6,17 @@ import {
 } from "../../data/eu-ai-act-classifier/copy";
 import { CLASSIFIER_SCHEMA } from "../../data/eu-ai-act-classifier/schema";
 import type { Result, SystemResult } from "../../data/eu-ai-act-classifier/types";
+import { RoleQuestion } from "./RoleQuestion";
+import { ObligationList } from "./ObligationList";
 
 interface Props {
   result: Result;
   onRestart: () => void;
-  onDownloadPdf: () => void;
+  onDownloadPdf: (role: string, substantiallyModified: boolean) => void;
+  role: string | null;
+  substantiallyModified: boolean | null;
+  onRoleChange: (role: string) => void;
+  onModifiedChange: (modified: boolean) => void;
 }
 
 const BADGE_CLASS: Record<SystemResult, string> = {
@@ -33,12 +39,18 @@ const BADGE_ICON: Record<SystemResult, string> = {
   minimal_risk: "✓",
 };
 
-export function ResultScreen({ result, onRestart, onDownloadPdf }: Props) {
+// Block 3 renders for these system_result values
+const SYSTEM_OBLIGATION_RESULTS = new Set([
+  "high_risk_annex_i",
+  "high_risk_annex_iii",
+  "limited_risk_transparency",
+]);
+
+export function ResultScreen({ result, onRestart, onDownloadPdf, role, substantiallyModified, onRoleChange, onModifiedChange }: Props) {
   const label = CLASSIFIER_SCHEMA.displayLabels[result.system_result];
   const summary = RESULT_SUMMARIES[result.system_result];
   const badgeClass = BADGE_CLASS[result.system_result];
   const badgeIcon = BADGE_ICON[result.system_result];
-
   const confidence = CONFIDENCE_COPY[result.confidence];
 
   const showDeployerExempt = result.deployer_obligation_exempt;
@@ -46,6 +58,15 @@ export function ResultScreen({ result, onRestart, onDownloadPdf }: Props) {
   const showGpaiPanel = result.model_result !== "none";
   const showArt50 = result.article_50_transparency_triggers.length > 0;
   const showExceptionPanel = result.article_6_3_exception.checked;
+
+  // Role question — gates Block 3 (system obligations)
+  const showRoleQuestion = SYSTEM_OBLIGATION_RESULTS.has(result.system_result);
+
+  // Obligation list renders when: role is selected (if Block 3 active), OR Block 4 only
+  const showObligationList =
+    (showRoleQuestion && role !== null) || // Block 3: role selected
+    (!showRoleQuestion && result.model_result !== "none") || // Block 4 only
+    (result.article_6_3_exception.checked && result.article_6_3_exception.applies); // Exception duties
 
   return (
     <div className="cl-result" role="region" aria-label="Assessment result">
@@ -58,7 +79,7 @@ export function ResultScreen({ result, onRestart, onDownloadPdf }: Props) {
       {/* Plain-language summary */}
       <p className="cl-result-summary">{summary}</p>
 
-      {/* Art. 2(12) open-source conversion banner (drift #4) */}
+      {/* Art. 2(12) open-source conversion banner */}
       {showOpenSourceBanner && (
         <div className="cl-banner cl-banner-info">
           <strong>Open-source exclusion applied (Art. 2(12)):</strong>
@@ -66,7 +87,7 @@ export function ResultScreen({ result, onRestart, onDownloadPdf }: Props) {
         </div>
       )}
 
-      {/* Deployer obligation exempt notice (drift #5) */}
+      {/* Deployer obligation exempt notice */}
       {showDeployerExempt && (
         <div className="cl-banner cl-banner-info">
           <strong>Deployer obligations do not apply to you (Art. 2(10)):</strong>
@@ -180,16 +201,33 @@ export function ResultScreen({ result, onRestart, onDownloadPdf }: Props) {
         )}
       </section>
 
-      {/* What this means for you */}
-      {result.post_classification_notes.length > 0 && (
-        <section className="cl-result-section">
-          <h3>What this means for you</h3>
-          <ul className="cl-notes-list">
-            {result.post_classification_notes.map((note, i) => (
-              <li key={i}>{note}</li>
-            ))}
-          </ul>
-        </section>
+      {/* Role question — shown only when Block 3 is active */}
+      {showRoleQuestion && (
+        <RoleQuestion
+          result={result}
+          role={role}
+          substantiallyModified={substantiallyModified}
+          onRoleChange={onRoleChange}
+          onModifiedChange={onModifiedChange}
+        />
+      )}
+
+      {/* Obligation list — replaces the old "What this means for you" section */}
+      {showObligationList && (
+        <ObligationList
+          result={result}
+          role={role ?? "Provider"}
+          substantiallyModified={substantiallyModified === true}
+        />
+      )}
+
+      {/* Model-only case when no system obligations but GPAI active and role not needed */}
+      {!showRoleQuestion && result.model_result !== "none" && !showObligationList && (
+        <ObligationList
+          result={result}
+          role="Provider"
+          substantiallyModified={false}
+        />
       )}
 
       {/* Confidence indicator */}
@@ -207,7 +245,11 @@ export function ResultScreen({ result, onRestart, onDownloadPdf }: Props) {
 
       {/* Actions */}
       <div className="cl-result-actions">
-        <button type="button" className="cl-btn-primary" onClick={onDownloadPdf}>
+        <button
+          type="button"
+          className="cl-btn-primary"
+          onClick={() => onDownloadPdf(role ?? "Provider", substantiallyModified === true)}
+        >
           Download PDF report
         </button>
         <button type="button" className="cl-btn-secondary" onClick={onRestart}>

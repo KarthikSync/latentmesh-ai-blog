@@ -42,13 +42,19 @@ function track(event: string, data: Record<string, unknown>): void {
 // Look up an initial seed from ?seed=<id> on page load. Runs once at
 // module-eval time inside the component's lazy initializer.
 function getInitialStateFromSeed():
-  | { view: View; currentStep: StepId; answers: AnswerSet }
+  | { view: View; currentStep: StepId; answers: AnswerSet; role?: string | null; substantiallyModified?: boolean | null }
   | null {
   const seedId = getSeedParam();
   if (!seedId) return null;
   const seed = findSeed(seedId);
   if (!seed) return null;
-  return { view: "step", currentStep: "step0", answers: { ...seed.answers } };
+  return {
+    view: "step",
+    currentStep: "step0",
+    answers: { ...seed.answers },
+    role: seed.role ?? null,
+    substantiallyModified: seed.substantiallyModified ?? null,
+  };
 }
 
 export default function Classifier() {
@@ -60,6 +66,12 @@ export default function Classifier() {
   const [answers, setAnswers] = useState<AnswerSet>(seeded?.answers ?? {});
   const [showLegalRefs, setShowLegalRefs] = useState(false);
   const [startedAt, setStartedAt] = useState<number | null>(seeded ? Date.now() : null);
+
+  // Post-classification state — lifted up so DevBar can save/load it
+  const [role, setRole] = useState<string | null>(seeded?.role ?? null);
+  const [substantiallyModified, setSubstantiallyModified] = useState<boolean | null>(
+    seeded?.substantiallyModified ?? null
+  );
 
   const reachable = useMemo(() => reachableSteps(answers), [answers]);
 
@@ -172,17 +184,23 @@ export default function Classifier() {
     setView("landing");
     setCurrentStep("step0");
     setStartedAt(null);
+    setRole(null);
+    setSubstantiallyModified(null);
   };
 
   // Dev-only: load a saved draft or a seed scenario into the component state
   const handleDevLoad = (
     newAnswers: AnswerSet,
     newStep: StepId,
-    newView: View
+    newView: View,
+    newRole?: string | null,
+    newModified?: boolean | null
   ) => {
     setAnswers(newAnswers);
     setCurrentStep(newStep);
     setView(newView);
+    setRole(newRole ?? null);
+    setSubstantiallyModified(newModified ?? null);
     if (newView !== "landing" && !startedAt) setStartedAt(Date.now());
   };
 
@@ -194,6 +212,8 @@ export default function Classifier() {
       answers={answers}
       currentStep={currentStep}
       view={view}
+      role={role}
+      substantiallyModified={substantiallyModified}
       onLoad={handleDevLoad}
     />
   ) : null;
@@ -241,9 +261,13 @@ export default function Classifier() {
         <ResultScreen
           result={result}
           onRestart={handleRestart}
-          onDownloadPdf={() => {
-            void downloadResultPdf(result);
+          onDownloadPdf={(pdfRole, pdfModified) => {
+            void downloadResultPdf(result, pdfRole, pdfModified);
           }}
+          role={role}
+          substantiallyModified={substantiallyModified}
+          onRoleChange={setRole}
+          onModifiedChange={setSubstantiallyModified}
         />
       </div>
     );

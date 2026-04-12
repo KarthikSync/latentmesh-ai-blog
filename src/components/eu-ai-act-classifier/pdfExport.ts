@@ -11,6 +11,10 @@ import {
   RESULT_SUMMARIES,
 } from "../../data/eu-ai-act-classifier/copy";
 import type { Result } from "../../data/eu-ai-act-classifier/types";
+import { ALL_OBLIGATIONS, EXCEPTION_OBLIGATIONS } from "../../data/eu-ai-act-classifier/obligations";
+import { buildDisplayContext, buildModelProfile, buildSystemProfile } from "../../lib/eu-ai-act-classifier/bridge";
+import { filterModelObligations, filterSystemObligations } from "../../lib/eu-ai-act-classifier/obligationFilter";
+import { renderObligations } from "../../lib/eu-ai-act-classifier/priorityRanker";
 
 // ── Layout constants (A4 in points) ──────────────────────────────
 const PAGE_WIDTH = 595.28;
@@ -168,7 +172,7 @@ const COLOR_POSITIVE: Rgb = [22, 101, 52];
 const COLOR_NEGATIVE: Rgb = [153, 27, 27];
 
 // ── Main export ───────────────────────────────────────────────────
-export async function downloadResultPdf(result: Result): Promise<void> {
+export async function downloadResultPdf(result: Result, role: string = "Provider", substantiallyModified: boolean = false): Promise<void> {
   const logo = await loadLogo();
   const doc = new jsPDF({ unit: "pt", format: "a4" });
 
@@ -329,9 +333,55 @@ export async function downloadResultPdf(result: Result): Promise<void> {
     );
   }
 
-  // ── What this means for you ──
-  if (result.post_classification_notes.length > 0) {
-    sectionHeader("What this means for you");
+  // ── Obligation list (replaces old "What this means for you") ──
+  const effectiveRole = substantiallyModified ? "Provider" : role;
+  const displayCtx = buildDisplayContext(result);
+  const sysProfile = buildSystemProfile(result, effectiveRole);
+  const modProfile = buildModelProfile(result);
+
+  const systemObligations = filterSystemObligations(ALL_OBLIGATIONS, sysProfile);
+  const modelObligations = filterModelObligations(ALL_OBLIGATIONS, modProfile);
+
+  if (role) {
+    sectionHeader(`Obligations (role: ${effectiveRole})`);
+  }
+
+  if (systemObligations.length > 0) {
+    writeLine("System obligations", 11, true, COLOR_TEXT_STRONG);
+    const renderedSys = renderObligations(systemObligations, displayCtx);
+    for (const obl of renderedSys) {
+      writeLine(`${obl.source_code} — ${obl.plain_language_requirement}`, 9, false, COLOR_TEXT);
+      writeLine(`Priority: ${obl.priority_label} · Effective: ${obl.display_effective_from}${obl.enforceable_now ? " (enforceable now)" : ""}`, 8, false, COLOR_TEXT_SUBTLE);
+      y += 3;
+    }
+  }
+
+  if (modelObligations.length > 0) {
+    y += 4;
+    writeLine("GPAI model obligations", 11, true, COLOR_TEXT_STRONG);
+    if (result.gpai_obligation_holder === "upstream_provider") {
+      writeLine("These obligations fall on the upstream model provider, not directly on you.", 9, false, COLOR_TEXT_MUTED);
+    }
+    const renderedMod = renderObligations(modelObligations.map((f) => f.record), displayCtx);
+    for (const obl of renderedMod) {
+      writeLine(`${obl.source_code} — ${obl.plain_language_requirement}`, 9, false, COLOR_TEXT);
+      writeLine(`Priority: ${obl.priority_label} · Effective: ${obl.display_effective_from}${obl.enforceable_now ? " (enforceable now)" : ""}`, 8, false, COLOR_TEXT_SUBTLE);
+      y += 3;
+    }
+  }
+
+  // Exception duties
+  if (result.article_6_3_exception.checked && result.article_6_3_exception.applies) {
+    y += 4;
+    writeLine("Duties that still apply after the Art. 6(3) exception", 11, true, COLOR_TEXT_STRONG);
+    const renderedExc = renderObligations(EXCEPTION_OBLIGATIONS, displayCtx);
+    for (const obl of renderedExc) {
+      writeLine(`${obl.source_code} — ${obl.plain_language_requirement}`, 9, false, COLOR_TEXT);
+      y += 3;
+    }
+  }
+
+  if (systemObligations.length === 0 && modelObligations.length === 0) {
     for (const note of result.post_classification_notes) {
       writeBullet(note);
     }
