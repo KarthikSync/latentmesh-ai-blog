@@ -245,7 +245,7 @@ export function ObligationList({ result, role, substantiallyModified }: Props) {
       {/* Block 3: System obligations by category */}
       {showBlock3 && renderedSystemObligations.length > 0 && (
         <section className="cl-obl-block">
-          <h3 className="cl-obl-block-title">System obligations</h3>
+          <h3 className="cl-obl-block-title">Full system obligation list</h3>
           {Array.from(systemByCategory.entries()).map(([category, obligations]) => {
             const label = CATEGORY_LABELS[category as ObligationCategory] ?? category;
             const isExpanded = expandedCategories.has(category);
@@ -305,7 +305,7 @@ export function ObligationList({ result, role, substantiallyModified }: Props) {
       {/* Block 4: Model obligations */}
       {showBlock4 && renderedModelObligations.length > 0 && (
         <section className="cl-obl-block cl-obl-model-block">
-          <h3 className="cl-obl-block-title">GPAI model obligations</h3>
+          <h3 className="cl-obl-block-title">All model obligations</h3>
           {isUpstreamProvider && (
             <div className="cl-obl-upstream-note">
               <span className="cl-obl-upstream-icon" aria-hidden="true">ⓘ</span>

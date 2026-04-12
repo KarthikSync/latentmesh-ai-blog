@@ -563,6 +563,20 @@
 /* ── Result screen ──────────────────────────────────────────────── */
 .cl-result { padding: 1rem 0; }
 
+/* ── Two-card result summary ───────────────────────────────────── */
+.cl-result-cards { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
+.cl-result-cards-split { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+@media (max-width: 640px) { .cl-result-cards-split { grid-template-columns: 1fr; } }
+.cl-result-track-card { background: var(--cl-surface); border: 1px solid var(--cl-border); border-radius: 8px; padding: 1rem 1.15rem; }
+.cl-result-track-label { display: block; font-family: "IBM Plex Mono", monospace; font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--cl-text-muted); margin-bottom: 0.5rem; }
+.cl-result-track-summary { font-size: 0.88rem; color: var(--cl-text-secondary); line-height: 1.55; margin: 0.5rem 0 0; }
+.cl-result-track-note { font-size: 0.8rem; color: var(--cl-text-muted); margin: 0.4rem 0 0; font-style: italic; }
+
+/* ── Track-specific deadlines ──────────────────────────────────── */
+.cl-deadline-row { margin-bottom: 0.5rem; font-size: 0.92rem; color: var(--cl-text); line-height: 1.5; }
+.cl-deadline-row:last-child { margin-bottom: 0; }
+.cl-deadline-track { font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--cl-text-muted); margin-right: 0.5rem; }
+
 .cl-badge {
   display: inline-flex;
   align-items: center;

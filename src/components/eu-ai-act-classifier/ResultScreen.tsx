@@ -1,6 +1,7 @@
 import {
   CONFIDENCE_COPY,
   DEPLOYER_EXEMPT_NOTICE,
+  MODEL_RESULT_SUMMARIES,
   OPEN_SOURCE_EXCLUSION_NOTICE,
   RESULT_SUMMARIES,
 } from "../../data/eu-ai-act-classifier/copy";
@@ -39,6 +40,16 @@ const BADGE_ICON: Record<SystemResult, string> = {
   minimal_risk: "✓",
 };
 
+const MODEL_BADGE_CLASS: Record<string, string> = {
+  gpai: "cl-badge-transparency",
+  gpai_systemic_risk: "cl-badge-high",
+};
+
+const MODEL_BADGE_ICON: Record<string, string> = {
+  gpai: "◆",
+  gpai_systemic_risk: "▲",
+};
+
 // Block 3 renders for these system_result values
 const SYSTEM_OBLIGATION_RESULTS = new Set([
   "high_risk_annex_i",
@@ -46,48 +57,90 @@ const SYSTEM_OBLIGATION_RESULTS = new Set([
   "limited_risk_transparency",
 ]);
 
-export function ResultScreen({ result, onRestart, onDownloadPdf, role, substantiallyModified, onRoleChange, onModifiedChange }: Props) {
-  const label = CLASSIFIER_SCHEMA.displayLabels[result.system_result];
-  const summary = RESULT_SUMMARIES[result.system_result];
-  const badgeClass = BADGE_CLASS[result.system_result];
-  const badgeIcon = BADGE_ICON[result.system_result];
-  const confidence = CONFIDENCE_COPY[result.confidence];
+export function ResultScreen({
+  result,
+  onRestart,
+  onDownloadPdf,
+  role,
+  substantiallyModified,
+  onRoleChange,
+  onModifiedChange,
+}: Props) {
+  const systemLabel = CLASSIFIER_SCHEMA.displayLabels[result.system_result];
+  const systemSummary = RESULT_SUMMARIES[result.system_result];
+  const systemBadgeClass = BADGE_CLASS[result.system_result];
+  const systemBadgeIcon = BADGE_ICON[result.system_result];
 
+  const showModelTrack = result.model_result !== "none";
+  const modelLabel = showModelTrack
+    ? CLASSIFIER_SCHEMA.displayLabels[result.model_result]
+    : "";
+  const modelSummary = MODEL_RESULT_SUMMARIES[result.model_result] ?? "";
+  const modelBadgeClass = MODEL_BADGE_CLASS[result.model_result] ?? "cl-badge-neutral";
+  const modelBadgeIcon = MODEL_BADGE_ICON[result.model_result] ?? "◆";
+
+  const confidence = CONFIDENCE_COPY[result.confidence];
   const showDeployerExempt = result.deployer_obligation_exempt;
   const showOpenSourceBanner = result.scope_status === "excluded_under_art_2_12";
-  const showGpaiPanel = result.model_result !== "none";
   const showArt50 = result.article_50_transparency_triggers.length > 0;
   const showExceptionPanel = result.article_6_3_exception.checked;
-
-  // Role question — gates Block 3 (system obligations)
   const showRoleQuestion = SYSTEM_OBLIGATION_RESULTS.has(result.system_result);
 
   // Obligation list renders when: role is selected (if Block 3 active), OR Block 4 only
   const showObligationList =
-    (showRoleQuestion && role !== null) || // Block 3: role selected
-    (!showRoleQuestion && result.model_result !== "none") || // Block 4 only
-    (result.article_6_3_exception.checked && result.article_6_3_exception.applies); // Exception duties
+    (showRoleQuestion && role !== null) ||
+    (!showRoleQuestion && result.model_result !== "none") ||
+    (result.article_6_3_exception.checked && result.article_6_3_exception.applies);
+
+  // Determine if we need track-specific deadlines
+  const hasSystemDeadline = SYSTEM_OBLIGATION_RESULTS.has(result.system_result);
+  const hasModelDeadline = showModelTrack;
 
   return (
     <div className="cl-result" role="region" aria-label="Assessment result">
-      {/* Classification badge */}
-      <div className={`cl-badge ${badgeClass}`}>
-        <span className="cl-badge-icon" aria-hidden="true">{badgeIcon}</span>
-        <span className="cl-badge-label">{label}</span>
+
+      {/* ── Two-card result summary ────────────────────────────── */}
+      <div className={`cl-result-cards ${showModelTrack ? "cl-result-cards-split" : ""}`}>
+        {/* System track card */}
+        <div className="cl-result-track-card">
+          <span className="cl-result-track-label">System track</span>
+          <div className={`cl-badge ${systemBadgeClass}`}>
+            <span className="cl-badge-icon" aria-hidden="true">{systemBadgeIcon}</span>
+            <span className="cl-badge-label">{systemLabel}</span>
+          </div>
+          <p className="cl-result-track-summary">{systemSummary}</p>
+        </div>
+
+        {/* Model track card (only when GPAI is applicable) */}
+        {showModelTrack && (
+          <div className="cl-result-track-card">
+            <span className="cl-result-track-label">Model track</span>
+            <div className={`cl-badge ${modelBadgeClass}`}>
+              <span className="cl-badge-icon" aria-hidden="true">{modelBadgeIcon}</span>
+              <span className="cl-badge-label">{modelLabel}</span>
+            </div>
+            <p className="cl-result-track-summary">{modelSummary}</p>
+            {result.gpai_obligation_holder === "upstream_provider" && (
+              <p className="cl-result-track-note">
+                Obligations held by your upstream model provider, not directly by you.
+              </p>
+            )}
+            {result.gpai_obligation_holder === "self" && (
+              <p className="cl-result-track-note">
+                You hold these obligations as the GPAI provider.
+              </p>
+            )}
+          </div>
+        )}
       </div>
 
-      {/* Plain-language summary */}
-      <p className="cl-result-summary">{summary}</p>
-
-      {/* Art. 2(12) open-source conversion banner */}
+      {/* ── Banners ───────────────────────────────────────────── */}
       {showOpenSourceBanner && (
         <div className="cl-banner cl-banner-info">
           <strong>Open-source exclusion applied (Art. 2(12)):</strong>
           <p>{OPEN_SOURCE_EXCLUSION_NOTICE}</p>
         </div>
       )}
-
-      {/* Deployer obligation exempt notice */}
       {showDeployerExempt && (
         <div className="cl-banner cl-banner-info">
           <strong>Deployer obligations do not apply to you (Art. 2(10)):</strong>
@@ -95,7 +148,7 @@ export function ResultScreen({ result, onRestart, onDownloadPdf, role, substanti
         </div>
       )}
 
-      {/* Triggering reasons */}
+      {/* ── Triggering reasons ────────────────────────────────── */}
       {result.system_reasons.length > 0 && (
         <section className="cl-result-section">
           <h3>Why this classification</h3>
@@ -111,7 +164,7 @@ export function ResultScreen({ result, onRestart, onDownloadPdf, role, substanti
         </section>
       )}
 
-      {/* Art. 6(3) exception panel */}
+      {/* ── Art. 6(3) exception panel ─────────────────────────── */}
       {showExceptionPanel && (
         <section className="cl-result-section">
           <h3>Article 6(3) exception test</h3>
@@ -137,37 +190,7 @@ export function ResultScreen({ result, onRestart, onDownloadPdf, role, substanti
         </section>
       )}
 
-      {/* GPAI panel */}
-      {showGpaiPanel && (
-        <section className="cl-result-section">
-          <h3>GPAI model track</h3>
-          <div className="cl-gpai-meta">
-            <span className={`cl-gpai-pill cl-${result.model_result}`}>
-              {CLASSIFIER_SCHEMA.displayLabels[result.model_result]}
-            </span>
-            <span className="cl-gpai-holder">
-              Obligations held by:{" "}
-              <strong>
-                {result.gpai_obligation_holder === "self"
-                  ? "You (as provider)"
-                  : result.gpai_obligation_holder === "upstream_provider"
-                    ? "Upstream provider"
-                    : result.gpai_obligation_holder === "unknown"
-                      ? "Unknown"
-                      : "Not applicable"}
-              </strong>
-            </span>
-          </div>
-          {result.gpai_open_source_exception && (
-            <p className="cl-gpai-note">
-              Art. 53(2) open-source exception applies — reduced transparency obligations (copyright
-              obligations still apply).
-            </p>
-          )}
-        </section>
-      )}
-
-      {/* Art. 50 transparency triggers */}
+      {/* ── Art. 50 transparency triggers ─────────────────────── */}
       {showArt50 && (
         <section className="cl-result-section">
           <h3>Article 50 transparency obligations</h3>
@@ -182,26 +205,35 @@ export function ResultScreen({ result, onRestart, onDownloadPdf, role, substanti
         </section>
       )}
 
-      {/* Timing */}
+      {/* ── Track-specific deadlines ──────────────────────────── */}
       <section className="cl-result-section">
-        <h3>Compliance deadline</h3>
-        <p>
-          <strong>{result.timing.compliance_deadline}</strong>
-          {result.timing.rules_enforceable_now && " — enforceable now"}
-        </p>
-        {result.timing.public_authority_deadline && (
-          <p className="cl-result-note">
-            Public authority legacy deadline: {result.timing.public_authority_deadline}
-          </p>
+        <h3>{hasSystemDeadline && hasModelDeadline ? "Compliance deadlines" : "Compliance deadline"}</h3>
+        {hasSystemDeadline && (
+          <div className="cl-deadline-row">
+            {hasModelDeadline && <span className="cl-deadline-track">System:</span>}
+            <strong>{result.timing.compliance_deadline}</strong>
+            {result.timing.rules_enforceable_now && " — enforceable now"}
+            {result.timing.public_authority_deadline && (
+              <p className="cl-result-note">
+                Public authority legacy deadline: {result.timing.public_authority_deadline}
+              </p>
+            )}
+          </div>
         )}
-        {result.timing.gpai_legacy_deadline && (
-          <p className="cl-result-note">
-            GPAI legacy compliance deadline: {result.timing.gpai_legacy_deadline}
-          </p>
+        {hasModelDeadline && (
+          <div className="cl-deadline-row">
+            {hasSystemDeadline && <span className="cl-deadline-track">Model:</span>}
+            <strong>2025-08-02</strong> — enforceable now
+            {result.timing.gpai_legacy_deadline && (
+              <p className="cl-result-note">
+                Legacy model compliance deadline: {result.timing.gpai_legacy_deadline}
+              </p>
+            )}
+          </div>
         )}
       </section>
 
-      {/* Role question — shown only when Block 3 is active */}
+      {/* ── Role question (system track only) ─────────────────── */}
       {showRoleQuestion && (
         <RoleQuestion
           result={result}
@@ -212,7 +244,7 @@ export function ResultScreen({ result, onRestart, onDownloadPdf, role, substanti
         />
       )}
 
-      {/* Obligation list — replaces the old "What this means for you" section */}
+      {/* ── Obligation list ───────────────────────────────────── */}
       {showObligationList && (
         <ObligationList
           result={result}
@@ -221,7 +253,7 @@ export function ResultScreen({ result, onRestart, onDownloadPdf, role, substanti
         />
       )}
 
-      {/* Model-only case when no system obligations but GPAI active and role not needed */}
+      {/* Model-only case when no system obligations but GPAI active */}
       {!showRoleQuestion && result.model_result !== "none" && !showObligationList && (
         <ObligationList
           result={result}
@@ -230,7 +262,7 @@ export function ResultScreen({ result, onRestart, onDownloadPdf, role, substanti
         />
       )}
 
-      {/* Confidence indicator */}
+      {/* ── Confidence ────────────────────────────────────────── */}
       <section className="cl-result-section cl-confidence">
         <h3>Confidence</h3>
         <p>
@@ -243,7 +275,7 @@ export function ResultScreen({ result, onRestart, onDownloadPdf, role, substanti
         )}
       </section>
 
-      {/* Actions */}
+      {/* ── Actions ───────────────────────────────────────────── */}
       <div className="cl-result-actions">
         <button
           type="button"

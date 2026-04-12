@@ -3,6 +3,8 @@
 
 import type { SystemResult, ConfidenceTier } from "./types";
 
+// ── Landing ─────────────────────────────────────────────────────
+
 export const LANDING_COPY = {
   headline: "Is your AI system high-risk under the EU AI Act?",
   subhead:
@@ -17,6 +19,8 @@ export const LANDING_COPY = {
 export const DISCLAIMER =
   "This tool provides a preliminary assessment only. It is not legal advice. For binding interpretation of your obligations under the EU AI Act, consult qualified legal counsel.";
 
+// System-track summaries — explicitly scoped to the system track so they
+// don't mislead when the model track carries real obligations.
 export const RESULT_SUMMARIES: Record<SystemResult, string> = {
   not_ai_system:
     "Your software does not meet the Article 3(1) definition of an AI system. The EU AI Act does not apply.",
@@ -25,13 +29,23 @@ export const RESULT_SUMMARIES: Record<SystemResult, string> = {
   prohibited:
     "This system appears to involve a practice prohibited under Article 5. These prohibitions have been enforceable since 2 February 2025. We strongly recommend consulting qualified legal counsel before proceeding.",
   high_risk_annex_i:
-    "This system is high-risk because it is part of a regulated product that requires third-party conformity assessment under Annex I. The full Chapter III obligations apply, and you must undergo notified-body assessment before placing the system on the market.",
+    "This system is high-risk because it is part of a regulated product that requires third-party conformity assessment under Annex I. The full Chapter III obligations apply.",
   high_risk_annex_iii:
     "This system is high-risk because its intended use falls within Annex III of the EU AI Act. The full Chapter III obligations apply.",
   limited_risk_transparency:
-    "This system is not high-risk, but it triggers transparency obligations under Article 50. You must inform users they are interacting with AI and/or mark AI-generated content appropriately.",
+    "This system triggers transparency obligations under Article 50. You must inform users they are interacting with AI and/or mark AI-generated content appropriately.",
   minimal_risk:
-    "Based on your answers, no specific obligations under the EU AI Act have been identified for this system beyond general good practice.",
+    "No specific system obligations identified by this tool.",
+};
+
+// Model-track summaries — shown alongside the system summary when
+// model_result is not 'none'.
+export const MODEL_RESULT_SUMMARIES: Record<string, string> = {
+  none: "",
+  gpai:
+    "GPAI provider obligations apply. Some are enforceable now (since 2 August 2025).",
+  gpai_systemic_risk:
+    "GPAI systemic-risk obligations apply. These include enhanced transparency, adversarial testing, and incident reporting duties. Some are enforceable now.",
 };
 
 export const CONFIDENCE_COPY: Record<ConfidenceTier, { label: string; explanation: string }> = {
