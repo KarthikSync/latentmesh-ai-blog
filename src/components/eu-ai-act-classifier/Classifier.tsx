@@ -241,8 +241,8 @@ export default function Classifier() {
         <ResultScreen
           result={result}
           onRestart={handleRestart}
-          onDownloadPdf={() => {
-            void downloadResultPdf(result);
+          onDownloadPdf={(pdfRole, pdfModified) => {
+            void downloadResultPdf(result, pdfRole, pdfModified);
           }}
         />
       </div>
