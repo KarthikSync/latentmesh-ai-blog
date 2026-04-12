@@ -2,13 +2,16 @@
 // Expandable sections for "Why this applies" and "Priority reasoning".
 // Adapts actor indicator and open-source note based on track.
 
-import { useState } from "preact/hooks";
 import type { RenderedObligation } from "../../data/eu-ai-act-classifier/obligation-types";
 
 interface Props {
   obligation: RenderedObligation;
   showOpenSourceNote?: boolean;
   isUpstreamProvider?: boolean;
+  whyExpanded: boolean;
+  priorityExpanded: boolean;
+  onToggleWhy: () => void;
+  onTogglePriority: () => void;
 }
 
 const PRIORITY_CLASSES: Record<string, string> = {
@@ -21,10 +24,11 @@ export function ObligationCard({
   obligation,
   showOpenSourceNote = false,
   isUpstreamProvider = false,
+  whyExpanded,
+  priorityExpanded,
+  onToggleWhy,
+  onTogglePriority,
 }: Props) {
-  const [whyExpanded, setWhyExpanded] = useState(false);
-  const [priorityExpanded, setPriorityExpanded] = useState(false);
-
   const priorityClass = PRIORITY_CLASSES[obligation.priority_label] ?? "cl-obl-priority-standard";
 
   // Actor indicator
@@ -84,7 +88,7 @@ export function ObligationCard({
         <button
           type="button"
           className="cl-obl-expand-btn"
-          onClick={() => setWhyExpanded((v) => !v)}
+          onClick={onToggleWhy}
           aria-expanded={whyExpanded}
         >
           {whyExpanded ? "▾ Hide" : "▸ Why this applies to you"}
@@ -96,7 +100,7 @@ export function ObligationCard({
         <button
           type="button"
           className="cl-obl-expand-btn"
-          onClick={() => setPriorityExpanded((v) => !v)}
+          onClick={onTogglePriority}
           aria-expanded={priorityExpanded}
         >
           {priorityExpanded ? "▾ Hide" : "▸ Priority reasoning"}

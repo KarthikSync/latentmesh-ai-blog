@@ -178,6 +178,13 @@ export function ObligationList({ result, role, substantiallyModified }: Props) {
 
   // ── Collapsible category state ────────────────────────────────
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
+
+  // Global expand/collapse for obligation card sections — toggling one
+  // card's "Why this applies" or "Priority reasoning" toggles all cards.
+  const [allWhyExpanded, setAllWhyExpanded] = useState(false);
+  const [allPriorityExpanded, setAllPriorityExpanded] = useState(false);
+  const toggleAllWhy = () => setAllWhyExpanded((v) => !v);
+  const toggleAllPriority = () => setAllPriorityExpanded((v) => !v);
   const toggleCategory = (cat: string) => {
     setExpandedCategories((prev) => {
       const next = new Set(prev);
@@ -230,7 +237,7 @@ export function ObligationList({ result, role, substantiallyModified }: Props) {
         <section className="cl-obl-block cl-obl-priority-block">
           <h3 className="cl-obl-block-title">Start here</h3>
           {priorityQueue.map((obl) => (
-            <ObligationCard key={obl.obligation_id} obligation={obl} />
+            <ObligationCard key={obl.obligation_id} obligation={obl} whyExpanded={allWhyExpanded} priorityExpanded={allPriorityExpanded} onToggleWhy={toggleAllWhy} onTogglePriority={toggleAllPriority} />
           ))}
         </section>
       )}
@@ -257,7 +264,7 @@ export function ObligationList({ result, role, substantiallyModified }: Props) {
                 {isExpanded && (
                   <div className="cl-obl-category-body">
                     {obligations.map((obl) => (
-                      <ObligationCard key={obl.obligation_id} obligation={obl} />
+                      <ObligationCard key={obl.obligation_id} obligation={obl} whyExpanded={allWhyExpanded} priorityExpanded={allPriorityExpanded} onToggleWhy={toggleAllWhy} onTogglePriority={toggleAllPriority} />
                     ))}
                   </div>
                 )}
@@ -290,7 +297,7 @@ export function ObligationList({ result, role, substantiallyModified }: Props) {
             obligations remain.
           </p>
           {renderedExceptionDuties.map((obl) => (
-            <ObligationCard key={obl.obligation_id} obligation={obl} />
+            <ObligationCard key={obl.obligation_id} obligation={obl} whyExpanded={allWhyExpanded} priorityExpanded={allPriorityExpanded} onToggleWhy={toggleAllWhy} onTogglePriority={toggleAllPriority} />
           ))}
         </section>
       )}
@@ -317,6 +324,10 @@ export function ObligationList({ result, role, substantiallyModified }: Props) {
               obligation={item.rendered}
               showOpenSourceNote={item.showOpenSourceNote}
               isUpstreamProvider={isUpstreamProvider}
+              whyExpanded={allWhyExpanded}
+              priorityExpanded={allPriorityExpanded}
+              onToggleWhy={toggleAllWhy}
+              onTogglePriority={toggleAllPriority}
             />
           ))}
         </section>
