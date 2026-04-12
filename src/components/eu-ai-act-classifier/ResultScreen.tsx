@@ -1,4 +1,3 @@
-import { useState } from "preact/hooks";
 import {
   CONFIDENCE_COPY,
   DEPLOYER_EXEMPT_NOTICE,
@@ -14,6 +13,10 @@ interface Props {
   result: Result;
   onRestart: () => void;
   onDownloadPdf: (role: string, substantiallyModified: boolean) => void;
+  role: string | null;
+  substantiallyModified: boolean | null;
+  onRoleChange: (role: string) => void;
+  onModifiedChange: (modified: boolean) => void;
 }
 
 const BADGE_CLASS: Record<SystemResult, string> = {
@@ -43,7 +46,7 @@ const SYSTEM_OBLIGATION_RESULTS = new Set([
   "limited_risk_transparency",
 ]);
 
-export function ResultScreen({ result, onRestart, onDownloadPdf }: Props) {
+export function ResultScreen({ result, onRestart, onDownloadPdf, role, substantiallyModified, onRoleChange, onModifiedChange }: Props) {
   const label = CLASSIFIER_SCHEMA.displayLabels[result.system_result];
   const summary = RESULT_SUMMARIES[result.system_result];
   const badgeClass = BADGE_CLASS[result.system_result];
@@ -56,10 +59,8 @@ export function ResultScreen({ result, onRestart, onDownloadPdf }: Props) {
   const showArt50 = result.article_50_transparency_triggers.length > 0;
   const showExceptionPanel = result.article_6_3_exception.checked;
 
-  // Role question state — gates Block 3 (system obligations)
+  // Role question — gates Block 3 (system obligations)
   const showRoleQuestion = SYSTEM_OBLIGATION_RESULTS.has(result.system_result);
-  const [role, setRole] = useState<string | null>(null);
-  const [substantiallyModified, setSubstantiallyModified] = useState<boolean | null>(null);
 
   // Obligation list renders when: role is selected (if Block 3 active), OR Block 4 only
   const showObligationList =
@@ -206,8 +207,8 @@ export function ResultScreen({ result, onRestart, onDownloadPdf }: Props) {
           result={result}
           role={role}
           substantiallyModified={substantiallyModified}
-          onRoleChange={setRole}
-          onModifiedChange={setSubstantiallyModified}
+          onRoleChange={onRoleChange}
+          onModifiedChange={onModifiedChange}
         />
       )}
 
