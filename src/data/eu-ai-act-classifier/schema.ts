@@ -6,6 +6,7 @@ import type { ClassifierSchema, SystemResult, ModelResult } from "./types";
 import { SCHEMA_VERSION } from "./types";
 import { STEP_0 } from "./steps/step0";
 import { STEP_1 } from "./steps/step1";
+import { STEP_BRANCH } from "./steps/stepBranch";
 import { STEP_2 } from "./steps/step2";
 import { STEP_3 } from "./steps/step3";
 import { STEP_4 } from "./steps/step4";
@@ -67,7 +68,7 @@ const OBLIGATIONS_TEMPLATES: Record<SystemResult, string[]> = {
 
 export const CLASSIFIER_SCHEMA: ClassifierSchema = {
   version: SCHEMA_VERSION,
-  steps: [STEP_0, STEP_1, STEP_2, STEP_3, STEP_4, STEP_5, STEP_6, STEP_7, STEP_8],
+  steps: [STEP_0, STEP_1, STEP_BRANCH, STEP_2, STEP_3, STEP_4, STEP_5, STEP_6, STEP_7, STEP_8],
   displayLabels: DISPLAY_LABELS,
   obligationsTemplates: OBLIGATIONS_TEMPLATES,
   timingMilestones: TIMING_MILESTONES,

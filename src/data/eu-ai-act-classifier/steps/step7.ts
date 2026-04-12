@@ -8,32 +8,15 @@ import type { StepDef } from "../types";
 
 export const STEP_7: StepDef = {
   id: "step7",
-  title: "Are you also assessing a general-purpose AI model?",
+  title: "GPAI model details",
   shortLabel: "GPAI",
   intro:
-    "The Act treats AI systems and general-purpose AI models as separate categories. You may need to assess one, or both.",
+    "Tell us about the general-purpose AI model you are assessing. These questions determine the model's classification and who holds the obligations.",
   questions: [
-    {
-      id: "assessment_target",
-      step: "step7",
-      order: 0,
-      type: "single_select",
-      prompt: "What are you assessing?",
-      helper:
-        "Choose 'Only an AI system / application' if you are using a third-party foundation model inside your product. Choose 'Only a GPAI model' if you develop, place on the market, or substantially modify the model itself.",
-      why:
-        "The Act distinguishes AI systems (applications) from GPAI models (foundation models). Each track has its own classification and obligations.",
-      legal: { article: "Art. 3(63)" },
-      options: [
-        { value: "system_only", label: "Only an AI system / application" },
-        { value: "model_only", label: "Only a GPAI model" },
-        { value: "both", label: "Both a system and a model" },
-      ],
-    },
     {
       id: "is_gpai_model",
       step: "step7",
-      order: 1,
+      order: 0,
       type: "yes_no",
       prompt: "Is the model a general-purpose AI model?",
       helper:
@@ -41,13 +24,12 @@ export const STEP_7: StepDef = {
       why:
         "If yes, the model enters the GPAI track regardless of whether you are the provider or a downstream user.",
       legal: { article: "Art. 3(63)" },
-      showIf: (a) =>
-        a.assessment_target === "model_only" || a.assessment_target === "both",
+      showIf: undefined, // always shown when step7 is reachable (model_only or both)
     },
     {
       id: "provider_placing_on_eu_market",
       step: "step7",
-      order: 2,
+      order: 1,
       type: "yes_no",
       prompt: "Are you the provider placing this model on the EU market?",
       helper:
@@ -60,7 +42,7 @@ export const STEP_7: StepDef = {
     {
       id: "gpai_open_source",
       step: "step7",
-      order: 3,
+      order: 2,
       type: "yes_no",
       prompt:
         "Is this model released as open-source with publicly available weights, architecture, and usage documentation?",
@@ -74,7 +56,7 @@ export const STEP_7: StepDef = {
     {
       id: "training_compute_above_threshold",
       step: "step7",
-      order: 4,
+      order: 3,
       type: "yes_no_unsure",
       prompt:
         "Was this model trained with more than 10²⁵ floating-point operations?",
@@ -87,7 +69,7 @@ export const STEP_7: StepDef = {
     {
       id: "commission_designated_systemic",
       step: "step7",
-      order: 5,
+      order: 4,
       type: "yes_no",
       prompt:
         "Has the European Commission designated this model as having systemic risk?",
@@ -100,7 +82,7 @@ export const STEP_7: StepDef = {
     {
       id: "commission_rebuttal_accepted",
       step: "step7",
-      order: 6,
+      order: 5,
       type: "yes_no",
       prompt:
         "Has the provider successfully rebutted the systemic risk designation?",
