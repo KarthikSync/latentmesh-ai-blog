@@ -10,6 +10,7 @@ import type { AnswerSet, StepId } from "../../data/eu-ai-act-classifier/types";
 const STEP_ORDER: StepId[] = [
   "step0",
   "step1",
+  "step_branch",
   "step2",
   "step3",
   "step4_tier1",
@@ -24,6 +25,8 @@ const STEP_ORDER: StepId[] = [
 const FIELD_TO_STEP: Record<string, StepId> = {
   // step0
   is_ai_system: "step0",
+  // step_branch
+  assessment_target: "step_branch",
   // step1
   eu_nexus: "step1",
   military_defence_exclusion: "step1",
@@ -97,7 +100,6 @@ const FIELD_TO_STEP: Record<string, StepId> = {
   ai_generated_public_interest_text: "step6",
   public_interest_text_human_review_exception: "step6",
   // step7
-  assessment_target: "step7",
   is_gpai_model: "step7",
   provider_placing_on_eu_market: "step7",
   gpai_open_source: "step7",
@@ -125,7 +127,18 @@ function isStepReachable(step: StepId, answers: AnswerSet): boolean {
     answers.premarket_testing_only === "yes";
   if (scopeExit && step !== "step0" && step !== "step1") return false;
 
-  // Step 3 only entered; sub-questions are handled by showIf inside the step
+  // ── Track-based routing (Option A: early branch) ──────────────
+  const scope = answers.assessment_target as string | undefined;
+
+  // System-track steps: hidden for model_only
+  const systemOnlySteps: StepId[] = [
+    "step2", "step3", "step4_tier1", "step4_tier2", "step5", "step6",
+  ];
+  if (scope === "model_only" && systemOnlySteps.includes(step)) return false;
+
+  // Model-track step (step7): hidden for system_only
+  if (scope === "system_only" && step === "step7") return false;
+
   // Step 4 tier 2 only if at least one domain selected
   if (step === "step4_tier2") {
     const domains = answers.selected_domains;

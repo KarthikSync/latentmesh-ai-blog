@@ -32,6 +32,7 @@ export type ConfidenceTier = "clear_match" | "likely_match" | "ambiguous_consult
 export type StepId =
   | "step0"
   | "step1"
+  | "step_branch"
   | "step2"
   | "step3"
   | "step4_tier1"

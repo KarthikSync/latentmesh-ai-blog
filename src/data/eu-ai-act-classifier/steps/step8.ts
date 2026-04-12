@@ -23,6 +23,7 @@ export const STEP_8: StepDef = {
       why:
         "If yes, this system is treated as 'legacy' and follows a different compliance timeline.",
       legal: { article: "Art. 111(1)" },
+      showIf: (a) => a.assessment_target !== "model_only",
     },
     {
       id: "significant_design_change_after_cutoff",
@@ -35,7 +36,9 @@ export const STEP_8: StepDef = {
       why:
         "If yes, the system is treated as newly placed on the market, and full obligations apply from the date of change.",
       legal: { article: "Art. 111(1)" },
-      showIf: (a) => a.placed_on_market_before_2026_08_02 === "yes",
+      showIf: (a) =>
+        a.assessment_target !== "model_only" &&
+        a.placed_on_market_before_2026_08_02 === "yes",
     },
     {
       id: "intended_for_public_authority_use",
@@ -48,6 +51,7 @@ export const STEP_8: StepDef = {
       why:
         "If yes, and the system is legacy with no significant change, the compliance deadline may be extended to 2 August 2030.",
       legal: { article: "Art. 111(2)" },
+      showIf: (a) => a.assessment_target !== "model_only",
     },
     {
       id: "gpai_on_market_before_2025_08_02",
@@ -61,8 +65,7 @@ export const STEP_8: StepDef = {
       why:
         "If yes, the provider has until 2 August 2027 to comply with Articles 53 and 55.",
       legal: { article: "Art. 111(3)" },
-      showIf: (a) =>
-        a.assessment_target === "model_only" || a.assessment_target === "both",
+      showIf: (a) => a.assessment_target !== "system_only",
     },
   ],
 };
