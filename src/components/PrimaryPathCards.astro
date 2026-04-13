@@ -1,0 +1,110 @@
+---
+// PrimaryPathCards — 3-path CTA row for the /ai-compliance/ hub.
+// Helps users choose their entry point: explain, assess, or reference.
+
+interface PathCard {
+  title: string;
+  description: string;
+  href: string;
+}
+
+const cards: PathCard[] = [
+  {
+    title: "Understand the model",
+    description:
+      "Read the essays that explain how obligations become controls, evaluations, and evidence.",
+    href: "/reading-list/",
+  },
+  {
+    title: "Assess your system",
+    description:
+      "Use the EU AI Compliance Checker to quickly understand your likely risk posture.",
+    href: "/tools/eu-ai-compliance-checker/",
+  },
+  {
+    title: "Use the reference",
+    description:
+      "Open the obligation-to-control mapping table for practical implementation detail.",
+    href: "/reference/eu-ai-act-controls/",
+  },
+];
+---
+
+<section class="path-cards" aria-label="Choose your starting point">
+  <h2 class="path-cards-heading">Choose your starting point</h2>
+  <div class="path-cards-grid">
+    {cards.map((card) => (
+      <a href={card.href} class="path-card">
+        <span class="path-card-title">{card.title}</span>
+        <span class="path-card-desc">{card.description}</span>
+        <span class="path-card-arrow">→</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .path-cards {
+    margin: 2.5rem 0 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .path-cards-heading {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 1.25rem;
+    letter-spacing: -0.01em;
+  }
+
+  .path-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.85rem;
+  }
+
+  .path-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.15rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    background: var(--color-bg);
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .path-card:hover {
+    border-color: var(--color-link);
+    box-shadow: 0 2px 8px rgba(30, 58, 138, 0.06);
+  }
+
+  .path-card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 0.4rem;
+  }
+
+  .path-card-desc {
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    flex: 1;
+  }
+
+  .path-card-arrow {
+    font-size: 0.88rem;
+    color: var(--color-link);
+    margin-top: 0.6rem;
+    font-weight: 500;
+  }
+
+  @media (max-width: 640px) {
+    .path-cards-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

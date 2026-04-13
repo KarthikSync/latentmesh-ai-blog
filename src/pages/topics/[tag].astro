@@ -34,7 +34,18 @@ const { tag, posts } = Astro.props;
   <body>
     <Header />
     <main>
-      <h1>{tag}</h1>
+      <h1>{tag === 'compliance' ? 'Compliance essays' : tag}</h1>
+      {tag === 'compliance' && (
+        <div class="archive-redirect">
+          <p class="archive-redirect-intro">
+            Browse all essays tagged compliance. If you want the full operating model,
+            start with the AI Compliance guide.
+          </p>
+          <a href="/ai-compliance/" class="archive-redirect-link">
+            Start with the AI Compliance guide →
+          </a>
+        </div>
+      )}
       <div class="essay-list">
         {posts.map((post: any) => (
           <a href={`/blog/${post.id}/`} class="essay-item">
@@ -124,6 +135,32 @@ const { tag, posts } = Astro.props;
     color: var(--color-text-muted);
     font-family: sans-serif;
     flex-shrink: 0;
+  }
+
+  .archive-redirect {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .archive-redirect-intro {
+    font-size: 0.92rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0 0 0.75rem;
+  }
+
+  .archive-redirect-link {
+    display: inline-block;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--color-link);
+    text-decoration: none;
+  }
+
+  .archive-redirect-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
   .back-link {

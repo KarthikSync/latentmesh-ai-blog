@@ -1,0 +1,88 @@
+---
+// ComplianceSystemCTA — end-of-essay CTA block for compliance-tagged posts.
+// Routes readers from the essay into the working compliance system:
+// guide, assessment, and reference.
+---
+
+<aside class="compliance-cta" aria-label="Continue through the compliance system">
+  <h3 class="compliance-cta-heading">Continue through the compliance system</h3>
+  <p class="compliance-cta-body">
+    LatentMesh organizes AI compliance as a practical loop: obligation, control,
+    evaluation, evidence, and response. These links take you from the essay into
+    the working system.
+  </p>
+  <div class="compliance-cta-links">
+    <a href="/ai-compliance/" class="compliance-cta-link">
+      <span class="compliance-cta-link-title">Start with the AI Compliance guide</span>
+      <span class="compliance-cta-link-desc">The full operating model for production AI compliance.</span>
+    </a>
+    <a href="/tools/eu-ai-compliance-checker/" class="compliance-cta-link">
+      <span class="compliance-cta-link-title">Assess your system</span>
+      <span class="compliance-cta-link-desc">Use the EU AI Compliance Checker to understand your risk posture.</span>
+    </a>
+    <a href="/reference/eu-ai-act-controls/" class="compliance-cta-link">
+      <span class="compliance-cta-link-title">Use the controls reference</span>
+      <span class="compliance-cta-link-desc">Obligation-to-control mapping table for implementation.</span>
+    </a>
+  </div>
+</aside>
+
+<style>
+  .compliance-cta {
+    margin: 2.5rem 0;
+    padding: 1.5rem 1.65rem;
+    background: var(--color-bg-secondary);
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+  }
+
+  .compliance-cta-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 0.5rem;
+  }
+
+  .compliance-cta-body {
+    font-size: 0.88rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0 0 1.25rem;
+    max-width: 640px;
+  }
+
+  .compliance-cta-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .compliance-cta-link {
+    display: flex;
+    flex-direction: column;
+    padding: 0.8rem 1rem;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s;
+  }
+
+  .compliance-cta-link:hover {
+    border-color: var(--color-link);
+  }
+
+  .compliance-cta-link-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 0.2rem;
+  }
+
+  .compliance-cta-link-desc {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+</style>
