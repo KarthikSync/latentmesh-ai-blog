@@ -1,0 +1,48 @@
+---
+// AuthorBlock — compact author/source block for authority pages.
+// Establishes trust and provenance without promotional language.
+---
+
+<aside class="author-block" aria-label="About this resource">
+  <p class="author-block-heading">About this resource</p>
+  <p class="author-block-body">
+    This page is part of <a href="/">LatentMesh</a>, a practical body of work on AI compliance,
+    evaluation, and governance for production systems, authored by
+    <a href="/about/">Karthik Mahalingam</a>.
+  </p>
+</aside>
+
+<style>
+  .author-block {
+    margin: 2rem 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .author-block-heading {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    margin: 0 0 0.4rem;
+  }
+
+  .author-block-body {
+    font-size: 0.88rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 640px;
+  }
+
+  .author-block-body a {
+    color: var(--color-link);
+    text-decoration: none;
+  }
+
+  .author-block-body a:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>

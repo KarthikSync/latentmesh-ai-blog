@@ -3,11 +3,21 @@ import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import ComplianceSystemCTA from "../../components/ComplianceSystemCTA.astro";
+import AuthorBlock from "../../components/AuthorBlock.astro";
 import { SITE_AUTHOR, SITE_URL } from "../../consts";
 
 const title = "AI Evidence Pack Guide | LatentMesh";
 const description =
-  "What an AI evidence pack should contain, why it matters, who owns it, and how to make it audit-ready.";
+  "A practical guide to building an AI evidence pack, including core sections, artifacts, ownership, review cadence, and common failure modes.";
+
+const techArticleSchema = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: "What an AI Evidence Pack Should Contain",
+  description,
+  url: SITE_URL + "/reference/ai-evidence-pack-guide/",
+  author: { "@type": "Person", name: SITE_AUTHOR, url: SITE_URL + "/about/" },
+};
 
 const breadcrumbSchema = {
   "@context": "https://schema.org",
@@ -34,6 +44,7 @@ const artifacts = [
 <html lang="en">
   <head>
     <BaseHead title={title} description={description} />
+    <script type="application/ld+json" set:html={JSON.stringify(techArticleSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   </head>
@@ -185,6 +196,8 @@ const artifacts = [
       <div class="epg-cta">
         <ComplianceSystemCTA />
       </div>
+
+      <AuthorBlock />
 
       <div class="epg-related">
         <h3>Related references</h3>

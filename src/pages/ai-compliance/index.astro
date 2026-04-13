@@ -3,16 +3,37 @@ import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import PrimaryPathCards from '../../components/PrimaryPathCards.astro';
-import { SITE_TITLE } from '../../consts';
+import AuthorBlock from '../../components/AuthorBlock.astro';
+import { SITE_TITLE, SITE_AUTHOR, SITE_URL } from '../../consts';
 
 const title = "AI Compliance for Production AI Systems";
-const description = "How to turn regulatory obligations, engineering controls, evaluations, and evidence into a practical compliance operating model for AI systems.";
+const description = "A practical AI compliance guide for production AI systems, connecting obligations, controls, evaluations, evidence, and operational response.";
+
+const webPageSchema = {
+	"@context": "https://schema.org",
+	"@type": "WebPage",
+	name: title,
+	description,
+	url: SITE_URL + "/ai-compliance/",
+	author: { "@type": "Person", name: SITE_AUTHOR, url: SITE_URL + "/about/" },
+};
+
+const breadcrumbSchema = {
+	"@context": "https://schema.org",
+	"@type": "BreadcrumbList",
+	itemListElement: [
+		{ "@type": "ListItem", position: 1, name: "Home", item: SITE_URL + "/" },
+		{ "@type": "ListItem", position: 2, name: "AI Compliance" },
+	],
+};
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={`${title} | ${SITE_TITLE}`} description={description} image="/og-default.png" />
+		<script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />
+		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 	</head>
 	<body>
 		<Header />
@@ -151,6 +172,8 @@ const description = "How to turn regulatory obligations, engineering controls, e
 			<section class="hub-cta">
 				<p>New to LatentMesh? The <a href="/reading-list">reading list</a> covers the full ten-essay series and all companion articles in order.</p>
 			</section>
+
+			<AuthorBlock />
 		</main>
 		<Footer />
 	</body>

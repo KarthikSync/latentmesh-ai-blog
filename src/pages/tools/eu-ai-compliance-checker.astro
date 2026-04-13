@@ -4,6 +4,7 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import Classifier from "../../components/eu-ai-act-classifier/Classifier";
 import "../../components/eu-ai-act-classifier/classifier.css";
+import AuthorBlock from "../../components/AuthorBlock.astro";
 import { SITE_URL } from "../../consts";
 
 const title = "EU AI Act Compliance Checker | LatentMesh";
@@ -51,6 +52,10 @@ const pageUrl = SITE_URL + "/tools/eu-ai-compliance-checker/";
     <Header />
     <main class="classifier-page">
       <Classifier client:load />
+
+      <div class="checker-author-wrap">
+        <AuthorBlock />
+      </div>
 
       <!-- Share + Discuss section -->
       <section class="checker-social">
@@ -150,6 +155,13 @@ const pageUrl = SITE_URL + "/tools/eu-ai-compliance-checker/";
 </script>
 
 <style>
+  .checker-author-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    width: auto;
+  }
+
   .checker-social {
     max-width: 860px;
     margin: 0 auto;

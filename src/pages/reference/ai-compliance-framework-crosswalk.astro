@@ -3,6 +3,7 @@ import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import ComplianceSystemCTA from "../../components/ComplianceSystemCTA.astro";
+import AuthorBlock from "../../components/AuthorBlock.astro";
 import { SITE_AUTHOR, SITE_URL } from "../../consts";
 
 const title = "EU AI Act, NIST AI RMF, and ISO 42001 Crosswalk | LatentMesh";
@@ -224,6 +225,8 @@ const rows = [
       <div class="crosswalk-cta">
         <ComplianceSystemCTA />
       </div>
+
+      <AuthorBlock />
 
       <div class="crosswalk-footer-note">
         <p>Framework crosswalks are indicative mappings, not authoritative equivalences. Consult the full text of each framework for binding interpretation. Last updated: April 2026 · Version 1.0</p>

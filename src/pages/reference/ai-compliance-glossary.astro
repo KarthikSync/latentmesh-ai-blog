@@ -3,6 +3,7 @@ import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import ComplianceSystemCTA from "../../components/ComplianceSystemCTA.astro";
+import AuthorBlock from "../../components/AuthorBlock.astro";
 import { SITE_AUTHOR, SITE_URL } from "../../consts";
 
 const title = "AI Compliance Glossary | LatentMesh";
@@ -267,6 +268,8 @@ const letters = [...new Set(terms.map((t) => t.term[0].toUpperCase()))].sort();
       <div class="glossary-cta">
         <ComplianceSystemCTA />
       </div>
+
+      <AuthorBlock />
     </main>
     <Footer />
   </body>
