@@ -105,7 +105,14 @@ function formatMonth(date: Date): string {
           <div class="section-header">
             <h2>What I write about</h2>
           </div>
+          <a href="/ai-compliance/" class="topics-primary-cta">New here? Start with the AI Compliance guide →</a>
           <div class="topic-grid">
+            <a href="/ai-compliance/" class="topic-cell" onclick="gtag('event','topic_click',{topic:'ai_compliance'})">
+              <div class="topic-icon t-gov">&equiv;</div>
+              <h3>AI compliance</h3>
+              <p>How regulatory obligations become engineering controls, evaluations, and audit-ready evidence.</p>
+              <span class="topic-cta">Start with the AI Compliance guide →</span>
+            </a>
             <a href="/topics/agents/" class="topic-cell" onclick="gtag('event','topic_click',{topic:'agents'})">
               <div class="topic-icon t-agents">&ofcir;</div>
               <h3>Agent failures</h3>
@@ -120,12 +127,6 @@ function formatMonth(date: Date): string {
               <div class="topic-icon t-safety">&osol;</div>
               <h3>Safety</h3>
               <p>Guardrails, control surfaces, observability, containment, and human review loops.</p>
-            </a>
-            <a href="/ai-compliance/" class="topic-cell" onclick="gtag('event','topic_click',{topic:'ai_compliance'})">
-              <div class="topic-icon t-gov">&equiv;</div>
-              <h3>AI compliance</h3>
-              <p>How regulatory obligations become engineering controls, evaluations, and audit-ready evidence.</p>
-              <span class="topic-cta">Start with the AI Compliance guide →</span>
             </a>
           </div>
         </div>
@@ -441,6 +442,16 @@ function formatMonth(date: Date): string {
 
   .view-all-link:hover { text-decoration: underline; }
 
+  .topics-primary-cta {
+    display: none;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--color-link);
+    text-decoration: none;
+    margin-bottom: 1rem;
+  }
+  .topics-primary-cta:hover { text-decoration: underline; text-underline-offset: 2px; }
+
   .topic-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -655,7 +666,24 @@ function formatMonth(date: Date): string {
     .hero-content { flex-direction: column; gap: 2rem; }
     .hero-panel { align-self: center; }
     .hero-panel img { width: 280px; }
-    .topic-grid { grid-template-columns: repeat(2, 1fr); }
+    .topics-primary-cta { display: block; }
+    .topic-grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 0;
+      background: var(--color-border-light);
+      border: 1px solid var(--color-border-light);
+      border-radius: 8px;
+    }
+    .topic-cell {
+      min-width: 75vw;
+      max-width: 80vw;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      padding: 1.5rem 1.25rem;
+    }
     .essay-item { grid-template-columns: 1fr; gap: 0.5rem; }
     .essay-meta-right { text-align: left; display: flex; gap: 0.75rem; }
     .essay-read { display: inline; margin-top: 0; }
@@ -674,7 +702,7 @@ function formatMonth(date: Date): string {
     .btn-primary { font-size: 0.78rem; padding: 0.55rem 1.1rem; border-radius: 5px; }
     .btn-secondary { font-size: 0.78rem; padding: 0.55rem 1.25rem; border-radius: 5px; }
     .hero-credit { margin-top: 1.5rem; padding-top: 1rem; padding-bottom: 0.25rem; }
-    .topics { display: none; }
+    .topics { padding: 2rem 1rem; }
     .start-here { padding: 2.5rem 1rem; }
     .flagship-item:nth-child(n+4) { display: none; }
     .latest { padding: 2.5rem 1rem; }
