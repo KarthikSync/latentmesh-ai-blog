@@ -29,12 +29,29 @@ let previousLog: string | null = null;
 
 if (triggerSeo) {
   try {
-    // 1. Fetch the live sitemap
-    const sitemapRes = await fetch(`${SITE_URL}/sitemap-0.xml`);
-    if (!sitemapRes.ok) {
-      throw new Error(`Failed to fetch sitemap: ${sitemapRes.status}`);
+    // 1. Fetch the sitemap from the ASSETS binding (avoids self-referential
+    //    fetch loop that causes 522 on Cloudflare Workers)
+    let sitemapXml = "";
+    const runtime = (Astro.locals as any).runtime;
+    const assets = runtime?.env?.ASSETS;
+
+    if (assets) {
+      // Production: read from the static assets bundle directly
+      const sitemapRes = await assets.fetch(
+        new Request(`${SITE_URL}/sitemap-0.xml`)
+      );
+      if (!sitemapRes.ok) {
+        throw new Error(`Failed to fetch sitemap from ASSETS: ${sitemapRes.status}`);
+      }
+      sitemapXml = await sitemapRes.text();
+    } else {
+      // Local dev fallback: fetch from the live site
+      const sitemapRes = await fetch(`${SITE_URL}/sitemap-0.xml`);
+      if (!sitemapRes.ok) {
+        throw new Error(`Failed to fetch sitemap: ${sitemapRes.status}`);
+      }
+      sitemapXml = await sitemapRes.text();
     }
-    const sitemapXml = await sitemapRes.text();
     const urls = [...sitemapXml.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
 
     if (urls.length === 0) {
