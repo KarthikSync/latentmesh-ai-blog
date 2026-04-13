@@ -29,7 +29,7 @@ const { tag, posts } = Astro.props;
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={`${tag} | ${SITE_TITLE}`} description={`Essays tagged "${tag}".`} />
+    <BaseHead title={`${tag === 'compliance' ? 'Compliance Essays' : tag} | ${SITE_TITLE}`} description={`Essays tagged "${tag}".`} />
   </head>
   <body>
     <Header />
