@@ -1,5 +1,6 @@
 ---
 title: "Drift Is the Default"
+seoTitle: "Drift Is the Default | AI Drift in Production | LatentMesh"
 description: "Your agent worked yesterday. That is not a promise about today. Model updates, prompt changes, and shifting inputs cause silent behavioral regression that traditional monitoring doesn't catch."
 pubDate: "Apr 04 2026 12:00"
 tags: ["reliability", "evals", "safety"]

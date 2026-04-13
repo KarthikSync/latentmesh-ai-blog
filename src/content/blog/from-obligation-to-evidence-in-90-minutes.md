@@ -1,5 +1,6 @@
 ---
 title: "From Obligation to Evidence in 90 Minutes"
+seoTitle: "From Obligation to Evidence | EU AI Act Article 14 | LatentMesh"
 description: "Pick one requirement. Map it to a control. Write the eval. Generate the artifact. Assign the owner. A hands-on walkthrough of the full compliance loop using EU AI Act Article 14."
 pubDate: "Apr 05 2026 12:00"
 tags: ["compliance", "practical", "evidence"]

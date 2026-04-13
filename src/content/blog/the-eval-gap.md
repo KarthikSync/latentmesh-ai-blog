@@ -1,5 +1,6 @@
 ---
 title: "The Eval Gap: Why Your Agent Works in Staging and Breaks in Production"
+seoTitle: "The Eval Gap: Why Agents Break in Production | LatentMesh"
 description: "Your benchmarks are passing. Your agent is failing. Most evals measure isolated performance under controlled conditions while production failure comes from distribution shift, tool-chain errors, and changing reality."
 pubDate: "Apr 04 2026 09:00"
 tags: ["evals", "reliability", "safety"]

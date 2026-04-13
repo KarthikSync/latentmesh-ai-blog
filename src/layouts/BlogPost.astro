@@ -11,7 +11,8 @@ import { SITE_AUTHOR, SITE_TITLE, SITE_URL } from '../consts';
 
 type Props = CollectionEntry<'blog'>['data'] & { slug: string; readingTime?: number; tags?: string[] };
 
-const { title, description, pubDate, updatedDate, heroImage, slug, readingTime, tags, summary, summaryProblem, summaryCoreIdea, summaryTakeaway } = Astro.props;
+const { title, seoTitle, description, pubDate, updatedDate, heroImage, slug, readingTime, tags, summary, summaryProblem, summaryCoreIdea, summaryTakeaway } = Astro.props;
+const pageTitle = seoTitle ?? `${title} | LatentMesh`;
 const pageUrl = new URL(`/blog/${slug}/`, Astro.site).toString();
 
 // Series data — ordered reading list
@@ -71,7 +72,7 @@ const breadcrumbSchema = {
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} image="/og-default.png" type="article" pubDate={pubDate} />
+		<BaseHead title={pageTitle} description={description} image="/og-default.png" type="article" pubDate={pubDate} />
 		<script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 	</head>

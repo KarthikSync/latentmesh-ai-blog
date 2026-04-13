@@ -1,5 +1,6 @@
 ---
 title: "The Regulatory Mapping Table"
+seoTitle: "The Regulatory Mapping Table | EU AI Act Controls | LatentMesh"
 description: "An interactive reference that turns EU AI Act high-risk obligations into operating controls, verification methods, evidence artifacts, owners, and review cadence. Filter by role, article, cluster, or cadence to map obligations into your operating responsibilities."
 pubDate: "Apr 05 2026 16:00"
 tags: ["compliance", "practical", "evidence"]

@@ -1,5 +1,6 @@
 ---
 title: "Controls Are Not Guardrails"
+seoTitle: "Controls Are Not Guardrails | AI Compliance Controls | LatentMesh"
 description: "A guardrail catches the output. A control proves the system works. The difference is the evidence layer — obligation, mechanism, eval, evidence, owner."
 pubDate: "Apr 04 2026 14:00"
 tags: ["compliance", "safety", "agents"]

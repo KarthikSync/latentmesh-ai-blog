@@ -1,5 +1,6 @@
 ---
 title: "Anatomy of an Evidence Pack"
+seoTitle: "Anatomy of an Evidence Pack | AI Compliance Evidence | LatentMesh"
 description: "Your system passed the eval. Can you prove it? An evidence pack is a structured, continuously generated collection of artifacts — traces, eval results, approvals, config snapshots, and incident records — that proves your AI system did what you said it would do."
 pubDate: "Apr 04 2026 16:00"
 tags: ["compliance", "evidence", "agents"]

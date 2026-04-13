@@ -1,5 +1,6 @@
 ---
 title: "Guardrails Are Not Safety"
+seoTitle: "Guardrails Are Not Safety | AI Agent Security | LatentMesh"
 description: "Boundary guardrails are the AI equivalent of locking the front door while leaving the windows open. Real safety requires observability, containment, least privilege, and structured human review."
 pubDate: "Apr 04 2026 10:00"
 tags: ["safety", "agents", "compliance"]
