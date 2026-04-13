@@ -1,0 +1,165 @@
+---
+// /admin/seo — IndexNow submission page.
+// Load with ?SEO=1 to trigger submission. Runs server-side on Cloudflare Workers.
+// Fetches the live sitemap, extracts URLs, POSTs to IndexNow API, stores
+// the response in KV, and renders the result.
+
+export const prerender = false;
+
+const INDEXNOW_KEY = "ebed9b6694a44d49b2f74f4e9c4fb077";
+const INDEXNOW_API = "https://api.indexnow.org/indexnow";
+const SITE_HOST = "latentmesh.ai";
+const SITE_URL = "https://latentmesh.ai";
+
+const url = new URL(Astro.request.url);
+const triggerSeo = url.searchParams.get("SEO") === "1";
+
+let result: {
+  timestamp: string;
+  urlCount: number;
+  urls: string[];
+  status: number;
+  statusText: string;
+  response: string;
+  success: boolean;
+  kvStored: boolean;
+} | null = null;
+
+let previousLog: string | null = null;
+
+if (triggerSeo) {
+  try {
+    // 1. Fetch the live sitemap
+    const sitemapRes = await fetch(`${SITE_URL}/sitemap-0.xml`);
+    if (!sitemapRes.ok) {
+      throw new Error(`Failed to fetch sitemap: ${sitemapRes.status}`);
+    }
+    const sitemapXml = await sitemapRes.text();
+    const urls = [...sitemapXml.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
+
+    if (urls.length === 0) {
+      throw new Error("No URLs found in sitemap");
+    }
+
+    // 2. Submit to IndexNow
+    const body = {
+      host: SITE_HOST,
+      key: INDEXNOW_KEY,
+      keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`,
+      urlList: urls,
+    };
+
+    const res = await fetch(INDEXNOW_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      body: JSON.stringify(body),
+    });
+
+    const responseText = await res.text();
+
+    result = {
+      timestamp: new Date().toISOString(),
+      urlCount: urls.length,
+      urls,
+      status: res.status,
+      statusText: res.statusText,
+      response: responseText || "(empty response body)",
+      success: res.ok || res.status === 200 || res.status === 202,
+      kvStored: false,
+    };
+
+    // 3. Store in KV (best-effort — don't fail if KV is unavailable)
+    try {
+      const kv = (Astro.locals as any).runtime?.env?.VIEW_COUNTS;
+      if (kv) {
+        await kv.put("indexnow_latest", JSON.stringify(result));
+        result.kvStored = true;
+      }
+    } catch {
+      // KV storage failed silently — the response is still rendered
+    }
+  } catch (err: any) {
+    result = {
+      timestamp: new Date().toISOString(),
+      urlCount: 0,
+      urls: [],
+      status: 0,
+      statusText: "Error",
+      response: err.message ?? String(err),
+      success: false,
+      kvStored: false,
+    };
+  }
+} else {
+  // Show previous log if available
+  try {
+    const kv = (Astro.locals as any).runtime?.env?.VIEW_COUNTS;
+    if (kv) {
+      previousLog = await kv.get("indexnow_latest");
+    }
+  } catch {
+    // KV read failed silently
+  }
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>IndexNow — LatentMesh SEO</title>
+    <style>
+      body { font-family: "IBM Plex Mono", monospace; background: #0f172a; color: #e2e8f0; padding: 2rem; max-width: 860px; margin: 0 auto; font-size: 14px; }
+      h1 { font-size: 1.4rem; color: #f1f5f9; margin-bottom: 0.5rem; }
+      .subtitle { color: #64748b; margin-bottom: 2rem; }
+      .trigger-link { display: inline-block; padding: 0.6rem 1.2rem; background: #1e3a8a; color: #fff; text-decoration: none; border-radius: 6px; margin-bottom: 1.5rem; }
+      .trigger-link:hover { background: #2563eb; }
+      .result-box { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 1.25rem; overflow-x: auto; white-space: pre-wrap; word-break: break-word; line-height: 1.6; }
+      .success { border-color: #15803d; }
+      .failure { border-color: #b91c1c; }
+      .status-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+      .status-ok { background: #15803d; color: #fff; }
+      .status-err { background: #b91c1c; color: #fff; }
+      .meta { color: #64748b; font-size: 0.85rem; margin-bottom: 1.5rem; }
+      .prev-label { color: #94a3b8; font-size: 0.85rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+    </style>
+  </head>
+  <body>
+    <h1>IndexNow Submission</h1>
+    <p class="subtitle">Submit all sitemap URLs to search engines via IndexNow protocol.</p>
+
+    {!triggerSeo && (
+      <>
+        <a href="?SEO=1" class="trigger-link">Submit now →</a>
+        <p class="meta">
+          This will fetch the live sitemap ({SITE_URL}/sitemap-0.xml), extract all URLs,
+          and POST them to api.indexnow.org. The response will be displayed below and stored
+          in KV for reference.
+        </p>
+        {previousLog && (
+          <>
+            <p class="prev-label">Last submission:</p>
+            <div class="result-box">{previousLog}</div>
+          </>
+        )}
+      </>
+    )}
+
+    {result && (
+      <>
+        <span class={`status-badge ${result.success ? "status-ok" : "status-err"}`}>
+          {result.success ? `✓ Success (${result.status})` : `✗ Failed (${result.status})`}
+        </span>
+        <div class={`result-box ${result.success ? "success" : "failure"}`}>
+          {JSON.stringify(result, null, 2)}
+        </div>
+        <p class="meta">
+          {result.kvStored ? "✓ Stored in KV as indexnow_latest" : "⚠ KV storage unavailable"}
+          {" · "}{result.urlCount} URLs submitted · {result.timestamp}
+        </p>
+        <a href="/admin/seo" class="trigger-link" style="background: #334155;">← Back</a>
+      </>
+    )}
+  </body>
+</html>
