@@ -34,6 +34,7 @@ const breadcrumbSchema = {
     },
   ],
 };
+const pageUrl = SITE_URL + "/tools/eu-ai-compliance-checker/";
 ---
 
 <html lang="en">
@@ -50,7 +51,169 @@ const breadcrumbSchema = {
     <Header />
     <main class="classifier-page">
       <Classifier client:load />
+
+      <!-- Share + Discuss section -->
+      <section class="checker-social">
+        <div class="checker-share">
+          <span class="checker-share-label">Share</span>
+          <button id="native-share" class="checker-share-icon" style="display:none" aria-label="Share this tool">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          </button>
+          <div id="social-share" class="checker-social-buttons">
+            <a class="checker-share-icon"
+              href={`https://x.com/intent/tweet?url=${encodeURIComponent(pageUrl)}&text=${encodeURIComponent("EU AI Act Compliance Checker — free guided risk classifier")}`}
+              target="_blank" rel="noopener noreferrer" aria-label="Share on X">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a class="checker-share-icon"
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`}
+              target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <button class="checker-share-icon" id="copy-link" aria-label="Copy link" title="Copy link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <section class="checker-discuss">
+          <h2>Discuss this tool</h2>
+          <div class="giscus"></div>
+        </section>
+      </section>
     </main>
     <Footer />
   </body>
 </html>
+
+<script>
+  const pageUrl = window.location.href;
+
+  // Share links
+  const nativeBtn = document.getElementById('native-share');
+  const socialDiv = document.getElementById('social-share');
+
+  if (navigator.share) {
+    if (nativeBtn) nativeBtn.style.display = 'inline-flex';
+    if (socialDiv) socialDiv.style.display = 'none';
+
+    nativeBtn?.addEventListener('click', () => {
+      navigator.share({
+        title: 'EU AI Act Compliance Checker',
+        url: pageUrl,
+      }).catch(() => {});
+    });
+  }
+
+  // Copy link
+  document.getElementById('copy-link')?.addEventListener('click', function() {
+    const btn = this as HTMLButtonElement;
+    navigator.clipboard.writeText(pageUrl).then(() => {
+      btn.setAttribute('title', 'Copied!');
+      setTimeout(() => { btn.setAttribute('title', 'Copy link'); }, 2000);
+    });
+  });
+
+  // Giscus comments
+  function getGiscusTheme() {
+    return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  }
+
+  const giscusScript = document.createElement('script');
+  giscusScript.src = 'https://giscus.app/client.js';
+  giscusScript.setAttribute('data-repo', 'KarthikSync/latentmesh-ai-discussions');
+  giscusScript.setAttribute('data-repo-id', 'R_kgDOR6N67Q');
+  giscusScript.setAttribute('data-category', 'General');
+  giscusScript.setAttribute('data-category-id', 'DIC_kwDOR6N67c4C6GDw');
+  giscusScript.setAttribute('data-mapping', 'pathname');
+  giscusScript.setAttribute('data-strict', '1');
+  giscusScript.setAttribute('data-reactions-enabled', '0');
+  giscusScript.setAttribute('data-emit-metadata', '0');
+  giscusScript.setAttribute('data-input-position', 'top');
+  giscusScript.setAttribute('data-theme', getGiscusTheme());
+  giscusScript.setAttribute('data-lang', 'en');
+  giscusScript.setAttribute('data-loading', 'lazy');
+  giscusScript.crossOrigin = 'anonymous';
+  giscusScript.async = true;
+  document.querySelector('.giscus')?.appendChild(giscusScript);
+
+  const themeObserver = new MutationObserver(() => {
+    const giscusFrame = document.querySelector('iframe.giscus-frame') as HTMLIFrameElement | null;
+    if (giscusFrame?.contentWindow) {
+      giscusFrame.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: getGiscusTheme() } } },
+        'https://giscus.app'
+      );
+    }
+  });
+  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+</script>
+
+<style>
+  .checker-social {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 1.5rem 2rem;
+    width: auto;
+  }
+
+  .checker-share {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .checker-share-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: sans-serif;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .checker-social-buttons {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .checker-share-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .checker-share-icon:hover {
+    border-color: var(--color-link);
+    color: var(--color-link);
+  }
+
+  .checker-discuss {
+    padding-top: 1.5rem;
+  }
+
+  .checker-discuss h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: sans-serif;
+    color: var(--color-text-primary);
+    margin: 0 0 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .checker-social {
+      padding: 0 1rem 2rem;
+    }
+  }
+</style>
