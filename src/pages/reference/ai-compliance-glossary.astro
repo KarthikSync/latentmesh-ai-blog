@@ -1,0 +1,354 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ComplianceSystemCTA from "../../components/ComplianceSystemCTA.astro";
+import { SITE_AUTHOR, SITE_URL } from "../../consts";
+
+const title = "AI Compliance Glossary | LatentMesh";
+const description =
+  "A practical glossary for AI compliance, controls, evaluations, evidence artifacts, and audit-ready operating models.";
+
+const definedTermSetSchema = {
+  "@context": "https://schema.org",
+  "@type": "DefinedTermSet",
+  name: "AI Compliance Glossary",
+  description,
+  url: SITE_URL + "/reference/ai-compliance-glossary/",
+  creator: { "@type": "Person", name: SITE_AUTHOR, url: SITE_URL + "/about/" },
+  inLanguage: "en",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "AI Compliance", item: SITE_URL + "/ai-compliance/" },
+    { "@type": "ListItem", position: 2, name: "Glossary" },
+  ],
+};
+
+const terms = [
+  {
+    id: "compliance-loop",
+    term: "Compliance loop",
+    definition: "The repeating cycle that turns regulatory obligations into demonstrable evidence.",
+    explanation:
+      "At LatentMesh, the compliance loop is the core operating model: obligation → control → evaluation → evidence → response. Each step feeds the next. The loop runs continuously, not as a one-time project.",
+    why: "If the loop is broken at any step — an obligation without a control, a control without an evaluation, an evaluation without evidence — the system cannot demonstrate compliance.",
+    links: [
+      { label: "AI Compliance guide", href: "/ai-compliance/" },
+    ],
+  },
+  {
+    id: "control",
+    term: "Control",
+    definition: "A mechanism that enforces or verifies a specific obligation.",
+    explanation:
+      "A control is not a guardrail. It is not a boundary check on output. A control is a verifiable mechanism that produces evidence of compliance. It has an obligation it serves, a verification method, an evidence artifact, an owner, and a review cadence.",
+    why: "Without controls, obligations remain abstract commitments. Controls make compliance operational by defining exactly what the system does to meet each requirement.",
+    links: [
+      { label: "Controls Are Not Guardrails", href: "/blog/controls-are-not-guardrails/" },
+      { label: "Regulatory Mapping Table", href: "/reference/eu-ai-act-controls/" },
+    ],
+  },
+  {
+    id: "deployer",
+    term: "Deployer",
+    definition: "The organisation that puts an AI system into use, as distinct from the organisation that built it.",
+    explanation:
+      "Under the EU AI Act, the deployer uses or operates a high-risk AI system. Deployers have their own obligations — human oversight, monitoring, incident reporting — that are separate from provider duties. A deployer who substantially modifies a system may inherit provider obligations under Article 25.",
+    why: "Deployer obligations are often overlooked. Governance teams must understand whether their organisation is a provider, a deployer, or both, because the obligation set differs.",
+    links: [
+      { label: "EU AI Compliance Checker", href: "/tools/eu-ai-compliance-checker/" },
+    ],
+  },
+  {
+    id: "evaluation",
+    term: "Evaluation",
+    definition: "A structured test that measures whether a control is working as intended.",
+    explanation:
+      "An evaluation is not a benchmark score. It is a repeatable verification method tied to a specific control. It produces evidence artifacts that demonstrate the control holds under the conditions the system actually operates in — not just under lab conditions.",
+    why: "Evaluations close the gap between 'we have a control' and 'we can prove it works.' Without evaluations, controls are claims rather than evidence.",
+    links: [
+      { label: "The Eval Gap", href: "/blog/the-eval-gap/" },
+      { label: "Building an Eval Harness That Survives Production", href: "/blog/building-an-eval-harness-that-survives-production/" },
+    ],
+  },
+  {
+    id: "evidence-artifact",
+    term: "Evidence artifact",
+    definition: "A concrete output that demonstrates a control was evaluated and the result was recorded.",
+    explanation:
+      "Evidence artifacts include test results, approval records, trace logs, configuration snapshots, and incident records. They are not the same as logs — logs record what happened; evidence artifacts prove the system meets its obligations.",
+    why: "Audit readiness depends on evidence artifacts. Without them, an organisation can describe its compliance program but cannot demonstrate it.",
+    links: [
+      { label: "What Your Agent Logged vs. What the Auditor Needed", href: "/blog/what-your-agent-logged-vs-what-the-auditor-needed/" },
+    ],
+  },
+  {
+    id: "evidence-pack",
+    term: "Evidence pack",
+    definition: "A structured collection of evidence artifacts that proves an AI system meets its obligations across time.",
+    explanation:
+      "An evidence pack bundles traces, evaluation results, approval records, configuration snapshots, and incident history into one auditable unit. It answers the question: 'Can you prove this system did what you said it would do?'",
+    why: "A system may pass an eval today. An evidence pack proves it was passing evals consistently, under real conditions, with proper oversight and incident response.",
+    links: [
+      { label: "Anatomy of an Evidence Pack", href: "/blog/anatomy-of-an-evidence-pack/" },
+      { label: "Evidence Pack Guide", href: "/reference/ai-evidence-pack-guide/" },
+    ],
+  },
+  {
+    id: "evidence-plane",
+    term: "Evidence plane",
+    definition: "The infrastructure layer that continuously generates, stores, and makes available the evidence artifacts a system produces.",
+    explanation:
+      "The evidence plane sits alongside the data plane and control plane. It is not a logging system — it is a purpose-built layer that captures obligation-mapped evidence, assembles evidence packs, and surfaces them for review and audit.",
+    why: "Without an evidence plane, compliance evidence is scattered across logs, dashboards, and documents. The evidence plane makes compliance a system property, not a manual activity.",
+    links: [
+      { label: "The Evidence Plane for AI Systems", href: "/blog/the-evidence-plane-for-ai-systems/" },
+    ],
+  },
+  {
+    id: "guardrail",
+    term: "Guardrail",
+    definition: "A boundary check on AI system input or output, typically at the prompt or response layer.",
+    explanation:
+      "Guardrails block or flag specific inputs and outputs. They are useful but insufficient for compliance. A guardrail does not produce evidence, does not map to an obligation, and does not prove the system is safe — it only proves the boundary was enforced at one moment.",
+    why: "Guardrails are often mistaken for safety or compliance. They are one mechanism among many. Treating guardrails as the compliance strategy leaves most obligations unaddressed.",
+    links: [
+      { label: "Guardrails Are Not Safety", href: "/blog/guardrails-are-not-safety/" },
+      { label: "Controls Are Not Guardrails", href: "/blog/controls-are-not-guardrails/" },
+    ],
+  },
+  {
+    id: "human-oversight",
+    term: "Human oversight",
+    definition: "The ability of a natural person to effectively monitor, intervene in, and override an AI system during operation.",
+    explanation:
+      "Under the EU AI Act (Article 14), high-risk AI systems must be designed so that human overseers can understand the system's capabilities, monitor its operation, and interrupt it when necessary. Human oversight is a design requirement, not just a policy statement.",
+    why: "Oversight is not the same as having a human in the loop. It requires the overseer to have sufficient information, authority, and tooling to act meaningfully.",
+    links: [
+      { label: "From Obligation to Evidence in 90 Minutes", href: "/blog/from-obligation-to-evidence-in-90-minutes/" },
+    ],
+  },
+  {
+    id: "obligation",
+    term: "Obligation",
+    definition: "A requirement that the system or organisation must satisfy.",
+    explanation:
+      "At LatentMesh, an obligation is the starting point of the compliance loop. It is the thing that must be demonstrated, not just discussed. Obligations come from statutes (EU AI Act articles), standards (NIST, ISO), or organisational policy.",
+    why: "If the obligation is vague, the downstream control, evaluation, and evidence will also be vague. Precision in stating obligations is what makes the rest of the loop actionable.",
+    links: [
+      { label: "AI Compliance guide", href: "/ai-compliance/" },
+      { label: "Mapping the EU AI Act to Engineering Evidence", href: "/blog/mapping-the-eu-ai-act-to-engineering-evidence/" },
+    ],
+  },
+  {
+    id: "owner",
+    term: "Owner",
+    definition: "The person or team accountable for a specific control, evaluation, or evidence artifact.",
+    explanation:
+      "Every control in the LatentMesh model has a designated owner — typically Safety, ML Engineering, Legal, or Product. Ownership means responsibility for maintaining the control, running evaluations on cadence, and escalating when the control fails.",
+    why: "Unowned controls decay. If no one is accountable for a control's health, it will eventually stop working without anyone noticing.",
+    links: [
+      { label: "Regulatory Mapping Table", href: "/reference/eu-ai-act-controls/" },
+    ],
+  },
+  {
+    id: "provider",
+    term: "Provider",
+    definition: "The organisation that develops or places an AI system on the market.",
+    explanation:
+      "Under the EU AI Act, the provider bears the heaviest obligations: risk management, data governance, technical documentation, conformity assessment, human oversight design, and post-market monitoring. If a deployer substantially modifies a system, they may become a provider under Article 25.",
+    why: "Provider obligations drive most of the engineering work for high-risk AI systems. Understanding whether you are a provider or deployer determines which obligations apply to you.",
+    links: [
+      { label: "EU AI Compliance Checker", href: "/tools/eu-ai-compliance-checker/" },
+    ],
+  },
+  {
+    id: "review-cadence",
+    term: "Review cadence",
+    definition: "How often a control, evaluation, or evidence artifact is reviewed or refreshed.",
+    explanation:
+      "Review cadence is not a fixed schedule for all controls. Some controls need pre-release review; others need continuous monitoring; others need quarterly or annual audit. The cadence depends on the risk and rate of change of the system.",
+    why: "A control reviewed once at deployment and never again is not a control — it is a historical snapshot. Cadence keeps the compliance loop alive.",
+    links: [
+      { label: "Regulatory Mapping Table", href: "/reference/eu-ai-act-controls/" },
+    ],
+  },
+  {
+    id: "risk-classification",
+    term: "Risk classification",
+    definition: "The process of determining which regulatory tier an AI system falls into.",
+    explanation:
+      "Under the EU AI Act, AI systems are classified as prohibited, high-risk (Annex I or Annex III), limited-risk (transparency obligations), or minimal-risk. The classification determines which obligations apply. The EU AI Compliance Checker walks through the full decision flow.",
+    why: "Classification is the gate to obligations. Getting it wrong — in either direction — means either over-engineering for requirements that don't apply, or under-engineering for requirements that do.",
+    links: [
+      { label: "EU AI Compliance Checker", href: "/tools/eu-ai-compliance-checker/" },
+    ],
+  },
+  {
+    id: "traceability",
+    term: "Traceability",
+    definition: "The ability to reconstruct what an AI system did, why, and with what inputs and outputs, for any given interaction.",
+    explanation:
+      "Under Article 12 of the EU AI Act, high-risk systems must have automatic logging capabilities. Traceability goes beyond logging — it means being able to follow a complete chain from input through model reasoning, tool calls, oversight decisions, and final output.",
+    why: "Traceability is what makes incidents investigable and compliance demonstrable. Without it, an incident is a mystery and an audit is a guessing exercise.",
+    links: [
+      { label: "What Your Agent Logged vs. What the Auditor Needed", href: "/blog/what-your-agent-logged-vs-what-the-auditor-needed/" },
+    ],
+  },
+];
+
+const letters = [...new Set(terms.map((t) => t.term[0].toUpperCase()))].sort();
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+    <script type="application/ld+json" set:html={JSON.stringify(definedTermSetSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <Header />
+    <main class="glossary-page">
+      <div class="glossary-back-nav">
+        <a href="/ai-compliance/">&larr; AI Compliance guide</a>
+      </div>
+
+      <div class="glossary-header">
+        <h1>AI Compliance Glossary</h1>
+        <p class="glossary-intro">
+          A practical glossary for the concepts behind AI compliance at LatentMesh. Use it to understand how obligations become controls, evaluations, evidence artifacts, owners, and response workflows.
+        </p>
+        <p class="glossary-meta">
+          {terms.length} terms · Last updated April 2026
+        </p>
+      </div>
+
+      <nav class="glossary-jump" aria-label="Jump to letter">
+        {letters.map((letter) => (
+          <a href={`#letter-${letter}`} class="glossary-jump-letter">{letter}</a>
+        ))}
+      </nav>
+
+      <div class="glossary-terms">
+        {letters.map((letter) => {
+          const letterTerms = terms.filter((t) => t.term[0].toUpperCase() === letter);
+          return (
+            <section id={`letter-${letter}`} class="glossary-letter-section">
+              <h2 class="glossary-letter">{letter}</h2>
+              {letterTerms.map((t) => (
+                <div id={t.id} class="glossary-entry">
+                  <h3 class="glossary-term">{t.term}</h3>
+                  <p class="glossary-definition">{t.definition}</p>
+                  <p class="glossary-explanation">{t.explanation}</p>
+                  <p class="glossary-why"><strong>Why it matters:</strong> {t.why}</p>
+                  {t.links.length > 0 && (
+                    <p class="glossary-links">
+                      <strong>Read next:</strong>{" "}
+                      {t.links.map((link, i) => (
+                        <span>
+                          <a href={link.href}>{link.label}</a>
+                          {i < t.links.length - 1 && " · "}
+                        </span>
+                      ))}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </section>
+          );
+        })}
+      </div>
+
+      <div class="glossary-cta">
+        <ComplianceSystemCTA />
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .glossary-page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    width: auto;
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+  }
+
+  .glossary-back-nav { margin-bottom: 1.5rem; }
+  .glossary-back-nav a { font-size: 0.85rem; color: var(--color-text-secondary); text-decoration: none; }
+  .glossary-back-nav a:hover { color: var(--color-text-primary); }
+
+  .glossary-header { margin-bottom: 2rem; }
+  .glossary-header h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 0.75rem; color: var(--color-text-primary); }
+  .glossary-intro { font-size: 1.05rem; color: var(--color-text-secondary); line-height: 1.6; margin: 0 0 0.75rem; max-width: 640px; }
+  .glossary-meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--color-text-muted); letter-spacing: 0.02em; margin: 0; }
+
+  .glossary-jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 0.75rem 0;
+    margin-bottom: 2rem;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .glossary-jump-letter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+  }
+  .glossary-jump-letter:hover { border-color: var(--color-link); color: var(--color-link); }
+
+  .glossary-letter-section { margin-bottom: 2rem; }
+  .glossary-letter {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-brand);
+    margin: 0 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--color-brand);
+    display: inline-block;
+  }
+
+  .glossary-entry {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border-light);
+    scroll-margin-top: 1rem;
+  }
+  .glossary-entry:last-child { border-bottom: none; }
+
+  .glossary-term { font-size: 1.15rem; font-weight: 600; margin: 0 0 0.4rem; color: var(--color-text-primary); }
+  .glossary-definition { font-size: 0.95rem; color: var(--color-text-primary); font-weight: 500; margin: 0 0 0.6rem; line-height: 1.5; }
+  .glossary-explanation { font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.65; margin: 0 0 0.5rem; }
+  .glossary-why { font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.6; margin: 0 0 0.5rem; }
+  .glossary-why strong { color: var(--color-text-primary); font-weight: 600; }
+  .glossary-links { font-size: 0.85rem; color: var(--color-text-muted); margin: 0; }
+  .glossary-links strong { color: var(--color-text-secondary); font-weight: 600; }
+  .glossary-links a { color: var(--color-link); text-decoration: none; }
+  .glossary-links a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+  .glossary-cta { margin-top: 2rem; }
+
+  @media (max-width: 640px) {
+    .glossary-page { padding: 1.25rem 1rem 3rem; }
+    .glossary-header h1 { font-size: 1.6rem; }
+  }
+</style>

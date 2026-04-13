@@ -1,0 +1,278 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ComplianceSystemCTA from "../../components/ComplianceSystemCTA.astro";
+import { SITE_AUTHOR, SITE_URL } from "../../consts";
+
+const title = "AI Evidence Pack Guide | LatentMesh";
+const description =
+  "What an AI evidence pack should contain, why it matters, who owns it, and how to make it audit-ready.";
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "AI Compliance", item: SITE_URL + "/ai-compliance/" },
+    { "@type": "ListItem", position: 2, name: "Evidence Pack Guide" },
+  ],
+};
+
+const artifacts = [
+  { artifact: "System scope document", proves: "The system's intended purpose, context of use, and deployment boundaries are defined and current.", owner: "Product / ML Engineering", trigger: "New system or significant design change", cadence: "Pre-release, reviewed annually", failure: "Scope described at proposal stage and never updated to match what was actually built." },
+  { artifact: "Obligation map", proves: "Every applicable legal obligation is identified and linked to a specific control.", owner: "Legal / Compliance", trigger: "New regulation, new system version, or change in intended purpose", cadence: "Pre-release, reviewed quarterly", failure: "Obligations listed but not mapped to controls. The document says 'we comply' without saying how." },
+  { artifact: "Control inventory", proves: "Each obligation has at least one verifiable mechanism that enforces or satisfies it.", owner: "Safety / ML Engineering", trigger: "New obligation, failed evaluation, or control gap audit", cadence: "Reviewed quarterly", failure: "Controls defined during initial assessment and never revisited as the system changed." },
+  { artifact: "Evaluation results", proves: "Controls are working as intended under production conditions.", owner: "ML Engineering / Safety", trigger: "Pre-release, post-update, scheduled cadence", cadence: "Per-release and periodic", failure: "Benchmarks used as evidence instead of production evaluations. Results from controlled conditions presented as production proof." },
+  { artifact: "Trace / logging evidence", proves: "The system's behaviour can be reconstructed for any given interaction.", owner: "ML Engineering / Infrastructure", trigger: "Always-on (continuous)", cadence: "Continuous capture, reviewed on incident", failure: "Logs exist but do not capture the full chain from input to output. Logs are voluminous but not obligation-mapped." },
+  { artifact: "Approval and sign-off records", proves: "Consequential decisions or tool calls required human review and received it.", owner: "Operations / Safety", trigger: "Oversight rule triggered during operation", cadence: "Per-event", failure: "Human-in-the-loop process exists on paper but approvals are rubber-stamped or not recorded." },
+  { artifact: "Model / system version history", proves: "Changes to the model, prompts, or system configuration are tracked and attributable.", owner: "ML Engineering", trigger: "Any model update, prompt change, or config change", cadence: "Per-change", failure: "System updated without a version record. Nobody can reconstruct which version was running during an incident." },
+  { artifact: "Incident and remediation records", proves: "Incidents were detected, investigated, and remediated with a documented response.", owner: "Safety / Operations", trigger: "Incident occurrence", cadence: "Per-incident, reviewed in post-mortems", failure: "Incidents handled ad hoc without structured records. Post-mortem culture exists but outputs are not retained as compliance evidence." },
+  { artifact: "Ownership and cadence register", proves: "Every control, evaluation, and artifact has a named owner and a defined review schedule.", owner: "Compliance / Program Management", trigger: "Control inventory change, organizational change", cadence: "Reviewed quarterly", failure: "Ownership assigned at setup and never updated when teams change. Cadences defined but not enforced." },
+];
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <Header />
+    <main class="epg-page">
+      <div class="epg-back-nav">
+        <a href="/ai-compliance/">&larr; AI Compliance guide</a>
+      </div>
+
+      <div class="epg-header">
+        <h1>What an AI Evidence Pack Should Contain</h1>
+        <p class="epg-intro">
+          An evidence pack is a structured, continuously generated collection of artifacts that proves your AI system meets its obligations across time. This guide explains what belongs in one, who owns each piece, and what makes the difference between documentation and evidence.
+        </p>
+      </div>
+
+      <section class="epg-section">
+        <h2>Why evidence packs exist</h2>
+        <p>An evaluation proves a control worked at a point in time. An evidence pack proves the system is trustworthy across time — under real conditions, with proper oversight, through incidents and changes.</p>
+        <p>Without evidence packs, compliance is a collection of assertions. With them, compliance is demonstrable.</p>
+      </section>
+
+      <div class="epg-callout">
+        A trace explains what happened in one run. An evidence pack explains why the system should be trusted across time.
+      </div>
+
+      <section class="epg-section">
+        <h2>Minimum evidence pack contents</h2>
+        <p>A complete evidence pack covers nine areas. Each area maps to specific compliance obligations and produces concrete artifacts that an auditor can inspect.</p>
+
+        <div class="epg-contents-list">
+          <div class="epg-content-item">
+            <h3>1. System scope and purpose</h3>
+            <p>What the system does, who it serves, what data it processes, and the boundaries of its intended use. This is the foundation — everything else in the pack is evidence that the system operates within this scope.</p>
+          </div>
+          <div class="epg-content-item">
+            <h3>2. Obligation and requirement mapping</h3>
+            <p>Every applicable obligation identified and linked to a specific control. If an obligation has no control, that gap is visible. If a control has no obligation, it is overhead.</p>
+          </div>
+          <div class="epg-content-item">
+            <h3>3. Control inventory</h3>
+            <p>The complete list of controls: what each one does, which obligation it serves, how it is evaluated, what evidence it produces, and who owns it.</p>
+          </div>
+          <div class="epg-content-item">
+            <h3>4. Evaluation results</h3>
+            <p>Outputs of structured tests that verify controls are working. Not benchmarks — production evaluations that reflect the conditions the system actually operates in.</p>
+          </div>
+          <div class="epg-content-item">
+            <h3>5. Trace and logging evidence</h3>
+            <p>Automatic records that allow any interaction to be reconstructed: inputs, model reasoning, tool calls, oversight decisions, and outputs. Obligation-mapped, not just infrastructure logs.</p>
+          </div>
+          <div class="epg-content-item">
+            <h3>6. Approvals and sign-offs</h3>
+            <p>Records showing that consequential actions received human review. Each record should include who approved, when, the rationale, and what was approved.</p>
+          </div>
+          <div class="epg-content-item">
+            <h3>7. Model and system version history</h3>
+            <p>A change log covering model updates, prompt changes, configuration changes, and deployment history. Attributable and timestamped so any version can be reconstructed.</p>
+          </div>
+          <div class="epg-content-item">
+            <h3>8. Incidents and remediation history</h3>
+            <p>Structured records of incidents: detection, investigation, root cause, remediation, and follow-up. AI incidents need AI-specific playbooks — generic IT incident templates are insufficient.</p>
+          </div>
+          <div class="epg-content-item">
+            <h3>9. Ownership and review cadence</h3>
+            <p>A register showing who owns each control and evidence artifact, and how often each is reviewed. Ownership without cadence is a commitment without follow-through.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="epg-section">
+        <h2>Artifact reference table</h2>
+        <p class="epg-table-intro">Each row describes one artifact, what it proves, who typically owns it, what triggers an update, the expected review cadence, and the most common way it fails.</p>
+
+        <div class="epg-table-wrapper">
+          <table class="epg-table">
+            <thead>
+              <tr>
+                <th>Artifact</th>
+                <th>What it proves</th>
+                <th>Typical owner</th>
+                <th>Update trigger</th>
+                <th>Review cadence</th>
+                <th>Common failure mode</th>
+              </tr>
+            </thead>
+            <tbody>
+              {artifacts.map((a) => (
+                <tr>
+                  <td class="cell-artifact"><strong>{a.artifact}</strong></td>
+                  <td>{a.proves}</td>
+                  <td class="cell-owner">{a.owner}</td>
+                  <td>{a.trigger}</td>
+                  <td>{a.cadence}</td>
+                  <td class="cell-failure">{a.failure}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="epg-section">
+        <h2>Logs are not evidence</h2>
+        <p>This is the most common confusion. Logs record system events. Evidence proves the system meets its obligations. The difference:</p>
+        <div class="epg-comparison">
+          <div class="epg-compare-col">
+            <h3>Logs</h3>
+            <ul>
+              <li>Record what happened</li>
+              <li>Infrastructure-level</li>
+              <li>Useful for debugging</li>
+              <li>High volume, low signal</li>
+              <li>Not obligation-mapped</li>
+            </ul>
+          </div>
+          <div class="epg-compare-col">
+            <h3>Evidence</h3>
+            <ul>
+              <li>Prove obligations are met</li>
+              <li>Obligation-mapped</li>
+              <li>Useful for audit</li>
+              <li>Curated and structured</li>
+              <li>Tied to controls and owners</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="epg-section">
+        <h2>Common failure modes</h2>
+        <div class="epg-failures">
+          <div class="epg-failure">
+            <strong>Snapshot compliance.</strong> The pack was assembled once before launch and never updated. The system changed; the evidence didn't.
+          </div>
+          <div class="epg-failure">
+            <strong>Unowned artifacts.</strong> Evidence exists but no one is accountable for keeping it current. Review cadences are defined but not enforced.
+          </div>
+          <div class="epg-failure">
+            <strong>Benchmark-as-evidence.</strong> Lab evaluation results presented as production evidence. The system passes the benchmark but fails under real conditions.
+          </div>
+          <div class="epg-failure">
+            <strong>Logs-as-evidence.</strong> Infrastructure logs presented as compliance evidence. Volume is high but the logs are not obligation-mapped and cannot answer specific compliance questions.
+          </div>
+        </div>
+      </section>
+
+      <div class="epg-cta">
+        <ComplianceSystemCTA />
+      </div>
+
+      <div class="epg-related">
+        <h3>Related references</h3>
+        <nav class="epg-related-links">
+          <a href="/blog/anatomy-of-an-evidence-pack/">Anatomy of an Evidence Pack →</a>
+          <a href="/blog/what-your-agent-logged-vs-what-the-auditor-needed/">What Your Agent Logged vs. What the Auditor Needed →</a>
+          <a href="/reference/ai-compliance-glossary/">AI Compliance Glossary →</a>
+          <a href="/ai-compliance/">AI Compliance guide →</a>
+        </nav>
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .epg-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    width: auto;
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+  }
+
+  .epg-back-nav { margin-bottom: 1.5rem; }
+  .epg-back-nav a { font-size: 0.85rem; color: var(--color-text-secondary); text-decoration: none; }
+  .epg-back-nav a:hover { color: var(--color-text-primary); }
+
+  .epg-header { margin-bottom: 2.5rem; max-width: 760px; }
+  .epg-header h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 0.75rem; color: var(--color-text-primary); }
+  .epg-intro { font-size: 1.05rem; color: var(--color-text-secondary); line-height: 1.65; margin: 0; }
+
+  .epg-callout {
+    max-width: 760px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    padding: 1.25rem 1.5rem;
+    background: var(--color-bg-secondary);
+    border-left: 3px solid var(--color-brand);
+    border-radius: 4px;
+    margin: 2rem 0 2.5rem;
+    line-height: 1.6;
+  }
+
+  .epg-section { margin-bottom: 2.5rem; }
+  .epg-section h2 { font-size: 1.25rem; font-weight: 600; margin: 0 0 0.75rem; color: var(--color-text-primary); }
+  .epg-section > p { font-size: 0.95rem; color: var(--color-text-secondary); line-height: 1.65; max-width: 760px; margin: 0 0 0.75rem; }
+
+  .epg-contents-list { display: flex; flex-direction: column; gap: 1rem; max-width: 760px; }
+  .epg-content-item { padding-bottom: 1rem; border-bottom: 1px solid var(--color-border-light); }
+  .epg-content-item:last-child { border-bottom: none; }
+  .epg-content-item h3 { font-size: 1rem; font-weight: 600; margin: 0 0 0.35rem; color: var(--color-text-primary); }
+  .epg-content-item p { font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6; margin: 0; }
+
+  .epg-table-intro { margin-bottom: 1rem !important; }
+  .epg-table-wrapper { overflow-x: auto; border: 1px solid var(--color-border); border-radius: 8px; }
+  .epg-table { width: 100%; border-collapse: collapse; min-width: 900px; }
+  .epg-table th { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); padding: 0.65rem 0.75rem; text-align: left; background: var(--color-bg-secondary); border-bottom: 1px solid var(--color-border); }
+  .epg-table td { font-size: 0.8rem; color: var(--color-text-primary); padding: 0.75rem; vertical-align: top; line-height: 1.5; border-bottom: 1px solid var(--color-border-light); }
+  .epg-table tr:last-child td { border-bottom: none; }
+  .epg-table tr:hover td { background: var(--color-bg-secondary); }
+  .cell-artifact { width: 13%; }
+  .cell-artifact strong { font-size: 0.82rem; }
+  .cell-owner { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: var(--color-text-muted); }
+  .cell-failure { font-size: 0.78rem; color: var(--color-text-muted); font-style: italic; }
+
+  .epg-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 640px; margin-top: 1rem; }
+  .epg-compare-col { padding: 1rem 1.15rem; border: 1px solid var(--color-border); border-radius: 6px; }
+  .epg-compare-col h3 { font-size: 0.9rem; font-weight: 600; margin: 0 0 0.5rem; color: var(--color-text-primary); }
+  .epg-compare-col ul { list-style: none; padding: 0; margin: 0; }
+  .epg-compare-col li { font-size: 0.82rem; color: var(--color-text-secondary); padding: 0.2rem 0; line-height: 1.5; }
+  .epg-compare-col li::before { content: "• "; color: var(--color-text-muted); }
+
+  .epg-failures { display: flex; flex-direction: column; gap: 0.75rem; max-width: 760px; }
+  .epg-failure { font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6; padding: 0.75rem 1rem; background: var(--color-bg-secondary); border-radius: 4px; }
+  .epg-failure strong { color: var(--color-text-primary); }
+
+  .epg-cta { margin-top: 2rem; max-width: 760px; }
+  .epg-related { max-width: 760px; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--color-border); }
+  .epg-related h3 { font-size: 0.82rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); margin: 0 0 0.75rem; }
+  .epg-related-links { display: flex; flex-direction: column; gap: 0.4rem; }
+  .epg-related-links a { font-size: 0.88rem; font-weight: 500; color: var(--color-link); text-decoration: none; }
+  .epg-related-links a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+  @media (max-width: 640px) {
+    .epg-page { padding: 1.25rem 1rem 3rem; }
+    .epg-header h1 { font-size: 1.6rem; }
+    .epg-comparison { grid-template-columns: 1fr; }
+  }
+</style>

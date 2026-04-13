@@ -1,0 +1,364 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ComplianceSystemCTA from "../../components/ComplianceSystemCTA.astro";
+import { SITE_AUTHOR, SITE_URL } from "../../consts";
+
+const title = "EU AI Act, NIST AI RMF, and ISO 42001 Crosswalk | LatentMesh";
+const description =
+  "A practical crosswalk between the EU AI Act, NIST AI RMF, and ISO 42001 for teams building AI compliance programs.";
+
+const datasetSchema = {
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  name: "AI Compliance Framework Crosswalk",
+  description,
+  url: SITE_URL + "/reference/ai-compliance-framework-crosswalk/",
+  creator: { "@type": "Person", name: SITE_AUTHOR, url: SITE_URL + "/about/" },
+  license: "https://creativecommons.org/licenses/by/4.0/",
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "AI Compliance", item: SITE_URL + "/ai-compliance/" },
+    { "@type": "ListItem", position: 2, name: "Framework Crosswalk" },
+  ],
+};
+
+const rows = [
+  {
+    concept: "Risk management",
+    euAiAct: "Art. 9 — risk management system throughout lifecycle",
+    nist: "Govern, Map",
+    nistNote: "Risk framing, context mapping, impact characterisation",
+    iso: "6.1, 6.1.2 — risk assessment and treatment",
+    interpretation: "EU AI Act is prescriptive (specific steps required). NIST frames risk contextually. ISO requires a management-system approach. All three start with identifying and characterising risk.",
+    link: { label: "Regulatory Mapping Table", href: "/reference/eu-ai-act-controls/" },
+  },
+  {
+    concept: "Obligation / requirement",
+    euAiAct: "Arts. 9–15, 26–27, 50, 72–73 — statutory requirements",
+    nist: "Govern",
+    nistNote: "Governance policies, accountability structures",
+    iso: "4.1, 5.1 — context of the organisation, leadership commitment",
+    interpretation: "The EU AI Act imposes legal obligations. NIST defines governance expectations. ISO requires the organisation to define its own requirements. The LatentMesh model starts with the obligation as the first input.",
+    link: { label: "AI Compliance guide", href: "/ai-compliance/" },
+  },
+  {
+    concept: "Control",
+    euAiAct: "Art. 9(2) — risk mitigation measures; Art. 14 — human oversight design",
+    nist: "Manage",
+    nistNote: "Risk response, mitigation actions",
+    iso: "6.1.3, 8.1 — risk treatment, operational planning",
+    interpretation: "The EU AI Act requires specific mechanisms. NIST expects documented risk responses. ISO requires treatment plans with controls. LatentMesh defines a control as a verifiable mechanism that produces evidence.",
+    link: { label: "Controls Are Not Guardrails", href: "/blog/controls-are-not-guardrails/" },
+  },
+  {
+    concept: "Evaluation / verification",
+    euAiAct: "Art. 9(7) — testing; Art. 15 — accuracy, robustness testing",
+    nist: "Measure",
+    nistNote: "Metrics, assessment, analysis, monitoring",
+    iso: "9.1 — monitoring, measurement, analysis, evaluation",
+    interpretation: "EU AI Act requires testing appropriate to the system. NIST emphasises measurement and metrics. ISO requires systematic evaluation. All converge on: you must verify controls work, not just assert they exist.",
+    link: { label: "The Eval Gap", href: "/blog/the-eval-gap/" },
+  },
+  {
+    concept: "Evidence artifact",
+    euAiAct: "Art. 11, Annex IV — technical documentation; Art. 12 — logging",
+    nist: "Govern, Manage",
+    nistNote: "Documentation, provenance tracking",
+    iso: "7.5 — documented information",
+    interpretation: "EU AI Act specifies what must be documented. NIST expects governance artefacts. ISO requires documented information to support the management system. LatentMesh treats evidence artifacts as the output of evaluations, not of compliance meetings.",
+    link: { label: "What Your Agent Logged vs. What the Auditor Needed", href: "/blog/what-your-agent-logged-vs-what-the-auditor-needed/" },
+  },
+  {
+    concept: "Owner / accountability",
+    euAiAct: "Art. 9(9) — overall accountability; Art. 26 — deployer duties",
+    nist: "Govern",
+    nistNote: "Roles, responsibilities, accountability structures",
+    iso: "5.3 — organisational roles, responsibilities, authorities",
+    interpretation: "EU AI Act assigns legal accountability to providers and deployers. NIST expects defined roles. ISO requires documented responsibilities. LatentMesh requires every control to have a named owner.",
+    link: { label: "Regulatory Mapping Table", href: "/reference/eu-ai-act-controls/" },
+  },
+  {
+    concept: "Review cadence",
+    euAiAct: "Art. 72 — post-market monitoring; Art. 9(2)(b) — continuous iteration",
+    nist: "Manage, Govern",
+    nistNote: "Monitoring, ongoing assessment",
+    iso: "9.3, 10.1 — management review, continual improvement",
+    interpretation: "EU AI Act requires systematic post-market monitoring. NIST expects continuous assessment. ISO requires management review cycles. Cadence is what keeps the compliance loop alive rather than a snapshot.",
+    link: { label: "AI Compliance Glossary", href: "/reference/ai-compliance-glossary/#review-cadence" },
+  },
+  {
+    concept: "Human oversight",
+    euAiAct: "Art. 14 — human oversight measures during operation",
+    nist: "Govern, Manage",
+    nistNote: "Human-AI teaming, human factors considerations",
+    iso: "6.1.2 — risk assessment including human factors",
+    interpretation: "EU AI Act is the most prescriptive: the system must be designed so a human can understand, monitor, and interrupt it. NIST frames oversight as a governance consideration. ISO treats it as a risk factor.",
+    link: { label: "From Obligation to Evidence", href: "/blog/from-obligation-to-evidence-in-90-minutes/" },
+  },
+  {
+    concept: "Logging / traceability",
+    euAiAct: "Art. 12 — automatic recording of events relevant to risk",
+    nist: "Manage, Measure",
+    nistNote: "Provenance tracking, system monitoring",
+    iso: "7.5, 9.1 — documented information, monitoring",
+    interpretation: "EU AI Act requires automatic logging. NIST expects traceability. ISO requires records. The LatentMesh distinction: traceability means reconstructing the full chain from input to output, not just storing logs.",
+    link: { label: "AI Compliance Glossary", href: "/reference/ai-compliance-glossary/#traceability" },
+  },
+  {
+    concept: "Incident response",
+    euAiAct: "Art. 73 — serious incident reporting within 15 days",
+    nist: "Manage",
+    nistNote: "Incident management, response processes",
+    iso: "10.2 — nonconformity, corrective action",
+    interpretation: "EU AI Act is the most specific: 15-day reporting window, 2 days for widespread incidents. NIST expects incident management processes. ISO treats incidents as nonconformities requiring corrective action.",
+    link: { label: "The Incident Response Gap in AI Systems", href: "/blog/the-incident-response-gap-in-ai-systems/" },
+  },
+  {
+    concept: "Post-deployment monitoring",
+    euAiAct: "Art. 72 — proportionate post-market monitoring system",
+    nist: "Manage, Measure",
+    nistNote: "Ongoing monitoring, retraining, decommissioning",
+    iso: "9.1, 10.1 — monitoring, continual improvement",
+    interpretation: "All three frameworks require post-deployment monitoring. The EU AI Act is most specific about what the monitoring system must include. The key question: are you monitoring system health, or monitoring compliance health? Both are needed.",
+    link: { label: "Drift Is the Default", href: "/blog/drift-is-the-default/" },
+  },
+  {
+    concept: "Documentation",
+    euAiAct: "Art. 11, Annex IV — technical documentation before market placement",
+    nist: "Govern",
+    nistNote: "Governance documentation, system cards, impact assessments",
+    iso: "7.5 — documented information, maintained and retained",
+    interpretation: "EU AI Act specifies a detailed documentation package (Annex IV). NIST expects governance documentation. ISO requires a management system with documented policies. Documentation is table stakes across all three; the question is what documentation proves.",
+    link: { label: "Mapping the EU AI Act to Engineering Evidence", href: "/blog/mapping-the-eu-ai-act-to-engineering-evidence/" },
+  },
+];
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+    <script type="application/ld+json" set:html={JSON.stringify(datasetSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <Header />
+    <main class="crosswalk-page">
+      <div class="crosswalk-back-nav">
+        <a href="/ai-compliance/">&larr; AI Compliance guide</a>
+      </div>
+
+      <div class="crosswalk-header">
+        <h1>AI Compliance Framework Crosswalk</h1>
+        <p class="crosswalk-intro">
+          These frameworks do not use the same language, serve the same function, or impose the same legal force. This crosswalk helps teams translate between them without pretending they are interchangeable.
+        </p>
+        <p class="crosswalk-meta">
+          EU AI Act (Regulation 2024/1689) · NIST AI RMF 1.0 · ISO/IEC 42001:2023 · {rows.length} mapping rows
+        </p>
+      </div>
+
+      <div class="crosswalk-caveat">
+        <strong>Comparison limits:</strong> The EU AI Act is a legally binding regulation with prescriptive requirements. The NIST AI RMF is a voluntary risk management framework. ISO 42001 is a certifiable management system standard. Alignment notes in this table indicate conceptual correspondence, not legal equivalence.
+      </div>
+
+      <div class="crosswalk-table-wrapper">
+        <table class="crosswalk-table">
+          <thead>
+            <tr>
+              <th class="col-concept">Concept</th>
+              <th class="col-eu">EU AI Act</th>
+              <th class="col-nist">NIST AI RMF</th>
+              <th class="col-iso">ISO 42001</th>
+              <th class="col-interp">Practical interpretation</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr>
+                <td class="cell-concept">
+                  <strong>{row.concept}</strong>
+                </td>
+                <td class="cell-eu">{row.euAiAct}</td>
+                <td class="cell-nist">
+                  <span class="nist-function">{row.nist}</span>
+                  {row.nistNote && <span class="nist-note">{row.nistNote}</span>}
+                </td>
+                <td class="cell-iso">{row.iso}</td>
+                <td class="cell-interp">
+                  {row.interpretation}
+                  {row.link && (
+                    <a href={row.link.href} class="cell-link">{row.link.label} →</a>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <section class="crosswalk-usage">
+        <h2>How to use this crosswalk</h2>
+        <div class="usage-grid">
+          <div class="usage-card">
+            <p class="usage-audience">Engineering teams</p>
+            <p>Use the "Practical interpretation" column to understand what each requirement means for your implementation. Start with the controls and evaluation rows.</p>
+          </div>
+          <div class="usage-card">
+            <p class="usage-audience">Governance and compliance teams</p>
+            <p>Use the framework columns to map your existing NIST or ISO program to EU AI Act requirements. Identify gaps where one framework is prescriptive and the other is silent.</p>
+          </div>
+          <div class="usage-card">
+            <p class="usage-audience">Legal and audit teams</p>
+            <p>Note that this crosswalk shows conceptual alignment, not legal equivalence. Compliance with one framework does not guarantee compliance with another.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="crosswalk-cta">
+        <ComplianceSystemCTA />
+      </div>
+
+      <div class="crosswalk-footer-note">
+        <p>Framework crosswalks are indicative mappings, not authoritative equivalences. Consult the full text of each framework for binding interpretation. Last updated: April 2026 · Version 1.0</p>
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .crosswalk-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    width: auto;
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+  }
+
+  .crosswalk-back-nav { margin-bottom: 1.5rem; }
+  .crosswalk-back-nav a { font-size: 0.85rem; color: var(--color-text-secondary); text-decoration: none; }
+  .crosswalk-back-nav a:hover { color: var(--color-text-primary); }
+
+  .crosswalk-header { margin-bottom: 1.5rem; max-width: 760px; }
+  .crosswalk-header h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 0.75rem; color: var(--color-text-primary); }
+  .crosswalk-intro { font-size: 1.05rem; color: var(--color-text-secondary); line-height: 1.6; margin: 0 0 0.75rem; }
+  .crosswalk-meta { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--color-text-muted); letter-spacing: 0.02em; margin: 0; }
+
+  .crosswalk-caveat {
+    max-width: 760px;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    padding: 0.9rem 1.1rem;
+    background: var(--color-bg-secondary);
+    border-left: 3px solid var(--color-brand);
+    border-radius: 4px;
+    margin-bottom: 2rem;
+  }
+  .crosswalk-caveat strong { color: var(--color-text-primary); }
+
+  .crosswalk-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 2.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+  }
+
+  .crosswalk-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 860px;
+  }
+
+  .crosswalk-table th {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    padding: 0.75rem 0.85rem;
+    text-align: left;
+    background: var(--color-bg-secondary);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  .col-concept { width: 12%; }
+  .col-eu { width: 22%; }
+  .col-nist { width: 14%; }
+  .col-iso { width: 14%; }
+  .col-interp { width: 38%; }
+
+  .crosswalk-table td {
+    font-size: 0.82rem;
+    color: var(--color-text-primary);
+    padding: 0.85rem;
+    vertical-align: top;
+    line-height: 1.55;
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  .crosswalk-table tr:last-child td { border-bottom: none; }
+  .crosswalk-table tr:hover td { background: var(--color-bg-secondary); }
+
+  .cell-concept { position: sticky; left: 0; background: var(--color-bg); z-index: 1; border-right: 1px solid var(--color-border-light); }
+  .crosswalk-table tr:hover .cell-concept { background: var(--color-bg-secondary); }
+  .cell-concept strong { font-size: 0.85rem; color: var(--color-text-primary); }
+
+  .cell-eu { font-size: 0.8rem; color: var(--color-text-secondary); }
+  .cell-iso { font-size: 0.8rem; color: var(--color-text-secondary); }
+
+  .nist-function {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-brand);
+    margin-bottom: 0.2rem;
+  }
+  .nist-note {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    line-height: 1.45;
+  }
+
+  .cell-interp { font-size: 0.8rem; color: var(--color-text-secondary); }
+  .cell-link {
+    display: block;
+    margin-top: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--color-link);
+    text-decoration: none;
+  }
+  .cell-link:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+  .crosswalk-usage {
+    max-width: 760px;
+    margin-bottom: 2rem;
+  }
+  .crosswalk-usage h2 { font-size: 1.15rem; font-weight: 600; margin: 0 0 1rem; color: var(--color-text-primary); }
+  .usage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.85rem; }
+  .usage-card { padding: 1rem; border: 1px solid var(--color-border); border-radius: 6px; }
+  .usage-audience { font-size: 0.82rem; font-weight: 600; color: var(--color-text-primary); margin: 0 0 0.3rem; }
+  .usage-card p:last-child { font-size: 0.82rem; color: var(--color-text-secondary); line-height: 1.55; margin: 0; }
+
+  .crosswalk-cta { margin-top: 2rem; max-width: 760px; }
+  .crosswalk-footer-note { max-width: 760px; margin-top: 1.5rem; font-size: 0.78rem; color: var(--color-text-muted); line-height: 1.5; border-top: 1px solid var(--color-border); padding-top: 1rem; }
+
+  @media (max-width: 640px) {
+    .crosswalk-page { padding: 1.25rem 1rem 3rem; }
+    .crosswalk-header h1 { font-size: 1.6rem; }
+    .usage-grid { grid-template-columns: 1fr; }
+  }
+</style>
