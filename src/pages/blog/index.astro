@@ -41,10 +41,10 @@ const startHereEssays = [
 			<p class="page-intro">Essays on AI agents, evaluation, safety, privacy, compliance, and governance through the lens of distributed systems and production engineering.</p>
 
 			<!-- Series label -->
-			<div class="series-block">
+			<a href="/series/reliable-agent-systems/" class="series-block">
 				<p class="series-label">Series: Reliable Agent Systems</p>
 				<p class="series-desc">A connected set of essays on failure, evaluation, controls, and proof.</p>
-			</div>
+			</a>
 
 			<!-- Start here -->
 			<section class="start-here">
@@ -114,11 +114,19 @@ const startHereEssays = [
 
 	/* ── Series block ── */
 	.series-block {
+		display: block;
 		padding: 1.25rem 1.5rem;
 		background: var(--color-bg-secondary);
 		border-radius: 8px;
 		border-left: 3px solid var(--color-link);
 		margin-bottom: 2.5rem;
+		text-decoration: none;
+		color: inherit;
+		transition: border-color 0.2s;
+	}
+
+	.series-block:hover {
+		border-left-color: var(--color-brand);
 	}
 
 	.series-label {
