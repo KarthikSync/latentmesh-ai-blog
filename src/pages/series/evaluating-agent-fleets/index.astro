@@ -1,0 +1,292 @@
+---
+import BaseHead from '../../../components/BaseHead.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { SITE_TITLE, LINKEDIN_URL } from '../../../consts';
+
+const title = "Evaluating Agent Fleets";
+const description = "How to allocate limited evaluation capacity across many agents, classes, workloads, and changes. A series on fleet-scale evaluation.";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`${title} | ${SITE_TITLE}`} description={description} image="/og-default.png" />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<header class="series-header">
+				<p class="series-label">New series</p>
+				<h1>{title}</h1>
+				<p class="series-dek">The scarce resource is not inventory. It is eval capacity.</p>
+			</header>
+
+			<div class="series-intro">
+				<p>Reliable Agent Systems asks how a single agent should be evaluated. This series asks a different question: when you have dozens or hundreds of agents, classes, workloads, and changes, which ones should be evaluated now?</p>
+				<p>Most teams treat evaluation as per-agent. Every agent gets its own eval suite, its own schedule, its own thresholds. That works until you have more agents than you have eval budget. Then evaluation becomes an allocation problem, and the tools and mental models built for single-agent reliability stop scaling.</p>
+				<p>This series introduces the structures needed to make that allocation decision well: work units, baseline inheritance, trigger-routed re-evaluation, sampling, eval packs, and evidence.</p>
+			</div>
+
+			<section class="series-section">
+				<h2>Essays</h2>
+				<ol class="essay-list">
+					<li>
+						<a href="/blog/why-per-agent-evaluation-breaks-at-fleet-scale/" class="essay-link">
+							<span class="essay-number">01</span>
+							<div class="essay-content">
+								<h3>Why per-agent evaluation breaks at fleet scale</h3>
+								<p>The first essay. Why the per-agent evaluation model stops working when you have more agents than eval capacity, and what the fleet-scale alternative looks like.</p>
+							</div>
+						</a>
+					</li>
+				</ol>
+				<p class="coming-soon-note">More essays in this series are coming. Follow on <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">LinkedIn</a> to get notified.</p>
+			</section>
+
+			<section class="reading-guide">
+				<h2>How this connects</h2>
+				<div class="guide-grid">
+					<div class="guide-card">
+						<p class="guide-audience">If you are new to LatentMesh</p>
+						<p>Start with <a href="/series/reliable-agent-systems/">Reliable Agent Systems</a>. That series covers how individual agents fail and how to build evidence that they work. This series builds on those foundations.</p>
+					</div>
+					<div class="guide-card">
+						<p class="guide-audience">If you already manage multiple agents</p>
+						<p>Start here. This series assumes you know what evals are and why they matter. The question is how to allocate them.</p>
+					</div>
+				</div>
+			</section>
+
+			<footer class="series-footer">
+				<p>This series is written by Karthik Mahalingam at <a href="/">LatentMesh</a>. If you found this useful, follow on <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer">LinkedIn</a>.</p>
+			</footer>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		width: 100%;
+		max-width: 760px;
+		margin: 0 auto;
+		padding: 0 1.25rem 3.5rem;
+	}
+
+	.series-header {
+		padding: 3rem 0 2rem;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.series-label {
+		font-size: 0.8rem;
+		font-weight: 700;
+		color: var(--color-link);
+		margin: 0 0 0.5rem;
+		font-family: sans-serif;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+
+	.series-header h1 {
+		font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+		font-weight: 800;
+		margin: 0 0 0.75rem;
+		color: var(--color-text-primary);
+		letter-spacing: -0.02em;
+		line-height: 1.15;
+	}
+
+	.series-dek {
+		font-size: 1.1rem;
+		color: var(--color-text-secondary);
+		margin: 0;
+		line-height: 1.65;
+		font-style: italic;
+	}
+
+	.series-intro {
+		padding: 2rem 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.series-intro p {
+		font-size: 1rem;
+		line-height: 1.75;
+		color: var(--color-text-body);
+		margin: 0 0 1rem;
+	}
+
+	.series-intro p:last-child {
+		margin-bottom: 0;
+	}
+
+	.series-section {
+		padding: 2.5rem 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.series-section h2 {
+		font-size: 1.5rem;
+		font-weight: 800;
+		margin: 0 0 1.5rem;
+		color: var(--color-text-primary);
+		font-family: sans-serif;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	.essay-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.essay-link {
+		display: flex;
+		gap: 1.25rem;
+		padding: 1.25rem 1.5rem;
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
+		text-decoration: none;
+		color: inherit;
+		align-items: flex-start;
+	}
+
+	a.essay-link:hover {
+		border-color: var(--color-card-hover);
+	}
+
+	a.essay-link:hover h3 {
+		color: var(--color-brand);
+	}
+
+	.essay-number {
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: var(--color-text-muted);
+		font-family: monospace;
+		flex-shrink: 0;
+		padding-top: 0.15rem;
+	}
+
+	.essay-content h3 {
+		font-size: 1.1rem;
+		font-weight: 700;
+		margin: 0 0 0.4rem;
+		color: var(--color-text-primary);
+		font-family: sans-serif;
+		line-height: 1.3;
+	}
+
+	.essay-content p {
+		font-size: 0.9rem;
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+
+	.coming-soon-note {
+		margin-top: 1.5rem;
+		font-size: 0.9rem;
+		color: var(--color-text-muted);
+		line-height: 1.6;
+	}
+
+	.coming-soon-note a {
+		color: var(--color-link);
+		text-decoration: none;
+	}
+
+	.coming-soon-note a:hover {
+		text-decoration: underline;
+	}
+
+	.reading-guide {
+		padding: 2.5rem 0;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.reading-guide h2 {
+		font-size: 1.25rem;
+		font-weight: 700;
+		margin: 0 0 1.25rem;
+		color: var(--color-text-primary);
+		font-family: sans-serif;
+	}
+
+	.guide-grid {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.guide-card {
+		padding: 1rem 1.25rem;
+		background: var(--color-bg-secondary);
+		border-radius: 8px;
+	}
+
+	.guide-audience {
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: var(--color-text-primary);
+		font-family: sans-serif;
+		margin: 0 0 0.25rem;
+	}
+
+	.guide-card p {
+		font-size: 0.9rem;
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		margin: 0;
+	}
+
+	.guide-card a {
+		color: var(--color-link);
+		text-decoration: none;
+	}
+
+	.guide-card a:hover {
+		text-decoration: underline;
+	}
+
+	.series-footer {
+		padding: 2rem 0 0;
+	}
+
+	.series-footer p {
+		font-size: 0.9rem;
+		color: var(--color-text-muted);
+		line-height: 1.6;
+	}
+
+	.series-footer a {
+		color: var(--color-link);
+		text-decoration: none;
+	}
+
+	.series-footer a:hover {
+		text-decoration: underline;
+	}
+
+	@media (max-width: 480px) {
+		main {
+			padding: 0 1rem 3rem;
+		}
+
+		.series-header {
+			padding: 2rem 0 1.5rem;
+		}
+
+		.essay-link {
+			flex-direction: column;
+			gap: 0.5rem;
+			padding: 1rem 1.25rem;
+		}
+	}
+</style>
