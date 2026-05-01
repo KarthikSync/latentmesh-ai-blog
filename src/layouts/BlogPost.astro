@@ -28,10 +28,25 @@ const seriesEssays = [
 	{ slug: "the-incident-response-gap-in-ai-systems", title: "The Incident Response Gap in AI Systems" },
 ];
 
+const fleetSeriesEssays = [
+	{ slug: "why-per-agent-evaluation-breaks-at-fleet-scale", title: "Why Per-Agent Evaluation Breaks at Fleet Scale" },
+];
+
 const seriesIndex = seriesEssays.findIndex((e) => e.slug === slug);
+const fleetIndex = fleetSeriesEssays.findIndex((e) => e.slug === slug);
 const isInSeries = seriesIndex !== -1;
-const prevEssay = isInSeries && seriesIndex > 0 ? seriesEssays[seriesIndex - 1] : null;
-const nextEssay = isInSeries && seriesIndex < seriesEssays.length - 1 ? seriesEssays[seriesIndex + 1] : null;
+const isInFleetSeries = fleetIndex !== -1;
+const activeSeriesEssays = isInFleetSeries ? fleetSeriesEssays : seriesEssays;
+const activeIndex = isInFleetSeries ? fleetIndex : seriesIndex;
+const isInAnySeries = isInSeries || isInFleetSeries;
+const prevEssay = isInAnySeries && activeIndex > 0 ? activeSeriesEssays[activeIndex - 1] : null;
+const nextEssay = isInAnySeries && activeIndex < activeSeriesEssays.length - 1 ? activeSeriesEssays[activeIndex + 1] : null;
+const activeSeriesName = isInFleetSeries ? "Evaluating Agent Fleets" : "Reliable Agent Systems";
+const activeSeriesDesc = isInFleetSeries
+	? "This series examines how to allocate limited evaluation capacity across many agents, classes, workloads, and changes."
+	: "This series explores how AI systems fail, how to evaluate them in production, and how governance becomes operational through controls, evidence, and accountability.";
+const activeSeriesStartSlug = isInFleetSeries ? "why-per-agent-evaluation-breaks-at-fleet-scale" : "agent-failures-are-distributed-systems-failures";
+const activeSeriesStartLabel = isInFleetSeries ? "Evaluating Agent Fleets" : "Reliable Agent Systems";
 
 const blogPostingSchema = {
 	"@context": "https://schema.org",
@@ -125,17 +140,17 @@ const breadcrumbSchema = {
 					)}
 
 					<!-- Series navigation block -->
-					{isInSeries && (
+					{isInAnySeries && (
 						<nav class="series-nav" aria-label="Essay series navigation">
 							<div class="series-nav-header">
-								<span class="series-label">Series: Reliable Agent Systems</span>
-								<span class="series-position">Essay {seriesIndex + 1} of {seriesEssays.length}</span>
+								<span class="series-label">Series: {activeSeriesName}</span>
+								<span class="series-position">Essay {activeIndex + 1} of {activeSeriesEssays.length}</span>
 							</div>
-							<p class="series-description">This series explores how AI systems fail, how to evaluate them in production, and how governance becomes operational through controls, evidence, and accountability.</p>
+							<p class="series-description">{activeSeriesDesc}</p>
 							<details class="series-reading-order">
 								<summary>Reading order</summary>
 								<ol>
-									{seriesEssays.map((essay, i) => (
+									{activeSeriesEssays.map((essay, i) => (
 										<li class={essay.slug === slug ? "current" : ""}>
 											{essay.slug === slug ? (
 												<span>{essay.title}</span>
@@ -176,7 +191,7 @@ const breadcrumbSchema = {
 						</div>
 
 						<!-- Continue reading -->
-						{isInSeries && (
+						{isInAnySeries && (
 							<section class="continue-reading">
 								<h2>Continue reading</h2>
 								<div class="prev-next">
@@ -193,7 +208,7 @@ const breadcrumbSchema = {
 										</a>
 									)}
 								</div>
-								<p class="series-entry">New here? <a href="/blog/agent-failures-are-distributed-systems-failures/">Start from the beginning</a> of the Reliable Agent Systems series.</p>
+								<p class="series-entry">New here? <a href={`/blog/${activeSeriesStartSlug}/`}>Start from the beginning</a> of the {activeSeriesStartLabel} series.</p>
 							</section>
 						)}
 
