@@ -3,10 +3,10 @@ title: "I Built a Free EU AI Act Compliance Checker"
 description: "A schema-driven way to turn scope questions into a preliminary risk classification, triggering reasons, and a downloadable record."
 pubDate: "May 04 2026 09:00"
 tags: ["compliance", "practical"]
-summary: "Most AI compliance work starts in the wrong place — a policy question, then a spreadsheet, then a meeting. The EU AI Compliance Checker is a guided ten-step flow that produces a preliminary risk classification under Regulation 2024/1689. It walks through scope, prohibited practices, Annex I product safety, Annex III use cases, Article 6(3) exceptions, Article 50 transparency duties, GPAI model classification, and the compliance timeline. The output is a classification, triggering reasons, and article references, downloadable as a branded PDF. It runs in the browser with no account and nothing stored on the server. A schema-driven flow makes the classification path explicit and repeatable — the only way to detect drift between assessments separated by months and a feature release."
+summary: "Most AI compliance work starts in the wrong place: a policy question, then a spreadsheet, then a meeting. The EU AI Compliance Checker is a guided ten-step flow that produces a preliminary risk classification under Regulation 2024/1689. It walks through scope, prohibited practices, Annex I product safety, Annex III use cases, Article 6(3) exceptions, Article 50 transparency duties, GPAI model classification, and the compliance timeline. The output is a classification, triggering reasons, and article references, downloadable as a branded PDF. It runs in the browser with no account and nothing stored on the server. A schema-driven flow makes the classification path explicit and repeatable, which is the only way to detect drift between assessments separated by months and a feature release."
 summaryProblem: "Most teams classify AI risk once, informally, and the assessment goes stale without anyone noticing."
 summaryCoreIdea: "A schema-driven classifier makes the classification path explicit, repeatable, and comparable over time."
-summaryTakeaway: "Run the free EU AI Compliance Checker on a system you are building this week — no account, no storage, downloadable PDF record."
+summaryTakeaway: "Run the free EU AI Compliance Checker on a system you are building this week. No account, no storage, downloadable PDF record."
 ---
 
 Most AI compliance work starts in the wrong place.
