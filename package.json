@@ -20,6 +20,7 @@
 		"astro": "5.16.9",
 		"jspdf": "^4.2.1",
 		"preact": "^10.29.1",
+		"satori": "^0.26.0",
 		"typescript": "5.9.3"
 	},
 	"devDependencies": {
@@ -33,11 +34,12 @@
 	"private": true,
 	"scripts": {
 		"astro": "astro",
-		"build": "astro build && node scripts/indexnow.mjs",
+		"build": "node scripts/generate-og.mjs && astro build && node scripts/indexnow.mjs",
 		"cf-typegen": "wrangler types",
-		"check": "astro build && tsc && wrangler deploy --dry-run",
+		"check": "node scripts/generate-og.mjs && astro build && tsc && wrangler deploy --dry-run",
 		"deploy": "wrangler deploy",
 		"dev": "astro dev",
+		"generate:og": "node scripts/generate-og.mjs",
 		"preview": "astro build && wrangler dev",
 		"test": "vitest run"
 	},

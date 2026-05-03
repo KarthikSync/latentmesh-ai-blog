@@ -89,7 +89,7 @@ const breadcrumbSchema = {
 
 <html lang="en">
 	<head>
-		<BaseHead title={pageTitle} description={description} image="/og-default.png" type="article" pubDate={pubDate} />
+		<BaseHead title={pageTitle} description={description} image={`/og/${slug}.png`} type="article" pubDate={pubDate} />
 		<script type="application/ld+json" set:html={JSON.stringify(blogPostingSchema)} />
 		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 	</head>
