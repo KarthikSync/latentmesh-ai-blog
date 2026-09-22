@@ -2,9 +2,10 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_URL, SITE_AUTHOR, LINKEDIN_URL, GITHUB_URL } from '../consts';
+import NeuralMesh from '../components/NeuralMesh.astro';
+import { SITE_URL, SITE_AUTHOR, LINKEDIN_URL, GITHUB_URL, X_URL, BLITZ_URL } from '../consts';
 
-const aboutDescription = "Karthik Mahalingam — engineering leader at Microsoft, writing about AI agents, evaluation, compliance, and governance from a systems perspective.";
+const aboutDescription = "Karthik Mahalingam — engineering leader at Microsoft and independent researcher on how AI agents make decisions, and how those decisions can be scored and verified.";
 
 const profileSchema = {
 	"@context": "https://schema.org",
@@ -16,7 +17,7 @@ const profileSchema = {
 		"description": aboutDescription,
 		"jobTitle": "Engineering Leader",
 		"worksFor": { "@type": "Organization", "name": "Microsoft" },
-		"sameAs": [LINKEDIN_URL, GITHUB_URL],
+		"sameAs": [LINKEDIN_URL, X_URL, GITHUB_URL],
 	},
 };
 
@@ -34,7 +35,7 @@ const breadcrumbSchema = {
 <html lang="en">
 	<head>
 		<BaseHead
-			title="About Karthik Mahalingam | LatentMesh"
+			title="About | LatentMesh"
 			description={aboutDescription}
 			image="/og-default.png"
 		/>
@@ -42,207 +43,132 @@ const breadcrumbSchema = {
 		<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 	</head>
 	<body>
+		<NeuralMesh seed={23} />
 		<Header />
-		<main>
-			<div class="about-header">
-				<h1>About Karthik and LatentMesh</h1>
-				<p class="role">
+		<main class="about">
+			<section class="intro">
+				<h1>About</h1>
+				<p>
+					LatentMesh is independent research by {SITE_AUTHOR} on how AI agents
+					make decisions.
+				</p>
+			</section>
+
+			<section class="block">
+				<h2 class="label">Background</h2>
+				<p>
 					I'm an engineering leader at Microsoft with 19+ years of experience
-					building systems at scale. LatentMesh is where I write about AI agents,
-					evaluation, safety, privacy, compliance, and governance from the
-					perspective of someone building these systems in practice.
-				</p>
-			</div>
-
-			<section class="about-section">
-				<h2>Background</h2>
-				<p>
-					My work sits at the intersection of large-scale systems, AI evaluation,
-					privacy, and governance. At Microsoft, I lead engineering in Purview
-					Data Lifecycle Management, building services for retention, compliance,
-					and governance across large enterprise environments.
+					building systems at scale. I lead engineering in Purview Data Lifecycle
+					Management, building retention, compliance, and governance services
+					for large enterprise environments.
 				</p>
 				<p>
-					Over the past several years, my focus has increasingly moved toward AI:
-					agent systems, evaluation pipelines, retrieval architectures, and
-					compliance automation. That background shapes how I think about AI. Not
-					just as a model problem, but as a systems problem.
+					Over the past several years my focus has moved toward AI: agent
+					systems, evaluation pipelines, retrieval architectures, and compliance
+					automation. That background shapes how I approach AI: not only as a
+					model problem, but as a systems problem.
 				</p>
 			</section>
 
-			<section class="about-section">
-				<h2>What I write about</h2>
+			<section class="block">
+				<h2 class="label">Research</h2>
 				<p>
-					Most writing about AI focuses on what models can do. I'm more interested
-					in what happens after deployment: the failures nobody planned for, the
-					evaluations that looked good in staging and fell apart in production, the
-					compliance requirements that arrive as legal text and somehow need to
-					become running code.
+					Most work on AI focuses on what models can do. I'm more interested in
+					what happens once an agent is deployed and has to act: which decision
+					it made, how confident it was, and whether anyone can check that later.
 				</p>
 				<p>
-					These are engineering problems, not policy abstractions. That's the gap
-					I write into.
-				</p>
-			</section>
-
-			<section class="about-section">
-				<h2>Why LatentMesh exists</h2>
-				<p>
-					A lot of writing about AI stays at the level of model capability or
-					product excitement. I am more interested in the engineering reality
-					underneath it: what breaks, what must be measured, what must be owned,
-					and what must be proved.
-				</p>
-				<p>
-					LatentMesh exists to make that layer legible.
+					LatentMesh approaches that from two directions: making agent decisions
+					fast enough to score directly, and making them verifiable after the
+					fact. <a href={BLITZ_URL} onclick="gtag('event','outbound_click',{destination:'blitz',location:'about'})">Blitz</a> is
+					the first public research preview of that work.
 				</p>
 			</section>
 
-			<section class="about-section last">
-				<h2>Connect</h2>
+			<section id="contact" class="block">
+				<h2 class="label">Contact</h2>
 				<p>
-					If you're working on AI evaluation, compliance, governance, or
-					production agent systems, I'd be glad to connect.
+					For research questions or collaboration:
+					<a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" onclick="gtag('event','outbound_click',{destination:'linkedin',location:'about'})">LinkedIn</a>
+					or
+					<a href={X_URL} target="_blank" rel="noopener noreferrer" onclick="gtag('event','outbound_click',{destination:'x',location:'about'})">X (@karthiksync)</a>
 				</p>
-				<div class="cta-box">
-					<div class="cta-primary">
-						<a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" class="cta-btn" onclick="gtag('event','outbound_click',{destination:'linkedin',location:'about'})">Connect on LinkedIn</a>
-						<a href="https://cal.com/karthik-lmai" target="_blank" rel="noopener noreferrer" class="cta-btn" onclick="gtag('event','outbound_click',{destination:'cal',location:'about'})">Book time</a>
-					</div>
-					<div class="cta-secondary">
-						<a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" onclick="gtag('event','outbound_click',{destination:'github',location:'about'})">GitHub</a>
-					</div>
-				</div>
 			</section>
-
-			<p class="disclaimer">Disclaimer: The views expressed on this website are my own and do not represent the views of my employer.</p>
 		</main>
 		<Footer />
 	</body>
 </html>
 
 <style>
-	main {
+	.about {
+		position: relative;
+		z-index: 1;
 		width: 100%;
-		max-width: 720px;
+		max-width: 760px;
+		min-height: calc(100vh - 16rem);
 		margin: 0 auto;
-		padding: 0 1.25rem;
+		padding: 7rem 1.25rem 0;
+		font-size: 1rem;
+		color: var(--color-text-body);
 	}
 
-	.about-header {
-		padding: 3rem 0 2rem;
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.about-header h1 {
-		font-size: clamp(1.5rem, 4vw, 2rem);
-		font-weight: 800;
-		margin: 0 0 0.75rem;
+	.about a {
 		color: var(--color-text-primary);
-		letter-spacing: -0.01em;
+		text-decoration-color: var(--color-border);
+		text-underline-offset: 3px;
 	}
 
-	.about-header .role {
+	.about a:hover {
+		text-decoration-color: var(--highlight);
+		text-decoration-thickness: 3px;
+	}
+
+	.intro h1 {
+		font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+		font-weight: 650;
+		line-height: 1.12;
+		letter-spacing: -0.035em;
+		margin: 0 0 1.25rem;
+	}
+
+	.intro p {
+		max-width: 58ch;
 		font-size: 1.05rem;
+		line-height: 1.6;
 		color: var(--color-text-secondary);
 		margin: 0;
+	}
+
+	.block {
+		margin-top: 3.5rem;
+		padding-top: 1.25rem;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.label {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		font-weight: 400;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-text-muted);
+		margin: 0 0 1.25rem;
+	}
+
+	.block p {
+		max-width: 62ch;
 		line-height: 1.65;
-	}
-
-	.about-section {
-		padding: 2.5rem 0;
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.about-section.last {
-		border-bottom: none;
-		padding-bottom: 3.5rem;
-	}
-
-	.about-section h2 {
-		font-size: 1.25rem;
-		font-weight: 700;
-		margin: 0 0 1rem;
-		color: var(--color-text-primary);
-		font-family: var(--font-sans);
-	}
-
-	.about-section p {
-		font-size: 1rem;
-		line-height: 1.8;
 		color: var(--color-text-secondary);
 		margin: 0 0 1rem;
 	}
 
-	.about-section p:last-child {
+	.block p:last-child {
 		margin-bottom: 0;
 	}
 
-	.cta-box {
-		margin-top: 1.5rem;
-	}
-
-	.cta-primary {
-		display: flex;
-		gap: 0.75rem;
-		flex-wrap: wrap;
-		margin-bottom: 1rem;
-	}
-
-	.cta-btn {
-		display: inline-block;
-		background: var(--color-brand);
-		color: #fff;
-		padding: 0.7rem 1.4rem;
-		border-radius: 6px;
-		text-decoration: none;
-		font-size: 0.95rem;
-		font-family: var(--font-sans);
-		font-weight: 600;
-	}
-
-	.cta-btn:hover {
-		background: var(--color-brand-hover);
-	}
-
-	.cta-secondary {
-		font-size: 0.85rem;
-		font-family: var(--font-sans);
-		color: var(--color-text-muted);
-	}
-
-	.cta-secondary a {
-		color: var(--color-link);
-		text-decoration: none;
-	}
-
-	.cta-secondary a:hover {
-		text-decoration: underline;
-	}
-
-	.cta-sep {
-		margin: 0 0.35rem;
-	}
-
-	.disclaimer {
-		font-size: 0.8rem;
-		color: var(--color-text-muted);
-		font-family: var(--font-sans);
-		margin: 0;
-		padding-bottom: 2rem;
-	}
-
-	@media (max-width: 480px) {
-		main {
-			padding: 0 1rem;
-		}
-
-		.about-header {
-			padding: 2rem 0 1.5rem;
-		}
-
-		.about-section {
-			padding: 2rem 0;
+	@media (max-width: 640px) {
+		.about {
+			padding: 3rem 1rem 0;
 		}
 	}
 </style>
