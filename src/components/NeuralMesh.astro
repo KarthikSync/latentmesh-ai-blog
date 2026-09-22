@@ -1,0 +1,198 @@
+---
+// Decorative neuron mesh rendered as static SVG at build time.
+// Seeded so the layout is identical across builds.
+interface Props {
+  seed?: number;
+  nodes?: number;
+}
+
+const { seed = 7, nodes: nodeCount = 110 } = Astro.props;
+
+const W = 1440;
+const H = 900;
+
+function mulberry32(a: number) {
+  return () => {
+    a |= 0;
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const rand = mulberry32(seed);
+
+// Best-candidate sampling: evenly spread points without a grid look.
+type Node = { x: number; y: number; r: number; kind: "plain" | "active" | "signal" };
+const points: Node[] = [];
+while (points.length < nodeCount) {
+  let best = { x: 0, y: 0 };
+  let bestDist = -1;
+  for (let c = 0; c < 12; c++) {
+    const x = rand() * W;
+    const y = rand() * H;
+    let d = Infinity;
+    for (const p of points) d = Math.min(d, (p.x - x) ** 2 + (p.y - y) ** 2);
+    if (d > bestDist) {
+      bestDist = d;
+      best = { x, y };
+    }
+  }
+  const roll = rand();
+  points.push({
+    ...best,
+    r: 1.4 + rand() * 2.2,
+    kind: roll < 0.06 ? "active" : roll < 0.12 ? "signal" : "plain",
+  });
+}
+
+// Connect each node to its nearest neighbours.
+const edgeKeys = new Set<string>();
+const edges: [number, number][] = [];
+points.forEach((p, i) => {
+  const nearest = points
+    .map((q, j) => ({ j, d: (p.x - q.x) ** 2 + (p.y - q.y) ** 2 }))
+    .filter(({ j }) => j !== i)
+    .sort((a, b) => a.d - b.d)
+    .slice(0, 3);
+  for (const { j } of nearest) {
+    const key = i < j ? `${i}-${j}` : `${j}-${i}`;
+    if (!edgeKeys.has(key)) {
+      edgeKeys.add(key);
+      edges.push([i, j]);
+    }
+  }
+});
+
+// Slightly curved edges read as dendrites rather than a wireframe.
+function edgePath(a: Node, b: Node, bend: number) {
+  const mx = (a.x + b.x) / 2;
+  const my = (a.y + b.y) / 2;
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  return `M${a.x.toFixed(1)} ${a.y.toFixed(1)} Q${(mx - dy * bend).toFixed(1)} ${(my + dx * bend).toFixed(1)} ${b.x.toFixed(1)} ${b.y.toFixed(1)}`;
+}
+
+const paths = edges.map(([i, j]) => ({
+  d: edgePath(points[i], points[j], (rand() - 0.5) * 0.35),
+  touchesActive: points[i].kind !== "plain" || points[j].kind !== "plain",
+}));
+
+// A handful of edges carry travelling signals.
+const pulses = paths
+  .filter((p) => p.touchesActive)
+  .slice(0, 14)
+  .map((p, k) => ({ d: p.d, delay: (k * 0.9) % 7, duration: 3.5 + (k % 4) }));
+---
+
+<div class="neural-mesh" aria-hidden="true">
+  <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <g class="edges">
+      {paths.map((p) => <path d={p.d} class:list={{ strong: p.touchesActive }} />)}
+    </g>
+    <g class="pulses">
+      {pulses.map((p) => (
+        <path d={p.d} pathLength="100" style={`animation-delay:${p.delay}s;animation-duration:${p.duration}s`} />
+      ))}
+    </g>
+    <g class="nodes">
+      {points.map((p) => (
+        <circle cx={p.x.toFixed(1)} cy={p.y.toFixed(1)} r={(p.kind === "plain" ? p.r : p.r + 2).toFixed(1)} class={p.kind} />
+      ))}
+    </g>
+  </svg>
+</div>
+
+<style>
+  .neural-mesh {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: min(100vh, 900px);
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    color: var(--color-text-primary);
+    /* Fade toward the bottom, and quiet the centre column where text sits. */
+    --mesh-fade: linear-gradient(to bottom, #000 45%, transparent 100%);
+    --mesh-clear: linear-gradient(
+      to right,
+      #000 0%,
+      #000 calc(50% - 480px),
+      rgba(0, 0, 0, 0.18) calc(50% - 320px),
+      rgba(0, 0, 0, 0.18) calc(50% + 320px),
+      #000 calc(50% + 480px),
+      #000 100%
+    );
+    -webkit-mask-image: var(--mesh-fade), var(--mesh-clear);
+    -webkit-mask-composite: source-in;
+    mask-image: var(--mesh-fade), var(--mesh-clear);
+    mask-composite: intersect;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .edges path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 0.8;
+    opacity: 0.09;
+  }
+
+  .edges path.strong {
+    opacity: 0.16;
+  }
+
+  .nodes circle {
+    fill: currentColor;
+    opacity: 0.16;
+  }
+
+  .nodes circle.active {
+    fill: var(--highlight);
+    stroke: currentColor;
+    stroke-width: 1;
+    opacity: 0.9;
+  }
+
+  .nodes circle.signal {
+    fill: var(--color-link);
+    opacity: 0.55;
+  }
+
+  .pulses path {
+    fill: none;
+    stroke: var(--color-link);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-dasharray: 6 94;
+    stroke-dashoffset: 100;
+    opacity: 0.7;
+    animation-name: pulse-travel;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes pulse-travel {
+    from { stroke-dashoffset: 100; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  @media (max-width: 760px) {
+    .neural-mesh {
+      opacity: 0.45;
+      -webkit-mask-image: var(--mesh-fade);
+      mask-image: var(--mesh-fade);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pulses {
+      display: none;
+    }
+  }
+</style>

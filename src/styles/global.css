@@ -5,58 +5,78 @@
  */
 
 :root {
-	--accent: #2337ff;
-	--accent-dark: #000d8a;
-	--black: 15, 18, 25;
-	--gray: 96, 115, 159;
-	--gray-light: 229, 233, 240;
-	--gray-dark: 34, 41, 57;
-	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
+	--accent: #2f5bff;
+	--accent-dark: #1a3fd6;
+	--black: 20, 17, 15;
+	--gray: 107, 100, 92;
+	--gray-light: 239, 230, 210;
+	--gray-dark: 42, 38, 34;
+	--gray-gradient: rgba(var(--gray-light), 50%), #fdf9ef;
 	--box-shadow:
 		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
 		0 16px 32px rgba(var(--gray), 33%);
 
+	/* Type — shared with blitz.latentmesh.ai */
+	--font-sans: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+	--font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+	--font-prose: "Atkinson", ui-sans-serif, system-ui, sans-serif;
+	--highlight: #ffe14d;
+
 	/* Semantic colors */
-	--color-bg: #ffffff;
-	--color-bg-secondary: #f8fafc;
-	--color-text-primary: #0f172a;
-	--color-text-secondary: #475569;
-	--color-text-muted: #94a3b8;
-	--color-text-body: #374151;
-	--color-border: #e5e7eb;
-	--color-border-light: #f1f5f9;
-	--color-link: #2563eb;
-	--color-link-hover: #1e3a8a;
-	--color-brand: #1e3a8a;
-	--color-brand-hover: #1e40af;
-	--color-code-bg: #f1f5f9;
-	--color-pre-bg: #1e293b;
-	--color-pre-text: #e2e8f0;
-	--color-card-hover: #93c5fd;
+	--color-bg: #fdf9ef;
+	--color-bg-secondary: #f6f0e2;
+	--color-text-primary: #14110f;
+	--color-text-secondary: #4a443e;
+	--color-text-muted: #857d73;
+	--color-text-body: #2a2622;
+	--color-border: #e4dccb;
+	--color-border-light: #eee7d8;
+	--color-link: #2f5bff;
+	--color-link-hover: #1a3fd6;
+	--color-brand: #14110f;
+	--color-brand-hover: #2f5bff;
+	--color-code-bg: #f3ebd8;
+	--color-pre-bg: #1f1b17;
+	--color-pre-text: #efe6d2;
+	--color-card-hover: #cfc4ad;
 }
 
 [data-theme="dark"] {
-	--black: 229, 233, 240;
-	--gray-dark: 229, 233, 240;
-	--gray-light: 51, 56, 68;
-	--gray-gradient: rgba(30, 41, 59, 50%), #0f172a;
+	--black: 245, 239, 225;
+	--gray-dark: 245, 239, 225;
+	--gray-light: 58, 52, 45;
+	--gray-gradient: rgba(31, 27, 23, 50%), #14110f;
 
-	--color-bg: #0f172a;
-	--color-bg-secondary: #1e293b;
-	--color-text-primary: #f1f5f9;
-	--color-text-secondary: #cbd5e1;
-	--color-text-muted: #64748b;
-	--color-text-body: #cbd5e1;
-	--color-border: #334155;
-	--color-border-light: #1e293b;
-	--color-link: #60a5fa;
-	--color-link-hover: #93c5fd;
-	--color-brand: #3b82f6;
-	--color-brand-hover: #60a5fa;
-	--color-code-bg: #1e293b;
-	--color-pre-bg: #0c1222;
-	--color-pre-text: #e2e8f0;
-	--color-card-hover: #334155;
+	--color-bg: #14110f;
+	--color-bg-secondary: #1f1b17;
+	--color-text-primary: #f5efe1;
+	--color-text-secondary: #cfc6b8;
+	--color-text-muted: #8a8279;
+	--color-text-body: #d8d0c2;
+	--color-border: #3a342d;
+	--color-border-light: #25211c;
+	--color-link: #8aa4ff;
+	--color-link-hover: #b3c3ff;
+	--color-brand: #f5efe1;
+	--color-brand-hover: #8aa4ff;
+	--color-code-bg: #1f1b17;
+	--color-pre-bg: #0d0b0a;
+	--color-pre-text: #efe6d2;
+	--color-card-hover: #3a342d;
+}
+@font-face {
+	font-family: "Bricolage Grotesque";
+	src: url("/fonts/bricolage-grotesque-latin-wght-normal.woff2") format("woff2-variations");
+	font-weight: 200 800;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "JetBrains Mono";
+	src: url("/fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
 }
 @font-face {
 	font-family: "Atkinson";
@@ -82,7 +102,7 @@ html {
 	box-sizing: border-box;
 }
 body {
-	font-family: "Atkinson", sans-serif;
+	font-family: var(--font-sans);
 	margin: 0;
 	padding: 0;
 	overflow-x: hidden;
@@ -110,6 +130,7 @@ h6 {
 	margin: 0 0 0.5rem 0;
 	color: rgb(var(--black));
 	line-height: 1.2;
+	letter-spacing: -0.02em;
 }
 h1 {
 	font-size: 3.052em;
@@ -134,10 +155,23 @@ a {
 	color: var(--accent);
 }
 a:hover {
-	color: var(--accent);
+	color: var(--accent-dark);
+}
+::selection {
+	background: var(--highlight);
+	color: #14110f;
+}
+code,
+kbd,
+samp {
+	font-family: var(--font-mono);
+	font-size: 0.88em;
 }
 p {
 	margin-bottom: 1em;
+}
+.prose {
+	font-family: var(--font-prose);
 }
 .prose p {
 	margin-bottom: 2em;

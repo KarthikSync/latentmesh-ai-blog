@@ -110,8 +110,6 @@ const breadcrumbSchema = {
 						<a href="https://cal.com/karthik-lmai" target="_blank" rel="noopener noreferrer" class="cta-btn" onclick="gtag('event','outbound_click',{destination:'cal',location:'about'})">Book time</a>
 					</div>
 					<div class="cta-secondary">
-						<a href="mailto:karthik.m@live.in" onclick="gtag('event','outbound_click',{destination:'email',location:'about'})">Email</a>
-						<span class="cta-sep">&middot;</span>
 						<a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" onclick="gtag('event','outbound_click',{destination:'github',location:'about'})">GitHub</a>
 					</div>
 				</div>
@@ -166,7 +164,7 @@ const breadcrumbSchema = {
 		font-weight: 700;
 		margin: 0 0 1rem;
 		color: var(--color-text-primary);
-		font-family: sans-serif;
+		font-family: var(--font-sans);
 	}
 
 	.about-section p {
@@ -199,7 +197,7 @@ const breadcrumbSchema = {
 		border-radius: 6px;
 		text-decoration: none;
 		font-size: 0.95rem;
-		font-family: sans-serif;
+		font-family: var(--font-sans);
 		font-weight: 600;
 	}
 
@@ -209,7 +207,7 @@ const breadcrumbSchema = {
 
 	.cta-secondary {
 		font-size: 0.85rem;
-		font-family: sans-serif;
+		font-family: var(--font-sans);
 		color: var(--color-text-muted);
 	}
 
@@ -229,7 +227,7 @@ const breadcrumbSchema = {
 	.disclaimer {
 		font-size: 0.8rem;
 		color: var(--color-text-muted);
-		font-family: sans-serif;
+		font-family: var(--font-sans);
 		margin: 0;
 		padding-bottom: 2rem;
 	}

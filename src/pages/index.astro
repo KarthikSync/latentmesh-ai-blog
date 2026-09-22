@@ -2,10 +2,8 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import EmailSignup from "../components/EmailSignup.astro";
-import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL, SITE_AUTHOR, LINKEDIN_URL, GITHUB_URL } from "../consts";
-import { getCollection } from "astro:content";
-import { getReadingTime } from "../utils/reading-time";
+import NeuralMesh from "../components/NeuralMesh.astro";
+import { SITE_DESCRIPTION, SITE_URL, SITE_AUTHOR, LINKEDIN_URL, GITHUB_URL, BLITZ_URL, X_URL } from "../consts";
 
 const websiteSchema = {
   "@context": "https://schema.org",
@@ -17,176 +15,61 @@ const websiteSchema = {
 
 const organizationSchema = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": "ResearchOrganization",
   "name": "LatentMesh",
   "url": SITE_URL + "/",
   "description": SITE_DESCRIPTION,
   "founder": { "@type": "Person", "name": SITE_AUTHOR, "url": SITE_URL + "/about/" },
-  "sameAs": [LINKEDIN_URL, GITHUB_URL],
+  "sameAs": [LINKEDIN_URL, X_URL, GITHUB_URL],
 };
-
-const allPosts = (await getCollection("blog")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
-const hasPosts = allPosts.length > 0 && allPosts[0].data.title !== "Coming Soon";
-const latestPosts = hasPosts ? allPosts.slice(0, 6) : [];
-
-// Map first tag to a display category
-function getCategory(tags: string[] | undefined): string {
-  if (!tags || tags.length === 0) return "Essay";
-  const map: Record<string, string> = {
-    reliability: "Reliability",
-    evals: "Evaluation",
-    compliance: "Compliance",
-    safety: "Safety",
-    evidence: "Evidence",
-    practical: "Walkthrough",
-    agents: "Agents",
-  };
-  for (const tag of tags) {
-    if (map[tag]) return map[tag];
-  }
-  return "Essay";
-}
-
-function formatMonth(date: Date): string {
-  return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
-}
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title="The Evidence Plane for Production AI: Compliance, Evaluation, Governance | LatentMesh" description={SITE_DESCRIPTION} image="/og-default.png" />
+    <BaseHead title="LatentMesh — Research on how AI agents make decisions" description={SITE_DESCRIPTION} image="/og-default.png" />
     <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
   </head>
   <body>
+    <NeuralMesh />
     <Header />
 
-    <main>
-      <!-- Hero -->
-      <section class="hero">
-        <div class="hero-content">
-          <div class="hero-text">
-            <p class="hero-brand">LatentMesh</p>
-            <h1>The evidence plane for production AI.</h1>
-            <p class="hero-sub">From obligation to proof: how regulatory obligations become controls, evaluations, evidence, and incident response.</p>
-            <div class="hero-cta-row">
-              <a href="/blog/the-evidence-plane-for-ai-systems/" class="btn-primary" onclick="gtag('event','cta_click',{cta_name:'evidence_plane_essay',location:'homepage_hero'})">Read: The Evidence Plane for AI Systems &rarr;</a>
-              <a href="/tools/eu-ai-compliance-checker/" class="btn-secondary" onclick="gtag('event','cta_click',{cta_name:'compliance_checker',location:'homepage_hero'})">Try: EU AI Compliance Checker</a>
-            </div>
-          </div>
-          <div class="hero-panel">
-            <img src="/images/right-panel.png" alt="Evidence loop: Obligation, Control, Eval, Evidence — with coverage and verification status" width="380" height="420" />
-          </div>
-        </div>
-        <div class="proof-card">
-          <div class="proof-flow">
-            <div class="proof-row">
-              <span class="proof-step"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Obligation</span>
-              <span class="proof-arrow">&rarr;</span>
-              <span class="proof-step"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Control</span>
-            </div>
-            <div class="proof-row">
-              <span class="proof-step"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><polyline points="9 11 12 14 22 4"/></svg> Eval</span>
-              <span class="proof-arrow">&rarr;</span>
-              <span class="proof-step"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg> Evidence</span>
-            </div>
-          </div>
-        </div>
-        <p class="hero-credit">By Karthik Mahalingam. Engineering leader at Microsoft, working on Purview Data Lifecycle Management: retention, compliance, and governance services for large enterprise environments.</p>
+    <main class="home">
+      <section class="intro">
+        <h1>Research on how AI agents make decisions.</h1>
+        <p>
+          LatentMesh is independent research by <a href="/about/">{SITE_AUTHOR}</a>.
+          The work asks two questions: how can an agent's decisions be made fast
+          enough to score directly, and how can they be verified after the fact?
+        </p>
       </section>
 
-      <!-- Topics -->
-      <section class="topics">
-        <div class="topics-inner">
-          <div class="section-header">
-            <h2>What I write about</h2>
+      <section id="research" class="block">
+        <h2 class="label">Research</h2>
+        <article class="entry">
+          <div class="entry-head">
+            <a href={BLITZ_URL} class="entry-title" onclick="gtag('event','outbound_click',{destination:'blitz',location:'homepage'})">Blitz: one state, many decisions</a>
+            <span class="tag">Research preview</span>
           </div>
-          <a href="/ai-compliance/" class="topics-primary-cta">New here? Start with the AI Compliance guide →</a>
-          <div class="topic-grid">
-            <a href="/ai-compliance/" class="topic-cell" onclick="gtag('event','topic_click',{topic:'ai_compliance'})">
-              <div class="topic-icon t-gov">&equiv;</div>
-              <h3>AI compliance</h3>
-              <p>How regulatory obligations become engineering controls, evaluations, and audit-ready evidence.</p>
-              <span class="topic-cta">Start with the AI Compliance guide →</span>
-            </a>
-            <a href="/topics/agents/" class="topic-cell" onclick="gtag('event','topic_click',{topic:'agents'})">
-              <div class="topic-icon t-agents">&ofcir;</div>
-              <h3>Agent failures</h3>
-              <p>How agent systems break, drift, and misbehave once they leave the demo environment.</p>
-            </a>
-            <a href="/topics/evals/" class="topic-cell" onclick="gtag('event','topic_click',{topic:'evals'})">
-              <div class="topic-icon t-evals">&target;</div>
-              <h3>Evaluation</h3>
-              <p>Practical evals for regression, reliability, and operational trust in production.</p>
-            </a>
-            <a href="/topics/safety/" class="topic-cell" onclick="gtag('event','topic_click',{topic:'safety'})">
-              <div class="topic-icon t-safety">&osol;</div>
-              <h3>Safety</h3>
-              <p>Guardrails, control surfaces, observability, containment, and human review loops.</p>
-            </a>
-          </div>
-        </div>
+          <p class="entry-desc">
+            Answers a panel of focused questions about one situation with
+            probabilities, in a single forward pass, so software can act
+            without parsing prose.
+          </p>
+          <a href={BLITZ_URL} class="entry-link" onclick="gtag('event','outbound_click',{destination:'blitz',location:'homepage_link'})">Demo and results &rarr;</a>
+        </article>
       </section>
 
-      <!-- Featured Series -->
-      <section class="featured-series">
-        <div class="section-header">
-          <h2>Featured series</h2>
-          <a href="/series" class="view-all-link">All series &rarr;</a>
-        </div>
-        <div class="series-grid">
-          <a href="/series/reliable-agent-systems/" class="series-card" onclick="gtag('event','series_click',{series:'reliable-agent-systems',location:'homepage'})">
-            <h3>Reliable Agent Systems</h3>
-            <p class="series-tagline">How to design, test, and operate individual agent systems reliably.</p>
-            <p class="series-body">Start here if you are building one agent, workflow, or AI system and need to understand how it fails, how to evaluate it, and how governance becomes operational.</p>
-            <span class="series-cta">Read the series &rarr;</span>
-          </a>
-          <a href="/series/evaluating-agent-fleets/" class="series-card" onclick="gtag('event','series_click',{series:'evaluating-agent-fleets',location:'homepage'})">
-            <span class="new-badge">New series</span>
-            <h3>Evaluating Agent Fleets</h3>
-            <p class="series-tagline">How to allocate limited evaluation capacity across many agents, classes, workloads, and changes.</p>
-            <p class="series-body">Start here if your problem is no longer one agent. This series is about fleet-scale evaluation: work units, baseline inheritance, trigger-routed re-evaluation, sampling, eval packs, and evidence.</p>
-            <span class="series-cta">Read the series &rarr;</span>
-          </a>
-        </div>
+      <section id="contact" class="block">
+        <h2 class="label">Contact</h2>
+        <p class="contact">
+          For research questions or collaboration:
+          <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" onclick="gtag('event','outbound_click',{destination:'linkedin',location:'homepage'})">LinkedIn</a>
+          or
+          <a href={X_URL} target="_blank" rel="noopener noreferrer" onclick="gtag('event','outbound_click',{destination:'x',location:'homepage'})">X (@karthiksync)</a>
+        </p>
       </section>
-
-      <!-- Latest Essays -->
-      {latestPosts.length > 0 && (
-        <section class="latest">
-          <div class="section-header">
-            <h2>Latest essays</h2>
-            <a href="/blog" class="view-all-link">View all &rarr;</a>
-          </div>
-          <div class="essay-list">
-            {latestPosts.map((post) => (
-              <a href={`/blog/${post.id}/`} class="essay-item">
-                <div>
-                  <div class="essay-cat">{getCategory(post.data.tags)}</div>
-                  <div class="essay-title">{post.data.title}</div>
-                  {post.data.description && (
-                    <div class="essay-desc">{post.data.description}</div>
-                  )}
-                </div>
-                <div class="essay-meta-right">
-                  <span class="essay-date">{formatMonth(post.data.pubDate)}</span>
-                  <span class="essay-read">{getReadingTime(post.body ?? '')} min</span>
-                </div>
-              </a>
-            ))}
-          </div>
-        </section>
-      )}
-
-      <EmailSignup
-        variant="section"
-        heading="Stay in the loop"
-        body="A weekly note on building reliable AI systems: governance, evals, controls, and compliance."
-      />
-
     </main>
 
     <Footer />
@@ -194,520 +77,112 @@ function formatMonth(date: Date): string {
 </html>
 
 <style>
-  main {
-    width: 100%;
-  }
-
-  /* ── Hero ── */
-  .hero {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 2.5rem 2rem 3rem;
-  }
-
-  .hero-content {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 3rem;
-  }
-
-  .hero-text {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .hero-panel {
-    flex-shrink: 0;
+  .home {
     position: relative;
-    filter: drop-shadow(0 4px 24px rgba(59, 93, 140, 0.08));
+    z-index: 1;
+    width: 100%;
+    min-height: calc(100vh - 16rem);
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 7rem 1.25rem 0;
+    font-size: 1rem;
+    color: var(--color-text-body);
   }
 
-  .hero-panel img {
-    display: block;
-    width: 340px;
-    height: auto;
-    border-radius: 12px;
-  }
-
-  .proof-card {
-    display: none;
-    max-width: 360px;
-    margin-top: 1.5rem;
-    padding: 0.9rem 1.25rem;
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(59, 93, 140, 0.06);
-    text-align: center;
-  }
-
-  .proof-title {
-    font-family: sans-serif;
-    font-size: 0.78rem;
-    font-weight: 700;
+  .home a {
     color: var(--color-text-primary);
-    margin: 0 0 0.6rem;
-    letter-spacing: -0.01em;
+    text-decoration-color: var(--color-border);
+    text-underline-offset: 3px;
   }
 
-  .proof-flow {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    padding: 0.5rem 0.75rem;
-    background: #e8ecf3;
-    border-radius: 8px;
+  .home a:hover {
+    text-decoration-color: var(--highlight);
+    text-decoration-thickness: 3px;
   }
 
-  :global([data-theme="dark"]) .proof-flow {
-    background: #1e2536;
+  /* ── Intro ── */
+  .intro h1 {
+    font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+    font-weight: 650;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+    max-width: 16ch;
+    margin: 0 0 1.25rem;
   }
 
-  .proof-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+  .intro p {
+    max-width: 58ch;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin: 0;
   }
 
-  .proof-step {
-    font-family: sans-serif;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--color-text-primary);
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    white-space: nowrap;
+  /* ── Sections ── */
+  .block {
+    margin-top: 3.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-border);
   }
 
-  .proof-step svg {
-    color: #3b6cb5;
-    flex-shrink: 0;
-  }
-
-  :global([data-theme="dark"]) .proof-step svg {
-    color: #6b9fe8;
-  }
-
-  .proof-arrow {
-    font-size: 0.75rem;
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: var(--color-text-muted);
-    font-weight: 500;
+    margin: 0 0 1.25rem;
   }
 
-  .hero-brand {
-    font-family: sans-serif;
-    font-size: 0.85rem;
+  .entry + .entry {
+    margin-top: 1.5rem;
+  }
+
+  .entry-head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.75rem;
+  }
+
+  .entry-title {
+    font-size: 1.15rem;
     font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--color-link);
-    margin: 0 0 0.75rem;
-  }
-
-  .hero h1 {
-    font-size: clamp(2.4rem, 5vw, 3.6rem);
-    font-weight: 800;
-    line-height: 1.15;
-    letter-spacing: -0.025em;
-    max-width: 720px;
-    color: var(--color-text-primary);
-    margin: 0;
-  }
-
-  .hero-sub {
-    margin-top: 1.25rem;
-    font-size: 1.05rem;
-    color: var(--color-text-secondary);
-    max-width: 560px;
-    line-height: 1.6;
-  }
-
-  .hero-cta-row {
-    margin-top: 1.75rem;
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.7rem 1.5rem;
-    background: var(--color-text-primary);
-    color: var(--color-bg);
-    font-family: sans-serif;
-    font-size: 0.875rem;
-    font-weight: 500;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
-
-  .btn-primary:hover { opacity: 0.85; }
-
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.7rem 1.5rem;
-    background: transparent;
-    color: var(--color-text-primary);
-    font-family: sans-serif;
-    font-size: 0.875rem;
-    font-weight: 500;
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    text-decoration: none;
-    transition: all 0.2s;
-  }
-
-  .btn-secondary:hover {
-    border-color: var(--color-text-muted);
-    background: var(--color-bg-secondary);
-  }
-
-  .hero-credit {
-    margin-top: 2rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--color-border-light);
-    font-size: 0.82rem;
     color: var(--color-text-muted);
-    font-family: sans-serif;
   }
 
-  /* ── Topics ── */
-  .topics {
-    background: var(--color-bg-secondary);
-    border-top: 1px solid var(--color-border-light);
-    border-bottom: 1px solid var(--color-border-light);
-    padding: 4rem 2rem;
-  }
-
-  .topics-inner {
-    max-width: 1120px;
-    margin: 0 auto;
-  }
-
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .section-header h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.015em;
-    color: var(--color-text-primary);
-    font-family: sans-serif;
-    margin: 0;
-  }
-
-  .view-all-link {
-    font-size: 0.82rem;
-    color: var(--color-link);
-    text-decoration: none;
-    font-weight: 500;
-  }
-
-  .view-all-link:hover { text-decoration: underline; }
-
-  .topics-primary-cta {
-    display: none;
-    font-size: 0.92rem;
-    font-weight: 500;
-    color: var(--color-link);
-    text-decoration: none;
-    margin-bottom: 1rem;
-  }
-  .topics-primary-cta:hover { text-decoration: underline; text-underline-offset: 2px; }
-
-  .topic-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--color-border-light);
-    border: 1px solid var(--color-border-light);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .topic-cell {
-    background: var(--color-bg);
-    padding: 2rem 1.75rem;
-    text-decoration: none;
-    color: inherit;
-    transition: background 0.2s;
-  }
-
-  .topic-cell:hover { background: var(--color-bg-secondary); }
-
-  .topic-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 7px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-  }
-
-  .topic-icon.t-agents { background: #fef2f2; color: #dc2626; }
-  .topic-icon.t-evals { background: #fffbeb; color: #d97706; }
-  .topic-icon.t-safety { background: #eff6ff; color: #2563eb; }
-  .topic-icon.t-gov { background: #f0fdf4; color: #16a34a; }
-
-  :global([data-theme="dark"]) .topic-icon.t-agents { background: #3b1515; }
-  :global([data-theme="dark"]) .topic-icon.t-evals { background: #3b2e10; }
-  :global([data-theme="dark"]) .topic-icon.t-safety { background: #15253b; }
-  :global([data-theme="dark"]) .topic-icon.t-gov { background: #153b1f; }
-
-  .topic-cell h3 {
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.01em;
-    color: var(--color-text-primary);
-    font-family: sans-serif;
-  }
-
-  .topic-cell p {
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  .topic-cta {
-    display: block;
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: var(--color-link);
-    margin-top: 0.6rem;
-  }
-
-  /* ── Featured Series ── */
-  .featured-series {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-  }
-
-  .series-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-  }
-
-  .series-card {
-    display: flex;
-    flex-direction: column;
-    padding: 2rem;
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    text-decoration: none;
-    color: inherit;
-    transition: border-color 0.2s;
-    position: relative;
-  }
-
-  .series-card:hover {
-    border-color: var(--color-card-hover);
-  }
-
-  .series-card:hover h3 {
-    color: var(--color-brand);
-  }
-
-  .new-badge {
-    display: inline-block;
-    width: fit-content;
-    font-size: 0.6rem;
-    font-weight: 700;
-    color: var(--color-link);
-    background: var(--color-bg-secondary);
-    border: 1px solid var(--color-link);
-    padding: 0.15rem 0.5rem;
-    border-radius: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-family: sans-serif;
-    margin-bottom: 0.5rem;
-  }
-
-  .series-card h3 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin: 0 0 0.5rem;
-    letter-spacing: -0.01em;
-    line-height: 1.3;
-    color: var(--color-text-primary);
-    font-family: sans-serif;
-    transition: color 0.2s;
-  }
-
-  .series-tagline {
-    font-size: 0.85rem;
-    color: var(--color-text-secondary);
-    margin: 0 0 0.75rem;
+  .entry-desc {
+    max-width: 60ch;
+    margin: 0.35rem 0 0;
     line-height: 1.55;
-    font-style: italic;
+    color: var(--color-text-secondary);
   }
 
-  .series-body {
-    font-size: 0.82rem;
-    color: var(--color-text-muted);
-    margin: 0;
-    line-height: 1.6;
-    flex: 1;
-  }
-
-  .series-cta {
+  .entry-link {
     display: inline-block;
-    margin-top: 1.25rem;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--color-link);
-    font-family: sans-serif;
-  }
-
-  /* ── Latest Essays ── */
-  .latest {
-    max-width: 1120px;
-    margin: 0 auto;
-    padding: 4rem 2rem;
-  }
-
-  .essay-list {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .essay-item {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 2rem;
-    padding: 1.4rem 0;
-    border-bottom: 1px solid var(--color-border-light);
-    text-decoration: none;
-    color: inherit;
-    align-items: baseline;
-    transition: all 0.15s;
-  }
-
-  .essay-item:first-child { border-top: 1px solid var(--color-border-light); }
-
-  .essay-item:hover {
-    background: var(--color-bg-secondary);
-    margin: 0 -1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    border-radius: 6px;
-  }
-
-  .essay-cat {
-    font-family: monospace;
-    font-size: 0.65rem;
+    margin-top: 0.6rem;
+    font-size: 0.9rem;
     font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-link);
-    margin-bottom: 0.3rem;
   }
 
-  .essay-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    line-height: 1.35;
-    color: var(--color-text-primary);
+  .contact {
+    margin: 0;
+    color: var(--color-text-secondary);
   }
 
-  .essay-desc {
-    font-size: 0.82rem;
-    color: var(--color-text-muted);
-    margin-top: 0.3rem;
-    line-height: 1.5;
-    max-width: 600px;
-  }
-
-  .essay-meta-right {
-    text-align: right;
-    white-space: nowrap;
-  }
-
-  .essay-date {
-    font-size: 0.78rem;
-    color: var(--color-text-muted);
-  }
-
-  .essay-read {
-    display: block;
-    font-family: monospace;
-    font-size: 0.65rem;
-    color: var(--color-text-muted);
-    margin-top: 0.2rem;
-    letter-spacing: 0.02em;
-  }
-
-  /* ── Responsive ── */
-  @media (max-width: 768px) {
-    .hero { padding: 1.5rem 1.25rem 1.5rem; }
-    .topics { padding: 3rem 1.25rem; }
-    .featured-series { padding: 3rem 1.25rem; }
-    .latest { padding: 3rem 1.25rem; }
-    .hero-content { flex-direction: column; gap: 2rem; }
-    .hero-panel { align-self: center; }
-    .hero-panel img { width: 280px; }
-    .topics-primary-cta { display: block; }
-    .topic-grid {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      gap: 0;
-      background: var(--color-border-light);
-      border: 1px solid var(--color-border-light);
-      border-radius: 8px;
+  @media (max-width: 640px) {
+    .home {
+      padding: 3rem 1rem 0;
     }
-    .topic-cell {
-      min-width: 75vw;
-      max-width: 80vw;
-      scroll-snap-align: start;
-      flex-shrink: 0;
-      padding: 1.5rem 1.25rem;
-    }
-    .series-grid { grid-template-columns: 1fr; }
-    .essay-item { grid-template-columns: 1fr; gap: 0.5rem; }
-    .essay-meta-right { text-align: left; display: flex; gap: 0.75rem; }
-    .essay-read { display: inline; margin-top: 0; }
-  }
 
-  @media (max-width: 480px) {
-    .hero { padding: 1.25rem 1rem 2rem; }
-    .hero-panel { display: none; }
-    .proof-card {
-      display: block;
-      margin-top: 1.5rem;
-    }
-    .hero h1 { font-size: 1.75rem; line-height: 1.2; }
-    .hero-sub { font-size: 0.9rem; margin-top: 0.75rem; }
-    .hero-cta-row { margin-top: 1.25rem; gap: 0.65rem; flex-wrap: nowrap; }
-    .btn-primary { font-size: 0.78rem; padding: 0.55rem 1.1rem; border-radius: 5px; }
-    .btn-secondary { font-size: 0.78rem; padding: 0.55rem 1.25rem; border-radius: 5px; }
-    .hero-credit { margin-top: 1.5rem; padding-top: 1rem; padding-bottom: 0.25rem; }
-    .topics { padding: 2rem 1rem; }
-    .featured-series { padding: 2.5rem 1rem; }
-    .series-card { padding: 1.5rem 1.25rem; }
-    .latest { padding: 2.5rem 1rem; }
-    .essay-item:nth-child(n+4) { display: none; }
   }
 </style>

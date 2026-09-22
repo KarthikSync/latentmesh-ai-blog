@@ -21,7 +21,7 @@ The site has two essay series, both defined in `src/layouts/BlogPost.astro`:
 - **Reliable Agent Systems** (10 essays + companions) — `seriesEssays` array. Landing page at `src/pages/series/reliable-agent-systems/index.astro`. Extended reading guide at `src/pages/reading-list/index.astro`.
 - **Evaluating Agent Fleets** (in progress, 8 planned) — `fleetSeriesEssays` array. Landing page at `src/pages/series/evaluating-agent-fleets/index.astro`.
 
-The series index at `src/pages/series/index.astro` shows both series as cards. The homepage "Featured series" section links to both.
+The series index at `src/pages/series/index.astro` shows both series as cards. The homepage "Writing" section links to both.
 
 ## Publishing a New Blog Post
 

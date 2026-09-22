@@ -50,7 +50,7 @@ const tags = [...tagMap.entries()].sort((a, b) => b[1] - a[1]);
     font-weight: 800;
     color: var(--color-text-primary);
     margin: 0 0 2rem;
-    font-family: sans-serif;
+    font-family: var(--font-sans);
   }
 
   .tag-grid {
@@ -74,14 +74,14 @@ const tags = [...tagMap.entries()].sort((a, b) => b[1] - a[1]);
   }
 
   .tag-name {
-    font-family: sans-serif;
+    font-family: var(--font-sans);
     font-size: 1rem;
     font-weight: 600;
     color: var(--color-text-primary);
   }
 
   .tag-count {
-    font-family: sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.8rem;
     color: var(--color-text-muted);
   }
