@@ -6,4 +6,5 @@ export const SITE_URL = "https://latentmesh.ai";
 export const GITHUB_URL = "https://github.com/KarthikSync";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/karthiksync";
 export const BLITZ_URL = "https://blitz.latentmesh.ai/";
+export const BLITZ_DEMO_URL = "https://blitz.latentmesh.ai/hunt";
 export const X_URL = "https://x.com/karthiksync";
